@@ -1,9 +1,10 @@
 <template>
-    <div id="app" ref="app">
+    <div id="wiki">
+        MainPageWiki
     </div>
 </template>
 <script>
 export default {
-    name: 'WorkoutMainView'
+    name: 'MainPageWiki'
   }
 </script>

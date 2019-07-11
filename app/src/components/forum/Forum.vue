@@ -1,9 +1,10 @@
 <template>
-    <div id="app" ref="app">
+    <div>
+      Forum
     </div>
 </template>
 <script>
 export default {
-    name: 'WorkoutSideBar'
+    name: 'Forum'
   }
 </script>

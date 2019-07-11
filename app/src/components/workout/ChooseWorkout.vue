@@ -1,6 +1,6 @@
 <template>
-    <div id="app" ref="app">
-    ChooseWorkout
+    <div>
+      ChooseWorkout
     </div>
 </template>
 <script>

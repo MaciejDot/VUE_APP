@@ -1,20 +1,13 @@
 <template>
   <div id="app">
-    <div id ="menu">
-      <a>element</a>
-      <router-link
-        :to="{ name: 'workout'}"
-        >
-        database
-      </router-link>
-      </div>
-    <router-view/>
+    <nav>
+      <router-link :to="{name:'exercises'}">A</router-link>
+      <router-link :to="{name:'workout'}">B</router-link>
+      <router-link :to="{name:'forum'}">C</router-link>
+    </nav>
+    <router-view></router-view>
   </div>
 </template>
-
-<router-view
-  :key="$router.fullPath"
-/>
 <script>
 export default {
   name: 'app'
