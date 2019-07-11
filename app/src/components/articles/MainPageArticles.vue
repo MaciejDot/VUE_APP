@@ -1,10 +1,10 @@
 <template>
     <div>
-      Forum
+      MainPageArticles
     </div>
-    </template>
+  </template>
 <script>
 export default {
-    name: 'Forum'
+    name: 'MainPageArticles'
   }
 </script>

@@ -2,7 +2,7 @@
     <div>
       ChooseWorkout
     </div>
-</template>
+  </template>
 <script>
 export default {
     name: 'ChooseWorkout'

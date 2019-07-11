@@ -1,5 +1,6 @@
 <template>
     <div id="app" ref="app">
+    hello
     </div>
 </template>
 <script>
