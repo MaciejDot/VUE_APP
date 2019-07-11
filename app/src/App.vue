@@ -4,7 +4,10 @@
   </div>
 </template>
 <navbar>
-<router-link>
+<router-link
+
+>
+<!--:to!-->
 </router-link>
 </navbar>
 <router-view
