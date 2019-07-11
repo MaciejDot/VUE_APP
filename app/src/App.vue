@@ -3,13 +3,21 @@
     <HelloWorld/>
   </div>
 </template>
-
+<navbar>
+<router-link>
+</router-link>
+</navbar>
+<router-view
+  :key="$router.fullPath"
+/>
 <script>
+import navbar from 'vue-strap'
 import HelloWorld from './components/HelloWorld'
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    HelloWorld,
+    navbar
   }
 }
 </script>
