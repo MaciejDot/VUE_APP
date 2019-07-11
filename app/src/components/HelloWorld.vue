@@ -4,10 +4,7 @@
 </template>
 <script>
   export default {
-    name: 'HelloWorld',
-    components: {
-      'slider' : Slider
-    }
+    name: 'HelloWorld'
   }
 </script>
 <style lang="less" rel="stylesheet/less" scoped>

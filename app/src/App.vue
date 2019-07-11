@@ -1,29 +1,23 @@
 <template>
   <div id="app">
-    <HelloWorld/>
+    <div id ="menu">
+      <a>element</a>
+      <router-link
+        :to="{ name: 'workout'}"
+        >
+        database
+      </router-link>
+      </div>
+    <router-view/>
   </div>
 </template>
-<navbar>
-<router-link
 
->
-<!--:to!-->
-</router-link>
-</navbar>
 <router-view
   :key="$router.fullPath"
 />
 <script>
-
-import navbar from 'vue-strap'
-import HelloWorld from './components/HelloWorld'
 export default {
-  name: 'app',
-
-  components: {
-    HelloWorld,
-    navbar
-  }
+  name: 'app'
 }
 </script>
 

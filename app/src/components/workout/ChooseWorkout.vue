@@ -1,5 +1,6 @@
 <template>
     <div id="app" ref="app">
+    ChooseWorkout
     </div>
 </template>
 <script>
