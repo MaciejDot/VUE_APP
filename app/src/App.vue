@@ -18,6 +18,7 @@ import navbar from 'vue-strap'
 import HelloWorld from './components/HelloWorld'
 export default {
   name: 'app',
+  
   components: {
     HelloWorld,
     navbar
