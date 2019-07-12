@@ -10,13 +10,16 @@ import BootstrapVue from "bootstrap-vue"
 import ForumPost from './components/forum/forumParts/ForumPost.vue'
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap-vue/dist/bootstrap-vue.css"
+import ForumThreadList from './components/forum/ForumThreadList.vue'
+
 //import HelloWorld from './components/HelloWorld'
 const routes = [
  { path: '/defaultPost', component: ForumPost },
  { path: '/workout', component: ChooseWorkout },
  { path: '/exercises', component: MainPageWiki},
  { path: '/forum', component: Forum},
- { path: '/articles', component: MainPageArticles}
+ { path: '/articles', component: MainPageArticles},
+ { path: '/forum/:title', component:ForumThreadList}
 ];
 Vue.use(VueRouter)
 const router = new VueRouter({
