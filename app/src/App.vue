@@ -9,8 +9,8 @@
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
         <router-link 
-                    class="nav-link"
-                    to="/exercises">Exercises Wiki</router-link>
+          class="nav-link"
+          to="/exercises">Exercises Wiki</router-link>
       </li>
       <li class="nav-item">
         <router-link
@@ -26,6 +26,11 @@
         <router-link
             class="nav-link"
             to="/articles">Articles</router-link>
+      </li>
+      <li class="nav-item">
+        <router-link
+            class="nav-link"
+            to="/defaultPost">Default Post</router-link>
       </li>
     </ul>
     </div>
