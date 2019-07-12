@@ -1,5 +1,5 @@
 <template>
-<div style="padding:5%;"
+<div style="padding:5%;cursor: pointer;"
 v-on:click="resolveLink()"
 >
   <div style="background-color:#f8f9fa!important;border-radius:10px;padding:10px;height:200px;">

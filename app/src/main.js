@@ -11,7 +11,7 @@ import ForumPost from './components/forum/forumParts/ForumPost.vue'
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap-vue/dist/bootstrap-vue.css"
 import ForumThreadList from './components/forum/ForumThreadList.vue'
-
+import axios from 'axios'
 //import HelloWorld from './components/HelloWorld'
 const routes = [
  { path: '/defaultPost', component: ForumPost },
@@ -25,10 +25,14 @@ Vue.use(VueRouter)
 const router = new VueRouter({
   routes: routes
 })
+
 Vue.use(BootstrapVue)
 new Vue({
   router: router,
   render: h => h(App),
 }).$mount('#app')
+Vue.prototype.$api=axios.create({
+  baseURL:""
+})
 Vue.config.productionTip = false
 
