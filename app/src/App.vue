@@ -1,6 +1,6 @@
 <template>
   <div id="app" style="margin-top:0px">
-  <div class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="navbar navbar-expand-lg navbar-light bg-light bg-color transparent">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -35,6 +35,13 @@
     </ul>
     </div>
   </div>
+  
+  </div>
+  <div style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden; pointer-events: none; z-index: -100;">
+  <div :style="{'background-position': '50% 50%', 'background-size': '100%', 'background-repeat': 'no-repeat', 
+  'background-image': `url('${('~@/assets/background.jpg')}')`, 'position': 'fixed', 'top': '0px', 
+  'left': '0px', 'width': '900.164px', 'height': '599px', 'overflow': 'hidden', 'pointer-events': 'none', 
+  'margin-left': '-198.482px', 'margin-top': '61.5px', 'visibility': 'visible', 'transform': 'translate3d(0px, -61.5px, 0px)'}"></div>
   </div>
     <router-view></router-view>
   </div>
