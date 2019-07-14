@@ -1,8 +1,8 @@
 <template>
-<div style="padding:5%;">
-  <div style="background-color:#f8f9fa!important;border-radius:10px;padding:10px;height:200px;">
+<div style="padding:5px;">
+  <div style="background-color:#f8f9fa!important;border-radius:10px;padding:5px;min-height:100px;cursor:pointer;">
   
-        <strong>{{title}}</strong>
+        <div style="text-align:left;"><strong>{{title}}</strong></div>
     <div class="row" >
         <div style="text-align:left;">
             {{description}}
@@ -13,6 +13,7 @@
 </template>
 <script>
 export default {
-    name:'ForumThread'
+    name:'ForumThread',
+    props :['title']
 }
 </script>

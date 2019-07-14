@@ -38,10 +38,7 @@
   
   </div>
   <div style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden; pointer-events: none; z-index: -100;">
-  <div :style="{'background-position': '50% 50%', 'background-size': '100%', 'background-repeat': 'no-repeat', 
-  'background-image': `url('${('~@/assets/background.jpg')}')`, 'position': 'fixed', 'top': '0px', 
-  'left': '0px', 'width': '900.164px', 'height': '599px', 'overflow': 'hidden', 'pointer-events': 'none', 
-  'margin-left': '-198.482px', 'margin-top': '61.5px', 'visibility': 'visible', 'transform': 'translate3d(0px, -61.5px, 0px)'}"></div>
+  <div class="image-background"></div>
   </div>
     <router-view></router-view>
   </div>
@@ -52,7 +49,50 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.image-background{
+  background-position: 0% 50%; background-size: 100%; background-repeat: no-repeat; 
+  background-image: url('/background.jpg'); 
+  position: fixed; top: 0px; 
+  left: 0px; overflow: hidden; pointer-events: none; 
+ /* margin-left: -198.482px;*/ margin-top: 61.5px; visibility: visible; transform: translate3d(0px, -61.5px, 0px);
+}
+
+@media (max-width: 450px){
+  .image-background {
+        width: 600px;
+        height: 400px;
+    }
+}
+
+@media (max-width:600px) and (min-width:451px) {
+  .image-background {
+        width: 900px;
+        height: 600px;
+    }
+}
+
+@media (max-width:900px) and (min-width:601px) {
+  .image-background {
+        width: 1200.164px; 
+        height: 800px;
+    }
+}
+
+@media (max-width:1200px) and (min-width:901px) {
+  .image-background {
+        width: 1500.164px; 
+        height :900px;
+    }
+}
+
+@media (max-width:1500px) and (min-width:1201px) {
+  .image-background {
+      width: 1800.164px;
+      height: 1000px; 
+    }
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
