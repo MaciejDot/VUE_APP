@@ -55,7 +55,7 @@ export default {
   background-image: url('/background.jpg'); 
   position: fixed; top: 0px; 
   left: 0px; overflow: hidden; pointer-events: none; 
- /* margin-left: -198.482px;*/ margin-top: 61.5px; visibility: visible; transform: translate3d(0px, -61.5px, 0px);
+  margin-top: 61.5px; visibility: visible; transform: translate3d(0px, -61.5px, 0px);
 }
 
 @media (max-width: 450px){

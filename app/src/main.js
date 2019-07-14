@@ -12,6 +12,7 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap-vue/dist/bootstrap-vue.css"
 import ForumThreadList from './components/forum/ForumThreadList.vue'
 import axios from 'axios'
+import ForumThreadPage from './components/forum/ForumThreadPage'
 //import HelloWorld from './components/HelloWorld'
 const routes = [
  { path: '/defaultPost', component: ForumPost },
@@ -19,7 +20,8 @@ const routes = [
  { path: '/exercises', component: MainPageWiki},
  { path: '/forum', component: Forum},
  { path: '/articles', component: MainPageArticles},
- { path: '/forum/:title', component:ForumThreadList}
+ { path: '/forum/:title', component:ForumThreadList},
+ { path: '/forum/:title/:threadId', component:ForumThreadPage }
 ];
 Vue.use(VueRouter)
 const router = new VueRouter({

@@ -1,6 +1,7 @@
 <template>
-<div style="padding:5%;">
-  <div style="background-color:#f8f9fa!important;border-radius:10px;padding:10px">
+<div style="padding:5px;">
+  <div style="background-color:#f8f9fa!important;border-radius:10px;padding:10px;min-height:500px;">
+  <div style="position:relative;min-height:500px;">
     <div class="row" >
         <div class="col-lg-3 col-sm-4 col-4">
         <div style="width:100px;">
@@ -15,8 +16,9 @@
              Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
         </div>
     </div>
-    <div style="text-align:right; border-top-style: solid; border-top-width: thin;">
+    <div style="text-align:right; border-top-style: solid; border-top-width: thin;position:absolute;width:100%;bottom: 5px">
         22-22-2022
+    </div>
     </div>
   </div>
 </div>

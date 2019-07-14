@@ -1,5 +1,7 @@
 <template>
-<div style="padding:5px;">
+<div style="padding:5px;"
+v-on:click="resolveLink()"
+>
   <div style="background-color:#f8f9fa!important;border-radius:10px;padding:5px;min-height:100px;cursor:pointer;">
   
         <div style="text-align:left;"><strong>{{title}}</strong></div>
@@ -14,6 +16,11 @@
 <script>
 export default {
     name:'ForumThread',
-    props :['title']
+    props :['title','description','link'],
+    methods:{
+    resolveLink: function(){
+        this.$router.push({path:this.link});
+      }
+    }
 }
 </script>

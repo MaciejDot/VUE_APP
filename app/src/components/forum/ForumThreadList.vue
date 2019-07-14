@@ -1,9 +1,9 @@
 <template>
 <div>
     <strong>{{title}}</strong>
-    <ForumThread title="How to achieve advanced tuck planche"/>
-    <ForumThread title="Problem with dips"/>
-    <ForumThread title="Triceps development"/>
+    <ForumThread :link="`/forum/${title}/cd-12`" title="How to achieve advanced tuck planche"/>
+    <ForumThread :link="`/forum/${title}/clp-122`" title="Problem with dips"/>
+    <ForumThread :link="`/forum/${title}/13332`" title="Triceps development"/>
 </div>
 </template>
 <script>
