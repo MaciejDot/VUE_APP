@@ -1,7 +1,11 @@
 <template>
 <div style="padding: 5px;">
   <div class="holder" style="background-color:#f8f9fa!important;border-radius:10px;padding:10px;">
-  <img src=`${imagePath}`/>
+  <div 
+    class="thumbnail-image" 
+    :style='`background-image: url(`+imagePath+`);`' 
+  >
+  </div>
   <h2 class="article-title">
 {{title}}
   </h2>
@@ -25,25 +29,26 @@ export default {
   font-family: Georgia, serif;
 }
 .thumbnail-image{
-    background-position: 0% 50%; background-size: 100%; background-repeat: no-repeat; 
-    background-image: url('/background.jpg'); 
-    position: fixed; top: 0px; 
-    left: 0px; overflow: hidden; pointer-events: none; 
-    margin-top: 61.5px; visibility: visible; transform: translate3d(0px, -61.5px, 0px);
+    background-position: 0% 50%; background-size: 100%; background-repeat: no-repeat;
+    margin-top: 61.5px; visibility: visible;
 }
 @media (min-width: 450px){
-  .image-background {
-        width: 380px;
-        height: 300px;
+  .thumbnail-image {
+        min-width: 380px;
+        min-height: 300px;
+        max-width: 380px;
+        max-height: 300px;
     }
     .holder{
       min-height:400px;
     }
 }
 @media (max-width: 449px) and (min-width: 300 px){
-  .image-background {
-        width: 280px;
-        height: 200px;
+  .thumbnail-image {
+        min-width: 280px;
+        min-height: 200px;
+        max-width: 280px;
+        max-height: 200px;
     }
     .holder{
       min-height:300px;
@@ -51,8 +56,10 @@ export default {
 }
 @media (max-width: 299 px){
   .image-background {
-        width: 200px;
-        height: 150px;
+        min-width: 200px;
+        min-height: 150px;
+        max-width: 200px;
+        max-height: 150px;
     }
     .holder{
       min-height:250px;
