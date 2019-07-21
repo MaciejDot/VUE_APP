@@ -1,15 +1,15 @@
 <template>
 <div style="padding:5px;">
-  <div style="background-color:#f8f9fa!important;border-radius:10px;padding:10px;min-height:500px;">
+  <div style="background-color:#f8f9fa!important;border-radius:10px;padding:10px;min-height:500px;box-shadow: 2px 2px 5px 0px rgba(120,111,120,1);">
   <div style="position:relative;min-height:500px;">
     <div class="row" >
-        <div class="col-lg-3 col-sm-4 col-4">
+        <div class="col-md-4 col-lg-3">
         <div style="width:100px;">
           <img class="d-flex mr-3 rounded-circle" src="@/assets/avatar.png" alt>
           <div>Commenter Name</div>
           </div>
         </div>
-        <div class="col-lg-9 col-sm-8 col-8">
+        <div class="col-md-8 col-lg-9">
             Cras sit amet nibh libero, in gravida nulla. 
             Nulla vel metus scelerisque ante sollicitudin. 
             Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.

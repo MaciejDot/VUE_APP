@@ -2,7 +2,7 @@
 <div style="padding:5%;cursor: pointer;"
 v-on:click="resolveLink()"
 >
-  <div style="background-color:#f8f9fa!important;border-radius:10px;padding:10px;height:200px;">
+  <div style="background-color:#f8f9fa!important;border-radius:10px;padding:10px;height:200px;box-shadow: 2px 2px 5px 0px rgba(120,111,120,1);">
   
         <strong>{{title}}</strong>
     <div class="row" >

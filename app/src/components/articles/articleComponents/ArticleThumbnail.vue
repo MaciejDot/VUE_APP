@@ -1,10 +1,15 @@
 <template>
-<div style="padding: 5px;">
-  <div class="holder" style="background-color:#f8f9fa!important;border-radius:10px;padding:10px;">
-  <div 
+<div>
+<div style="padding: 5px;cursor: pointer;">
+  <div class="holder" style="background-color:#f8f9fa!important;border-radius:10px;padding:10px;box-shadow: 2px 2px 5px 0px rgba(120,111,120,1);">
+  <div style="position:inherit;">
+  <div>
+  <img 
     class="thumbnail-image" 
-    :style='`background-image: url(`+imagePath+`);`' 
-  >
+    :style='`margin: 0;border-radius:10px;margin-left: auto;
+    margin-right: auto;background-image: url(`+imagePath+`);`' 
+  />
+  </div>
   </div>
   <h2 class="article-title">
 {{title}}
@@ -14,7 +19,7 @@
   </div>
   </div>
 </div>
-
+</div>
 </template>
 <script>
 export default {
@@ -30,39 +35,16 @@ export default {
 }
 .thumbnail-image{
     background-position: 0% 50%; background-size: 100%; background-repeat: no-repeat;
-    margin-top: 61.5px; visibility: visible;
+    margin-top: 61.5px; visibility: visible;border-radius: 10px;
 }
-@media (min-width: 450px){
+  .holder-image{
+    height: 300px;
+  }
   .thumbnail-image {
-        min-width: 380px;
-        min-height: 300px;
-        max-width: 380px;
-        max-height: 300px;
+    width: -webkit-fill-available;
+    padding-top: 62.5%;
     }
     .holder{
       min-height:400px;
     }
-}
-@media (max-width: 449px) and (min-width: 300 px){
-  .thumbnail-image {
-        min-width: 280px;
-        min-height: 200px;
-        max-width: 280px;
-        max-height: 200px;
-    }
-    .holder{
-      min-height:300px;
-    }
-}
-@media (max-width: 299 px){
-  .image-background {
-        min-width: 200px;
-        min-height: 150px;
-        max-width: 200px;
-        max-height: 150px;
-    }
-    .holder{
-      min-height:250px;
-    }
-}
 </style>
