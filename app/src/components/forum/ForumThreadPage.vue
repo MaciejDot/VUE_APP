@@ -2,7 +2,7 @@
 <div>
     {{threadTitle}}
     <ForumPost v-for="post in posts" :key="post" :content="post.content" :date="post.date" :author="post.author" />
-<RichTextEditorComment style="max-width:1000px;margin-left: auto;
+<RichTextEditorComment :threadId="this.$route.params.threadId" ref="textEditor" style="max-width:1000px;margin-left: auto;
     margin-right: auto;" />
 </div>
 </template>

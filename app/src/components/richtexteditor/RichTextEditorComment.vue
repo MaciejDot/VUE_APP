@@ -116,6 +116,7 @@
     </editor-menu-bar>
 
     <editor-content class="editor__content" :editor="editor" style="background-color:white; min-height:400px;border-radius:10px; text-align:left;" />
+    <button v-on:click="postAnswear()">post</button>
   </div>
 </div>
 </div>
@@ -146,9 +147,11 @@ export default {
     EditorMenuBar,
     
   },
+  props:['threadId'],
   data() {
     return {
       editor: new Editor({
+        content: '',
         extensions: [
           new Blockquote(),
           new BulletList(),
@@ -165,9 +168,13 @@ export default {
           new Strike(),
           new Underline(),
           new History(),
-        ],
-        content: ``,
+        ]
       }),
+    }
+  },
+  methods:{
+    postAnswear:function(){
+    this.$api.post('/ForumWriter/PostAnswear',{ThreadId:5,Content:'2'})//this.editor.getHTML()}})
     }
   },
   beforeDestroy() {

@@ -30,7 +30,10 @@ const router = new VueRouter({
 
 Vue.use(BootstrapVue)
 Vue.prototype.$api=axios.create({
-  baseURL: 'https://localhost:44371'
+  baseURL: 'https://localhost:44371',
+  headers: {
+    'Content-Type': "application/x-www-form-urlencoded",
+  },
 })
 new Vue({
   router: router,
