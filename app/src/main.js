@@ -18,10 +18,10 @@ const routes = [
  { path: '/defaultPost', component: ForumPost },
  { path: '/workout', component: ChooseWorkout },
  { path: '/exercises', component: MainPageWiki},
- { path: '/forum', component: Forum},
+ { path: '/Forum', component: Forum},
  { path: '/articles', component: MainPageArticles},
- { path: '/forum/:title', component:ForumThreadList},
- { path: '/forum/:title/:threadId', component:ForumThreadPage }
+ { path: '/Forum/:title', component:ForumThreadList},
+ { path: '/Forum/:title/:threadId', component:ForumThreadPage }
 ];
 Vue.use(VueRouter)
 const router = new VueRouter({
@@ -29,12 +29,13 @@ const router = new VueRouter({
 })
 
 Vue.use(BootstrapVue)
+Vue.prototype.$api=axios.create({
+  baseURL: 'https://localhost:44371'
+})
 new Vue({
   router: router,
-  render: h => h(App),
+  render: h => h(App)
 }).$mount('#app')
-Vue.prototype.$api=axios.create({
-  baseURL:""
-})
+
 Vue.config.productionTip = false
 

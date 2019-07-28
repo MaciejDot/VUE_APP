@@ -8,7 +8,7 @@ v-on:click="resolveLink()"
     <div class="row" >
         <div class="col-xl-3 col-md-4 col-2">
         <div style="width:50px;">
-          <img class="d-flex mr-3 rounded-circle" src="@/assets/avatar.png" style="width:50px;height:50px;" alt>
+          <img class="d-flex mr-3 rounded-circle" :src="'data:image/png;base64, '+thumbnail" style="width:50px;height:50px;" alt>
           
           </div>
         </div>
@@ -22,7 +22,7 @@ v-on:click="resolveLink()"
 <script>
 export default {
     name:'ForumSubject',
-    props :['title','description','link'],
+    props :['title','description','link','thumbnail'],
     data:function(){
       return{
         goToLocation:''

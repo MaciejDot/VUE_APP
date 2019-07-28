@@ -1,7 +1,7 @@
 <template>
 <div>
 <div style="padding: 5px;">
-  <div style="background-color:#f8f9fa!important;border-radius:10px;padding:10px;min-height:300px;">
+  <div style="background-color:#f8f9fa!important;border-radius:10px;padding:10px;min-height:500px;">
     <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
       <div class="menubar">
 
@@ -115,7 +115,7 @@
       </div>
     </editor-menu-bar>
 
-    <editor-content class="editor__content" :editor="editor" style="background-color:white; min-height:200px;border-radius:10px; text-align:left;" />
+    <editor-content class="editor__content" :editor="editor" style="background-color:white; min-height:400px;border-radius:10px; text-align:left;" />
   </div>
 </div>
 </div>

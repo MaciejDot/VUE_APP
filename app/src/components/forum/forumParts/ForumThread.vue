@@ -7,7 +7,7 @@ v-on:click="resolveLink()"
         <div style="text-align:left;"><strong>{{title}}</strong></div>
     <div class="row" >
         <div style="text-align:left;">
-            {{description}}
+            replies count : {{replies}}
         </div>
     </div>
   </div>
@@ -16,7 +16,7 @@ v-on:click="resolveLink()"
 <script>
 export default {
     name:'ForumThread',
-    props :['title','description','link'],
+    props :['title','link','op','replies','created'],
     methods:{
     resolveLink: function(){
         this.$router.push({path:this.link});

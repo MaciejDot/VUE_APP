@@ -1,9 +1,7 @@
 <template>
 <div>
     <strong>{{title}}</strong>
-    <ForumThread :link="`/forum/${title}/cd-12`" title="How to achieve advanced tuck planche"/>
-    <ForumThread :link="`/forum/${title}/clp-122`" title="Problem with dips"/>
-    <ForumThread :link="`/forum/${title}/13332`" title="Triceps development"/>
+    <ForumThread  v-for="thread in threads" :key="thread" :link="thread.path" :title="thread.title" :op="thread.op" :replies="thread.replies"/>
 </div>
 </template>
 <script>
@@ -15,11 +13,17 @@ export default {
     },
     data:function(){
         return {
-            title:''
+            title:'',
+            threads:[]
         }
     },
     mounted:function(){
         this.title = this.$route.params.title;
+        this.$api.get('/ForumViewer/GetThreads?subject='+this.title+'&page=0').then(
+            r=>{
+                this.threads = r.data.threads;
+            }
+        )
     }
 }
 </script>

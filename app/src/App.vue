@@ -20,7 +20,7 @@
       <li class="nav-item">
       <router-link 
             class="nav-link"
-            to="/forum">Forum</router-link>
+            to="/Forum">Forum</router-link>
       </li>
       <li class="nav-item">
         <router-link
