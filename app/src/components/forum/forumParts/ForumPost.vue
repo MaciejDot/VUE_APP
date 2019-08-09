@@ -4,9 +4,7 @@
     margin-right: auto;max-width:1000px">
   <div style="position:relative;min-height:500px;">
    <div style="text-align:left;">{{author}}</div>
-    <div class="row" >
-            {{content}}
-    </div>
+    <div class="row" v-html ="content" />
     <div style="text-align:right; border-top-style: solid; border-top-width: thin;position:absolute;width:100%;bottom: 5px;">
         {{date}}
     </div>

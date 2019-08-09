@@ -115,8 +115,13 @@
       </div>
     </editor-menu-bar>
 
-    <editor-content class="editor__content" :editor="editor" style="background-color:white; min-height:400px;border-radius:10px; text-align:left;" />
-    <button v-on:click="postAnswear()">post</button>
+    <editor-content class="editor__content" :editor="editor" style="background-color:white; min-height:400px;border-radius:10px; text-align:left;
+    padding: 1px 0px;
+    border-width: 2px;
+    border-style: inset;
+    border-color: initial;
+    border-image: initial;" />
+    <div v-if="postEnabled"><button v-on:click="postAnswear()">post</button></div>
   </div>
 </div>
 </div>
@@ -147,7 +152,16 @@ export default {
     EditorMenuBar,
     
   },
-  props:['threadId'],
+  props:{
+    threadId:{
+      type : Number,
+      default : 0
+    },
+    postEnabled:{
+      type: Boolean,
+      default : true
+    }
+    },
   data() {
     return {
       editor: new Editor({
@@ -174,7 +188,7 @@ export default {
   },
   methods:{
     postAnswear:function(){
-    this.$api.post('/ForumWriter/PostAnswear',{ThreadId:5,Content:'2'})//this.editor.getHTML()}})
+    this.$api.post('/ForumWriter/PostAnswear',{ThreadId:5,Content: this.editor.getHTML()})
     }
   },
   beforeDestroy() {

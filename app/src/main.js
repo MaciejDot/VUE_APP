@@ -13,6 +13,8 @@ import "bootstrap-vue/dist/bootstrap-vue.css"
 import ForumThreadList from './components/forum/ForumThreadList.vue'
 import axios from 'axios'
 import ForumThreadPage from './components/forum/ForumThreadPage'
+import ForumThreadCreator from './components/forum/ForumThreadCreator'
+import VueSanitize from 'vue-sanitize'
 //import HelloWorld from './components/HelloWorld'
 const routes = [
  { path: '/defaultPost', component: ForumPost },
@@ -21,9 +23,11 @@ const routes = [
  { path: '/Forum', component: Forum},
  { path: '/articles', component: MainPageArticles},
  { path: '/Forum/:title', component:ForumThreadList},
- { path: '/Forum/:title/:threadId', component:ForumThreadPage }
+ { path: '/Forum/:title/:threadId', component:ForumThreadPage },
+ { path: '/Forum/*/:title/creator', component: ForumThreadCreator}
 ];
-Vue.use(VueRouter)
+Vue.use(VueSanitize);
+Vue.use(VueRouter);
 const router = new VueRouter({
   routes: routes
 })
