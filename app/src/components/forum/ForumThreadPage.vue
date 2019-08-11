@@ -1,8 +1,11 @@
 <template>
 <div>
     <h1>{{threadTitle}}</h1>
+    <iframe id="ytplayer" type="text/html" width="640" height="360"
+  src="http://www.youtube.com/embed/M7lc1UVf-VE?autoplay=1&origin=http://example.com"
+  frameborder="0"/>
     <ForumPost v-for="post in posts" :key="post" :content="post.content" :date="post.date" :author="post.author" />
-<RichTextEditorComment :threadId="this.$route.params.threadId" ref="textEditor" style="max-width:1000px;margin-left: auto;
+<RichTextEditorComment :threadId="parseInt(this.$route.params.threadId)" ref="textEditor" style="max-width:1000px;margin-left: auto;
     margin-right: auto;" />
 </div>
 </template>

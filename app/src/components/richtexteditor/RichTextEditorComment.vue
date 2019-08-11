@@ -140,11 +140,12 @@ import {
   Bold,
   Code,
   Italic,
-  Link,
+  //Link,
   Strike,
   Underline,
   History,
 } from 'tiptap-extensions'
+import Iframe from './customNodes/Iframe';
 export default {
   name: 'RichTextEditorComment',
   components: {
@@ -175,13 +176,14 @@ export default {
           new OrderedList(),
           new TodoItem(),
           new TodoList(),
-          new Link(),
+          //new Link(),
           new Bold(),
           new Code(),
           new Italic(),
           new Strike(),
           new Underline(),
           new History(),
+          new Iframe(),
         ]
       }),
     }
