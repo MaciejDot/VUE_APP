@@ -1,33 +1,36 @@
 <template>
-    <div id="wiki">
-        <div>
-            <sidebar-menu
+    <div id="wiki" style="display: -webkit-box;">
+                <sidebar-menu
                 :menu="menu"
+                :collapsed="collapsed"
                 theme="white-theme"
                 :show-one-child="true"
-            />
-        </div>
-    </div>
+                style="position:sticky;top:0;overflow: hidden;"
+                @toggle-collapse="onToggleCollapse"
+                />
+                <div :style="{width: collapsed ? 'calc(100% - 50px)' : 'calc(100% - 350px)'}">
+                <MainPageArticles 
+                style="width:-webkit-fill-available"
+                 />
+                </div>
+            <!--theme="white-theme" style="display: inline-block;
+            style="/*display: inline-block;*//*margin-left: -50%;*//*width:60%;*//*width: calc(100% - 350px);*/"
+    margin-left: -50%;"position:absolute;  style="top : auto;""-->
+    </div>  
 </template>
 <script>
-
 import "vue-sidebar-menu/src/scss/vue-sidebar-menu.scss";
-//import "vue-sidebar-menu/src/scss/_variables.scss";
-//import "vue-sidebar-menu/src/scss/themes/white-theme.scss";
-/* 
-content: '\F105';
-    font-family: 'Font Awesome 5 Free';
-
-*/
-
 import { SidebarMenu } from 'vue-sidebar-menu'
+import MainPageArticles from '@/components/articles/MainPageArticles'
 export default {
     name: 'MainPageWiki',
     components : {
-    SidebarMenu
+    SidebarMenu,
+    MainPageArticles
   },
   data: function(){
       return {
+        collapsed:false,
            menu: [
                     {
                         header: true,
@@ -35,9 +38,12 @@ export default {
                         hiddenOnCollapse: true
                     },
                     {
-                        title: '"Another "',
-                        //component : 'select',
-                        icon : 'fa fa-bell'
+                        title: 'search',
+                        icon : 'fa fa-search',
+                        badge: {
+                            text: 'new',
+                            class: 'vsm--badge_default'
+                        }
                     },
                     {
                         title: 'Dashboard',
@@ -54,6 +60,11 @@ export default {
                     }
                 ]
       }
+  },
+  methods: {
+    onToggleCollapse (collapsed) {
+      this.collapsed = collapsed
+    }
   }
     
   }
@@ -71,26 +82,5 @@ body {
   font-size: 16px;
   background-color: #f2f4f7;
   color: #262626;
-}
-#demo {
-  padding-left: 350px;
-}
-#demo.collapsed {
-  padding-left: 50px;
-}
-.demo {
-  padding: 50px;
-}
-.container {
-  max-width: 600px;
-}
-pre {
-  font-family: Consolas, monospace;
-  color: #000;
-  background: #fff;
-  border-radius: 2px;
-  font-size: 13px;
-  padding: 5px;
-  overflow: auto;
 }
 </style>

@@ -9,14 +9,11 @@ import axios from 'axios'
 import VueSanitize from 'vue-sanitize'
 import routes from './routes'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faUser, faChartArea, faBell} from '@fortawesome/free-solid-svg-icons'
+import { faUser, faChartArea, faSearch} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { dom } from '@fortawesome/fontawesome-svg-core'
 
-/* 
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-*/
-library.add(faUser, faChartArea, faBell)
+library.add(faUser, faChartArea, faSearch)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 dom.watch()
