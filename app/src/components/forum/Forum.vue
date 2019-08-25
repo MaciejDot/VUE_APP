@@ -1,7 +1,7 @@
 <template>
 <div>
     <div class="row">
-    <div v-for="subject in subjects" :key="subject" class="col-md-4">
+    <div v-for="subject in subjects" :key="subject.path" class="col-md-4">
       <ForumSubject :link="subject.path" :title="subject.title" :description="subject.description" :thumbnail="subject.thumbnail"/>
     </div>
     </div>

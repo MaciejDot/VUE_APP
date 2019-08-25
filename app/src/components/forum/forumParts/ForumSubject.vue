@@ -1,22 +1,24 @@
 <template>
-<div style="padding:5%;cursor: pointer;"
-v-on:click="resolveLink()"
->
-  <div style="background-color:#f8f9fa!important;border-radius:10px;padding:10px;height:200px;box-shadow: 2px 2px 5px 0px rgba(120,111,120,1);">
-  
-        <strong>{{title}}</strong>
-    <div class="row" >
-        <div class="col-xl-3 col-md-4 col-2">
-        <div style="width:50px;">
-          <img class="d-flex mr-3 rounded-circle" :src="'data:image/png;base64, '+thumbnail" style="width:50px;height:50px;" alt>
-          
-          </div>
-        </div>
-        <div class="col-xl-9 col-md-8 col-10" style="text-align:left;">
-            {{description}}
-        </div>
-    </div>
+<div v-on:click="resolveLink()">
+<div style="padding: 5px;cursor: pointer;">
+  <div class="holder" style="background-color:#f8f9fa!important;border-radius:10px;padding:10px;box-shadow: 2px 2px 5px 0px rgba(120,111,120,1);">
+  <div style="position:inherit;">
+  <div>
+  <img 
+    class="thumbnail-image" 
+    :style='`margin: 0;border-radius:10px;margin-left: auto;
+    margin-right: auto;background-image: url("`+thumbnail+`");`'
+  />
   </div>
+  </div>
+  <h2 class="article-title">
+{{title}}
+  </h2>
+  <div>
+  {{description}}
+  </div>
+  </div>
+</div>
 </div>
 </template>
 <script>
@@ -35,3 +37,18 @@ export default {
     }
 }
 </script>
+<style scoped>
+.article-title {
+  color :black;
+  font-family: Georgia, serif;
+}
+.thumbnail-image{
+    background-position: 0% 50%; background-size: 100%; background-repeat: no-repeat;
+    margin-top: 61.5px; visibility: visible;border-radius: 10px;
+        width: -webkit-fill-available;
+    padding-top: 62.5%;
+}
+    .holder{
+      max-height:500px;
+    }
+</style>

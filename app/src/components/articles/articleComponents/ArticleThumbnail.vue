@@ -1,50 +1,52 @@
 <template>
 <div>
 <div style="padding: 5px;cursor: pointer;">
-  <div class="holder" style="background-color:#f8f9fa!important;border-radius:10px;padding:10px;box-shadow: 2px 2px 5px 0px rgba(120,111,120,1);">
-  <div style="position:inherit;">
-  <div>
+  <b-card style="background-color:#f8f9fa!important;border-radius:10px;box-shadow: 2px 2px 5px 0px rgba(120,111,120,1);margin-left: auto;
+    margin-right: auto;max-width:1000px;">
+  <b-row>
+    <b-col>
   <img 
     class="thumbnail-image" 
-    :style='`margin: 0;border-radius:10px;margin-left: auto;
-    margin-right: auto;background-image: url(`+imagePath+`);`' 
+    :style='`background-image: url(`+imagePath+`);`' 
   />
-  </div>
-  </div>
+  </b-col>
+  <b-col cols="8">
   <h2 class="article-title">
 {{title}}
   </h2>
-  <div>
+  <b-media>
   {{shortDescription}}
-  </div>
-  </div>
+  </b-media>
+  </b-col>
+  </b-row>
+  </b-card>
 </div>
 </div>
 </template>
 <script>
+import {BCard, BMedia, BRow, BCol} from 'bootstrap-vue'
 export default {
     name:'ArticleThumbnail',
-    props: ['imagePath','title','shortDescription']
+    props: ['imagePath','title','shortDescription'],
+    components: {BCard, BMedia, BRow, BCol}
 
 }
 </script>
-<style>
+<style scoped>
 .article-title {
   color :black;
   font-family: Georgia, serif;
 }
 .thumbnail-image{
-    background-position: 0% 50%; background-size: 100%; background-repeat: no-repeat;
-    margin-top: 61.5px; visibility: visible;border-radius: 10px;
-}
-  .holder-image{
-    height: 300px;
-  }
-  .thumbnail-image {
+    background-position: 0% 50%; 
+    background-size: 100%; 
+    background-repeat: no-repeat;
+    margin-top: 0px; 
+    visibility: visible;
+    border-radius: 10px;
+    margin: 0;
+    border-radius:10px;
     width: -webkit-fill-available;
     padding-top: 62.5%;
-    }
-    .holder{
-      min-height:400px;
-    }
+}
 </style>

@@ -1,7 +1,7 @@
 <template>
 <div>
     <strong>{{title}}</strong>
-    <ForumThread  v-for="thread in threads" :key="thread" :link="thread.path" :title="thread.title" :op="thread.op" :replies="thread.replies"/>
+    <ForumThread  v-for="thread in threads" :key="thread.path" :link="thread.path" :title="thread.title" :op="thread.op" :replies="thread.replies"/>
 </div>
 </template>
 <script>

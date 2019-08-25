@@ -1,7 +1,7 @@
 <template>
-<div>
 <div style="padding: 5px;">
-  <div style="background-color:#f8f9fa!important;border-radius:10px;padding:10px;min-height:500px;">
+  <b-card style="background-color:#f8f9fa!important;border-radius:10px;padding:10px;min-height:500px;box-shadow: 2px 2px 5px 0px rgba(120,111,120,1);margin-left: auto;
+    margin-right: auto;max-width:1000px">
     <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
       <div class="menubar">
 
@@ -122,11 +122,11 @@
     border-color: initial;
     border-image: initial;" />
     <div v-if="postEnabled"><button v-on:click="postAnswear()">post</button></div>
-  </div>
-</div>
+</b-card>
 </div>
 </template>
 <script>
+import {BCard} from 'bootstrap-vue'
 import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
 import {
   Blockquote,
@@ -151,7 +151,7 @@ export default {
   components: {
     EditorContent,
     EditorMenuBar,
-    
+    BCard,
   },
   props:{
     threadId:{
