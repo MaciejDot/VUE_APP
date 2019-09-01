@@ -4,13 +4,13 @@
   <b-card style="background-color:#f8f9fa!important;border-radius:10px;box-shadow: 2px 2px 5px 0px rgba(120,111,120,1);margin-left: auto;
     margin-right: auto;max-width:1000px;">
   <b-row>
-    <b-col>
+    <b-col sm="12" md="4">
   <img 
     class="thumbnail-image" 
     :style='`background-image: url(`+imagePath+`);`' 
   />
   </b-col>
-  <b-col cols="8">
+  <b-col sm="12" md="8">
   <h2 class="article-title">
 {{title}}
   </h2>

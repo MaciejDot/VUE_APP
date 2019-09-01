@@ -6,7 +6,7 @@ import ForumThreadList from './components/forum/ForumThreadList.vue'
 import ForumThreadPage from './components/forum/ForumThreadPage'
 import ForumThreadCreator from './components/forum/ForumThreadCreator'
 import MainPage from './components/MainPage'
-
+import RichTextEditorArticle from './components/richtexteditor/RichTextEditorArticle.vue'
 export default [
  { path: '', name:"Main Page", component: MainPage },
  { path: '/workout', component: ChooseWorkout },
@@ -15,5 +15,6 @@ export default [
  { path: '/articles', component: MainPageArticles},
  { path: '/Forum/:title', component:ForumThreadList},
  { path: '/Forum/:title/:threadId', component:ForumThreadPage },
- { path: '/Forum/*/:title/creator', component: ForumThreadCreator}
+ { path: '/Forum/*/:title/creator', component: ForumThreadCreator},
+ { path: '/Art', component: RichTextEditorArticle},
 ];

@@ -6,7 +6,7 @@
     </h1>
     </div>
     <b-container>
-    <b-pagination base-variant="light" type="light" variant="info" v-model="currentPage" :total-rows="20*500" align="fill"></b-pagination>
+    <b-pagination class="pagination-custom" v-model="currentPage" :total-rows="20*500" align="fill"></b-pagination>
     </b-container>
     <div >
     <div >
@@ -20,7 +20,7 @@
     </div>
    </div>
    <b-container>
-    <b-pagination base-variant="dark" v-model="currentPage" :total-rows="20*500" align="fill"></b-pagination>
+    <b-pagination class="pagination-custom" v-model="currentPage" :total-rows="20*500" align="fill"></b-pagination>
     </b-container>
     </div>
   </template>
@@ -39,3 +39,13 @@ export default {
     }
   }
 </script>
+<style>
+  .pagination-custom{
+    box-shadow: 2px 2px 5px 0px rgba(120,111,120,1);
+    margin-top: 10px;
+    margin-bottom:10px;
+  }
+  .pagination-custom a{
+    color: black;
+  }
+</style>

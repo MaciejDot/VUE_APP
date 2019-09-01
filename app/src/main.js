@@ -28,7 +28,7 @@ Vue.use(BootstrapVue)
 Vue.prototype.$api=axios.create({
   baseURL: 'https://localhost:5001',
   headers: {
-    'Content-Type': '*/*'//"application/x-www-form-urlencoded",
+    'Content-Type': "application/json",
   },
 })
 new Vue({
