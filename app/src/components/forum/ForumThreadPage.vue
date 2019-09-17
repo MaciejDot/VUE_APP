@@ -20,9 +20,13 @@ export default {
     RichTextEditorComment,
   },
   mounted: function(){
-    this.$api.get(`/ForumViewer/GetPosts?threadId=${this.$route.params.threadId}&page=0`).then(r=>{
+    this.$api.get('/ForumViewer/GetPosts',{
+      params:{
+        threadId:this.$route.params.threadId,
+        page:0
+      }
+    }).then(r=>{
       let partialPost = r.data.posts;
-      //partialPost.forEach(el => el.content = this.$sanitize(el.content));
       this.posts=partialPost;
       this.threadTitle =r.data.threadTitle;
     })

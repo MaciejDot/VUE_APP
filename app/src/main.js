@@ -25,6 +25,7 @@ const router = new VueRouter({
 })
 
 Vue.use(BootstrapVue)
+Vue.prototype.$baseUrlApi="https://localhost:5001";
 Vue.prototype.$api=axios.create({
   baseURL: 'https://localhost:5001',
   headers: {

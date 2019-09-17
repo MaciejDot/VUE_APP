@@ -8,17 +8,16 @@
     <b-container>
     <b-pagination class="pagination-custom" v-model="currentPage" :total-rows="20*500" align="fill"></b-pagination>
     </b-container>
-    <div >
-    <div >
-     <ArticleThumbnail imagePath='/background.jpg' title ='example A' shortDescription='example B'/>
-    </div>
-    <div>
-     <ArticleThumbnail imagePath='/background.jpg' title ='example A' shortDescription='example B'/>
-    </div>
-    <div >
-     <ArticleThumbnail imagePath='/background.jpg' title ='example A' shortDescription='example B'/>
-    </div>
-   </div>
+     <ArticleThumbnail
+      v-for="article in articles" 
+      :author="article.author"
+      :key="article"
+      :imagePath="`${$baseUrlApi}/ArticleViewer/GetThumbnailPicture?thumbnailId=${article.thumbnailId}`" 
+      :title ='article.title' 
+      :shortDescription='article.description'
+      :date='article.created'
+      :to='article.id'
+    />
    <b-container>
     <b-pagination class="pagination-custom" v-model="currentPage" :total-rows="20*500" align="fill"></b-pagination>
     </b-container>
@@ -31,8 +30,17 @@ export default {
     name: 'MainPageArticles',
     data:function(){
       return{
-        currentPage: 2
+        currentPage: 2,
+        articles: []
       }
+    },
+    mounted:function(){
+      this.$api.get(
+        '/ArticleViewer/GetArticlesThumbnails?page=1'
+      ).then((response)=>{
+        this.articles = response.data.articles;
+      }
+      )
     },
     components:{
       ArticleThumbnail, BPagination, BContainer, 

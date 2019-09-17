@@ -7,14 +7,16 @@ import ForumThreadPage from './components/forum/ForumThreadPage'
 import ForumThreadCreator from './components/forum/ForumThreadCreator'
 import MainPage from './components/MainPage'
 import RichTextEditorArticle from './components/richtexteditor/RichTextEditorArticle.vue'
+import ArticleView from './components/articles/ArticleView.vue'
 export default [
  { path: '', name:"Main Page", component: MainPage },
  { path: '/workout', component: ChooseWorkout },
  { path: '/wiki', component: MainPageWiki},
- { path: '/Forum', component: Forum},
+ { path: '/Forum', name:"Forum", component: Forum},
  { path: '/articles', component: MainPageArticles},
- { path: '/Forum/:title', component:ForumThreadList},
- { path: '/Forum/:title/:threadId', component:ForumThreadPage },
- { path: '/Forum/*/:title/creator', component: ForumThreadCreator},
+ { path: '/article/:id', component: ArticleView },
+ { path: '/Forum/:subjectId', name:'Forum Subject Threads', component:ForumThreadList},
+ { path: '/Forum/:subjectId/:threadId', component:ForumThreadPage },
+ { path: '/Forum/*/:subjectId/creator', component: ForumThreadCreator},
  { path: '/Art', component: RichTextEditorArticle},
 ];

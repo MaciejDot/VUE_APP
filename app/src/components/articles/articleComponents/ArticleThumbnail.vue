@@ -1,5 +1,5 @@
 <template>
-<div>
+<div @click="resolveLink()">
 <div style="padding: 5px;cursor: pointer;">
   <b-card style="background-color:#f8f9fa!important;border-radius:10px;box-shadow: 2px 2px 5px 0px rgba(120,111,120,1);margin-left: auto;
     margin-right: auto;max-width:1000px;">
@@ -19,6 +19,14 @@
   </b-media>
   </b-col>
   </b-row>
+  <b-row>
+    <b-col>
+      {{author}}
+    </b-col>
+    <b-col>
+      {{date}}
+      </b-col>
+  </b-row>
   </b-card>
 </div>
 </div>
@@ -27,8 +35,13 @@
 import {BCard, BMedia, BRow, BCol} from 'bootstrap-vue'
 export default {
     name:'ArticleThumbnail',
-    props: ['imagePath','title','shortDescription'],
-    components: {BCard, BMedia, BRow, BCol}
+    props: ['author','imagePath','title','shortDescription','date','to'],
+    components: {BCard, BMedia, BRow, BCol},
+    methods:{
+      resolveLink(){
+         this.$router.push({path:`/article/${this.to}`});
+      }
+    }
 
 }
 </script>
