@@ -70,7 +70,8 @@ export default {
     ],
     mounted:function(){
         ClassicEditor
-        .create( document.querySelector( '#content' ) )
+        .create( document.querySelector( '#content' ) ,{
+        })
         .then( newEditor => {
             this.editor = newEditor;
         } )

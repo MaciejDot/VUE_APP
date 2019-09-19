@@ -6,21 +6,28 @@ v-on:click="resolveLink()"
   
         <div style="text-align:left;"><strong>{{title}}</strong></div>
     <b-media>
-        <div style="text-align:left;">
-            replies count : {{replies}}
-        </div>
+      <b-row>
+        <b-col style="text-align:left;">
+            created: {{created}}
+        </b-col>
+        <b-col>
+          replies count : {{replies}}
+        </b-col>
+        </b-row>
     </b-media>
   </b-card >
 </div>
 </template>
 <script>
-import {BCard, BMedia} from 'bootstrap-vue'
+import {BCard, BMedia, BRow, BCol } from 'bootstrap-vue'
 export default {
     name:'ForumThread',
     props :['title','link','op','replies','created'],
     components:{
       BCard,
-      BMedia
+      BMedia,
+      BRow,
+      BCol
     },
     methods:{
     resolveLink: function(){

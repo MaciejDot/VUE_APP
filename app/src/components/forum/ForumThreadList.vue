@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <b-container>
     <h1>{{title}}</h1>
     <ForumThread
       v-for="thread in threads"
@@ -15,13 +15,13 @@
       <b-col></b-col>
       <b-col>All threads count : {{allThreadsCount}}</b-col>
     </b-row>
-  </div>
+  </b-container>
 </template>
 <script>
 import ForumThread from "./forumParts/ForumThread.vue";
-import { BRow, BCol } from "bootstrap-vue";
+import { BRow, BCol, BContainer } from "bootstrap-vue";
 export default {
-  components: { BRow, BCol, ForumThread },
+  components: { BRow, BCol, ForumThread, BContainer },
   name: "ForumThreadList",
   data: function() {
     return {
@@ -37,7 +37,7 @@ export default {
       .get("/ForumViewer/GetThreads", {
         params: {
           subjectId: this.subjectId,
-          page: 0
+          page: 1
         }
       })
       .then(r => {

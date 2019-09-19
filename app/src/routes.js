@@ -14,6 +14,7 @@ export default [
  { path: '/wiki', component: MainPageWiki},
  { path: '/Forum', name:"Forum", component: Forum},
  { path: '/articles', component: MainPageArticles},
+ { path: '/articles/:page', component: MainPageArticles},
  { path: '/article/:id', component: ArticleView },
  { path: '/Forum/:subjectId', name:'Forum Subject Threads', component:ForumThreadList},
  { path: '/Forum/:subjectId/:threadId', component:ForumThreadPage },

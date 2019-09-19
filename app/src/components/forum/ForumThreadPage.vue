@@ -23,7 +23,7 @@ export default {
     this.$api.get('/ForumViewer/GetPosts',{
       params:{
         threadId:this.$route.params.threadId,
-        page:0
+        page:1
       }
     }).then(r=>{
       let partialPost = r.data.posts;

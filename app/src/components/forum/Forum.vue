@@ -1,7 +1,7 @@
 <template>
   <b-container>
     <b-row>
-      <b-col lg="6" md="12" v-for="subject in subjects" :key="subject.path" >
+      <b-col lg="6" md="12" v-for="subject in subjects" :key="subject.path">
         <ForumSubject
           :link="'/Forum/'+subject.id"
           :title="subject.title"
@@ -16,7 +16,7 @@
 </template>
 <script>
 import ForumSubject from "./forumParts/ForumSubject.vue";
-import {BContainer} from "bootstrap-vue";
+import { BContainer } from "bootstrap-vue";
 export default {
   name: "Forum",
   data: function() {
