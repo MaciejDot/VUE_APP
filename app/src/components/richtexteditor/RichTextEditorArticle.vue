@@ -52,7 +52,6 @@
 <script>
 import {BContainer , BButton, BCard, BFormInput, BFormFile, BModal, BRow, BCol, BImg } from 'bootstrap-vue'
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic"
-
 export default {
     name:"RichTextEditorArticle",
     data: function(){
@@ -71,6 +70,9 @@ export default {
     mounted:function(){
         ClassicEditor
         .create( document.querySelector( '#content' ) ,{
+            mediaEmbed: {
+                extraProviders : ['instagram', 'twitter', 'googleMaps', 'flickr', 'facebook']
+            }
         })
         .then( newEditor => {
             this.editor = newEditor;

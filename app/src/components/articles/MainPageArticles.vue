@@ -7,6 +7,7 @@
     </div>
     <b-container>
       <b-pagination-nav
+        v-model="pageNum"
         class="pagination-custom"
         :link-gen="linkGen"
         :number-of-pages="numberOfPages"
@@ -26,6 +27,7 @@
     />
     <b-container>
       <b-pagination-nav
+        v-model="pageNum"
         class="pagination-custom"
         :link-gen="linkGen"
         :number-of-pages="numberOfPages"
@@ -42,6 +44,8 @@ export default {
   name: "MainPageArticles",
   data: function() {
     return {
+      pageNum:
+        this.$route.params.page == undefined ? 1 : this.$route.params.page,
       numberOfPages: 1,
       articles: []
     };
@@ -72,7 +76,7 @@ export default {
 };
 </script>
 <style>
-.pagination-custom ul{
+.pagination-custom ul {
   box-shadow: 2px 2px 5px 0px rgba(120, 111, 120, 1);
   margin-top: 10px;
   margin-bottom: 10px;

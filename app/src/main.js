@@ -12,7 +12,9 @@ import { faUser, faChartArea, faSearch} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { dom } from '@fortawesome/fontawesome-svg-core'
 //goog.require( 'goog.html.sanitizer.HtmlSanitizer' );
-
+var VueScrollTo = require('vue-scrollto');
+ 
+Vue.use(VueScrollTo)
 
 
 library.add(faUser, faChartArea, faSearch)

@@ -3,7 +3,7 @@
     <b-row>
       <b-col lg="6" md="12" v-for="subject in subjects" :key="subject.path">
         <ForumSubject
-          :link="'/Forum/'+subject.id"
+          :link="'/Forum/'+subject.title+'?page=1'"
           :title="subject.title"
           :description="subject.description"
           :thumbnail="`${$baseUrlApi}/ForumViewer/GetThumbnailPicture?thumbnailId=${subject.thumbnailId}`"

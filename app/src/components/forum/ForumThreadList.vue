@@ -4,7 +4,7 @@
     <ForumThread
       v-for="thread in threads"
       :key="thread.id"
-      :link="`/forum/${subjectId}/${thread.id}`"
+      :link="`/forum/${subjectName}/${thread.id}?page=1`"
       :title="thread.title"
       :op="thread.author"
       :replies="thread.replies"
@@ -32,12 +32,12 @@ export default {
     };
   },
   mounted: function() {
-    this.subjectId = this.$route.params.subjectId;
+    this.subjectName = this.$route.params.subjectName;
     this.$api
       .get("/ForumViewer/GetThreads", {
         params: {
-          subjectId: this.subjectId,
-          page: 1
+          subjectName: this.subjectName,
+          page: this.$route.query.page
         }
       })
       .then(r => {

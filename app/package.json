@@ -36,6 +36,7 @@
     "vue-fontawesome": "0.0.2",
     "vue-router": "^3.0.7",
     "vue-sanitize": "^0.2.0",
+    "vue-scrollto": "^2.17.1",
     "vue-sidebar-menu": "^4.0.0",
     "vue-strap": "^1.1.40",
     "vue-tree-list": "^1.3.0"
