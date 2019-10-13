@@ -12,7 +12,7 @@ import ArticleView from './components/articles/ArticleView.vue'
 import RichTextEditor from './components/richtexteditor/RichTextEditor.vue'
 export default [
  { path: '', name:"Main Page", component: MainPage },
- {path:'/rich',component:RichTextEditor},
+ { path: '/rich',component:RichTextEditor},
  { path: '/workout', component: ChooseWorkout },
  { path: '/wiki', component: MainPageWiki},
  { path: '/wiki/:exercise', component: WikiArticle},

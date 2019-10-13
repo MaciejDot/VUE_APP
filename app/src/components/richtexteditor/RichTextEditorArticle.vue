@@ -7,7 +7,15 @@
         <div style="height:30px" />
         <b-form-input v-model="description" placeholder="Enter Short Description..."></b-form-input>
         <div style="height:30px" />
-        <textarea name="content" id="content" placeholder="Type article here!" />
+        <div v-if="!showVisual">
+        <editor ref="editor" v-model="content" />
+        </div>
+        <div v-else>
+            <div v-for="(content,index) in visableContent" :key="index">
+            <div v-html="content"/>
+            </div>
+        </div>
+        <b-button pill @click="toggleVisual()">Toggle Visual</b-button>
         <div style="height:30px" />
         <b-form-file
             v-model="file"
@@ -25,19 +33,6 @@
     </b-container>
     <b-modal ref="are-sure-modal" hide-footer title="Are you sure you want post this article?">
         <b-row>
-            <b-img center :src="thumbnailSrc" />
-        </b-row>
-        <b-row>
-            <b-container>
-            <h1 style="margin-left: auto; margin-right: auto;text-align:center;">
-            {{title}}
-            </h1>
-            </b-container>
-        </b-row>
-        <b-row>
-            <div v-html="content" style="margin-left: auto; margin-right: auto ;" />
-        </b-row>
-        <b-row>
             <b-col>
                 <b-button pill variant="danger" @click="hideModal()">No. I'm still working on it.</b-button>
             </b-col>
@@ -51,32 +46,23 @@
 </template>
 <script>
 import {BContainer , BButton, BCard, BFormInput, BFormFile, BModal, BRow, BCol, BImg } from 'bootstrap-vue'
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic"
+import Editor from './customEditorBase/Editor.vue'
 export default {
     name:"RichTextEditorArticle",
     data: function(){
         return {
+            showVisual:false,
             title : '',
             description : '',
             file : null,
-            editor : null,
             content:'',
             thumbnailSrc:'',
+            visableContent:[],
         }
     },
-    components:[
+    components:{
+        Editor,
         BContainer , BButton, BCard, BFormInput, BFormFile, BModal, BRow, BCol, BImg
-    ],
-    mounted:function(){
-        ClassicEditor
-        .create( document.querySelector( '#content' ) ,{
-            mediaEmbed: {
-                extraProviders : ['instagram', 'twitter', 'googleMaps', 'flickr', 'facebook']
-            }
-        })
-        .then( newEditor => {
-            this.editor = newEditor;
-        } )
     },
     methods:{
         hideModal: function(){
@@ -85,7 +71,7 @@ export default {
         submit: function(){
             this.$refs['are-sure-modal'].hide();
             let formData = new FormData();
-                formData.append('Content', this.editor.getData());
+                formData.append('Content', this.$refs.editor.compileToHtml().join(','));
                 formData.append('Description', this.description);
                 formData.append('Title', this.title);
                 formData.append('file', this.file)
@@ -96,14 +82,21 @@ export default {
                 )
         },
         articleIsValid: function(){
-            return ( this.file != null && this.title != '' && this.description != '' && ( this.editor!=null ));
+            return ( this.file != null && this.title != '' && this.description != '' && (this.content!='' ));
         },
         submitArticle: function(){
-            if(this.articleIsValid() && this.editor.getData().length > 0){
+            if(this.articleIsValid()){
+                this.visableContent =this.$refs.editor.compileToHtml();
                 this.$refs['are-sure-modal'].show();
-                this.content = this.editor.getData();
             }
+        },
+        toggleVisual: function(){
+            if(!this.showVisual){
+                this.visableContent = this.$refs.editor.compileToHtml();
+            }
+            this.showVisual = !this.showVisual;
         }
+
     }
 }
 </script>

@@ -3,12 +3,12 @@
     <h1>{{thread.title}}</h1>
     <ForumPost v-if="$route.query.page==1" :content="thread.content" :date="thread.created" :author="thread.author" />
     <ForumPost v-for="post in posts" :key="post.Id" :content="post.content" :date="post.date" :author="post.author" />
-<RichTextEditorComment :threadId="parseInt(this.$route.params.threadId)" ref="textEditor" />
+    <RichTextEditor />
 </div>
 </template>
 <script>
 import ForumPost from './forumParts/ForumPost'
-import RichTextEditorComment from '@/components/richtexteditor/RichTextEditorComment'
+import RichTextEditor from '@/components/richtexteditor/RichTextEditor.vue'
 export default {
   data: ()=>{
     return {
@@ -18,7 +18,7 @@ export default {
   },
   components: {
     ForumPost,
-    RichTextEditorComment,
+    RichTextEditor
   },
   mounted: function(){
     this.$api.get('/ForumViewer/GetPosts',{

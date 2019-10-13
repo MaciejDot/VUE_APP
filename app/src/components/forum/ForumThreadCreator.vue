@@ -20,16 +20,12 @@
       <div>
         <strong>Description</strong>
       </div>
-      <RichTextEditorComment
-        :threadId="treadId"
-        :postEnabled="false"
-        style="max-width:1000px;margin-left: auto; margin-right: auto;"
-      />
+      <RichTextEditor/>
     </div>
   </div>
 </template>
 <script>
-import RichTextEditorComment from "@/components/richtexteditor/RichTextEditorComment";
+import RichTextEditor from "@/components/richtexteditor/RichTextEditor";
 export default {
   name: "ForumThreadCreator",
   data: function() {
@@ -38,7 +34,7 @@ export default {
     };
   },
   components: {
-    RichTextEditorComment
+    RichTextEditor
   }
 };
 </script>
