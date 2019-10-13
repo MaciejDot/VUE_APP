@@ -1,9 +1,28 @@
 <template>
   <b-container id="wikiArticle">
     <h1>{{title}}</h1>
+    <b-card>
+      <b-row>
+        <b-col cols="12" v-for="section in sectionsMap" :key="section">
+          <a
+            href="#"
+            v-scroll-to="{
+          el: `#${section.replace(/ /g,'-')}`,
+          duration: 500,
+          easing: 'linear',
+          offset: -200,
+          force: true,
+          cancelable: true,
+          x: false,
+          y: true
+        }"
+          >{{section}}</a>
+        </b-col>
+      </b-row>
+    </b-card>
     <b-row>
       <b-col cols="12" v-for="section in sections" :key="section.title">
-        <h2>{{section.title}}</h2>
+        <h2 :id="section.title.replace(/ /g,'-')">{{section.title}}</h2>
         <div v-html="section.content" />
         <!--div table of contentif index == 0 -->
       </b-col>
@@ -11,10 +30,10 @@
   </b-container>
 </template>
 <script>
-import { BRow, BContainer, BCol } from "bootstrap-vue"; 
+import { BRow, BContainer, BCol, BCard } from "bootstrap-vue";
 export default {
   name: "WikiArticle",
-  components: { BRow, BContainer, BCol },
+  components: { BRow, BContainer, BCol, BCard },
   data: function() {
     return {
       title: "",

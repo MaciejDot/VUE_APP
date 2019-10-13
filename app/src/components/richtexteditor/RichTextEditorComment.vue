@@ -1,212 +1,80 @@
 <template>
-<div style="padding: 5px;">
-  <b-card style="background-color:#f8f9fa!important;border-radius:10px;padding:10px;min-height:500px;box-shadow: 2px 2px 5px 0px rgba(120,111,120,1);margin-left: auto;
-    margin-right: auto;max-width:1000px">
-    <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
-      <div class="menubar">
-
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.bold() }"
-          @click="commands.bold"
-          title="bold"
-          style="background-image:url(images/icons/bold.svg)"
-        >
-        </button>
-
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.italic() }"
-          @click="commands.italic"
-          title="italic"
-          style="background-image:url(images/icons/italic.svg)"
-        >
-        </button>
-
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.strike() }"
-          @click="commands.strike"
-          title="strike"
-          style="background-image:url(images/icons/strike.svg)"
-        >
-        </button>
-
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.underline() }"
-          @click="commands.underline"
-          title="underline"
-          style="background-image:url(images/icons/underline.svg)"
-        >
-        </button>
-
-        <button
-          class="menubar_text"
-          :class="{ 'is-active': isActive.heading({ level: 1 }) }"
-          title="H1"
-          @click="commands.heading({ level: 1 })"
-        >
-          H1
-        </button>
-
-        <button
-          class="menubar_text"
-          :class="{ 'is-active': isActive.heading({ level: 2 }) }"
-          title="H2"
-          @click="commands.heading({ level: 2 })"
-          style=""
-        >
-          H2
-        </button>
-
-        <button
-          class="menubar_text"
-          :class="{ 'is-active': isActive.heading({ level: 3 }) }"
-          title="H3"
-          @click="commands.heading({ level: 3 })"
-        >
-          H3
-        </button>
-
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.bullet_list() }"
-          @click="commands.bullet_list"
-          title="bullet list"
-          style="background-image:url(images/icons/ul.svg)"
-        >
-        </button>
-
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.ordered_list() }"
-          @click="commands.ordered_list"
-          title="ordered list"
-          style="background-image:url(images/icons/ol.svg)"
-        >
-        </button>
-
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.blockquote() }"
-          @click="commands.blockquote"
-          title="block quote"
-          style="background-image:url(images/icons/quote.svg)"
-        >
-        </button>
-
-        <button
-          class="menubar__button"
-          @click="commands.undo"
-          title="undo"
-          style="background-image:url(images/icons/undo.svg)"
-        >
-        </button>
-
-        <button
-          class="menubar__button"
-          @click="commands.redo"
-          title="redo"
-          style="background-image:url('images/icons/redo.svg');"
-        >
-        </button>
-
-      </div>
-    </editor-menu-bar>
-
-    <editor-content class="editor__content" :editor="editor" style="background-color:white; min-height:400px;border-radius:10px; text-align:left;
-    padding: 1px 0px;
-    border-width: 2px;
-    border-style: inset;
-    border-color: initial;
-    border-image: initial;" />
-    <div v-if="postEnabled"><button v-on:click="postAnswear()">post</button></div>
-</b-card>
-</div>
+  <div style="padding: 5px;">
+    <b-card
+      style="background-color:#f8f9fa!important;border-radius:10px;padding:10px;min-height:500px;box-shadow: 2px 2px 5px 0px rgba(120,111,120,1);margin-left: auto;
+    margin-right: auto;max-width:1000px"
+    >
+      <editor
+        autofocus
+        holder-id="codex-editor"
+        save-button-id="save-button"
+        :init-data="initData"
+        :customTools="customTools"
+        @save="save"
+      />
+    </b-card>
+  </div>
 </template>
 <script>
-import {BCard} from 'bootstrap-vue'
-import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
-import {
-  Blockquote,
-  HardBreak,
-  Heading,
-  OrderedList,
-  BulletList,
-  ListItem,
-  TodoItem,
-  TodoList,
-  Bold,
-  Code,
-  Italic,
-  //Link,
-  Strike,
-  Underline,
-  History,
-} from 'tiptap-extensions'
-import Iframe from './customNodes/Iframe';
+import { BCard } from "bootstrap-vue";
+import { Editor } from "vue-editor-js";
+import Embed from '@editorjs/embed'
 export default {
-  name: 'RichTextEditorComment',
-  components: {
-    EditorContent,
-    EditorMenuBar,
-    BCard,
-  },
-  props:{
-    threadId:{
-      type : Number,
-      default : 0
-    },
-    postEnabled:{
-      type: Boolean,
-      default : true
-    }
-    },
-  data() {
+  name: "RichTextEditorComment",
+  data: function() {
     return {
-      editor: new Editor({
-        content: '',
-        extensions: [
-          new Blockquote(),
-          new BulletList(),
-          new HardBreak(),
-          new Heading({ levels: [1, 2, 3] }),
-          new ListItem(),
-          new OrderedList(),
-          new TodoItem(),
-          new TodoList(),
-          //new Link(),
-          new Bold(),
-          new Code(),
-          new Italic(),
-          new Strike(),
-          new Underline(),
-          new History(),
-          new Iframe(),
-        ]
-      }),
-    }
+      initData: {},
+      customTools: {
+        embed: new Embed({
+            services: {
+              youtube: true,
+              coub: true,
+              instagram: {
+                regex: /(https?:\/\/www\.)?instagram\.com(\/p\/\w+\/?)/,
+                embedUrl: "//platform.instagram.com/en_US/embeds.js",
+                html: "<iframe height='300' scrolling='no' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'></iframe>",
+                height: 300,
+                width: 600,
+                id:11
+              }
+            }
+          })
+        }
+      }
+    },
+  components: {
+    BCard,
+    Editor
   },
   methods:{
-    postAnswear:function(){
-    this.$api.post('/ForumWriter/PostAnswear',{ThreadId:5,Content: this.editor.getHTML()})
+    save:function(data){
+      alert(data)
     }
   },
-  beforeDestroy() {
-    this.editor.destroy()
-  },
-}
+  props: {
+    threadId: {
+      type: Number,
+      default: 0
+    },
+    postEnabled: {
+      type: Boolean,
+      default: true
+    }
+  }
+};
 </script>
 <style>
 .menubar__button {
-background-color: transparent; 
-margin: 6px;
-border: none; height: 18px; width: 18px;background-repeat: no-repeat;
+  background-color: transparent;
+  margin: 6px;
+  border: none;
+  height: 18px;
+  width: 18px;
+  background-repeat: no-repeat;
 }
-.menubar_text{
-background-color: transparent; 
-margin: 5px;
-border: none; 
+.menubar_text {
+  background-color: transparent;
+  margin: 5px;
+  border: none;
 }
 </style>

@@ -11,9 +11,14 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUser, faChartArea, faSearch} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { dom } from '@fortawesome/fontawesome-svg-core'
+import Editor from 'vue-editor-js'
+
+//import Embed from '@editorjs/embed'
+//const Embed = require('@editorjs/embed');
+Vue.use(Editor)
+//Vue.use(require('@editorjs/embed'))
 //goog.require( 'goog.html.sanitizer.HtmlSanitizer' );
 var VueScrollTo = require('vue-scrollto');
- 
 Vue.use(VueScrollTo)
 
 

@@ -9,8 +9,10 @@ import MainPage from './components/MainPage'
 import WikiArticle from './components/wiki/wikiComponents/WikiArticle'
 import RichTextEditorArticle from './components/richtexteditor/RichTextEditorArticle.vue'
 import ArticleView from './components/articles/ArticleView.vue'
+import RichTextEditor from './components/richtexteditor/RichTextEditor.vue'
 export default [
  { path: '', name:"Main Page", component: MainPage },
+ {path:'/rich',component:RichTextEditor},
  { path: '/workout', component: ChooseWorkout },
  { path: '/wiki', component: MainPageWiki},
  { path: '/wiki/:exercise', component: WikiArticle},
