@@ -43,7 +43,7 @@ export default {
              : `<a href=${match}>${match}</a>`)
             let splitID="assa%%$#@hx___swx_s_a_q_qw_s"
             compiled = compiled.replace(regexYoutube, `<iframe src="https://www.youtube.com/embed/$1" />${splitID}`)
-            compiled = compiled.replace(regexInstagram, (match)=>`<iframe style="width:auto;" src="${match}embed" />${splitID}`)
+            compiled = compiled.replace(regexInstagram, (match)=>`<iframe class="iframe-instagram" src="${match}embed" />${splitID}`)
             compiled = `<p>${compiled.replace(/\n/g,'</p><p>')}</p>`;
             return compiled.split(splitID);
         },
@@ -53,6 +53,12 @@ export default {
 <style scoped>
 .editor{
     width:100%;
-    min-height:40ex;
+    height:20ex;
+}
+@media(min-width: 500px){
+.editor{
+    width:100%;
+    height:40ex;
+}
 }
 </style>

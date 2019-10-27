@@ -1,8 +1,7 @@
 <template>
 <div style="padding: 5px;">
     <b-card
-      style="background-color:#f8f9fa!important;border-radius:10px;padding:10px;min-height:500px;box-shadow: 2px 2px 5px 0px rgba(120,111,120,1);margin-left: auto;
-    margin-right: auto;max-width:1000px"
+      class="card-editor"
     >
     <div>
         <div id="editor_menu">
@@ -49,8 +48,6 @@ export default {
 }
 </script>
 <style scoped>
-.editor{
-    width:100%;
-    min-height:40ex;
-}
+.card-editor{background-color:#f8f9fa!important;border-radius:10px;padding:10px;box-shadow: 2px 2px 5px 0px rgba(120,111,120,1);margin-left: auto;
+    margin-right: auto;max-width:1000px;max-height:60%;}
 </style>

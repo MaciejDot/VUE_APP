@@ -5,7 +5,9 @@
                 {{title}}
             </h1>
         </b-row>
-        <div style="text-align:left;" v-html="content"/>
+        <div v-for="(line,index) in content" :key="index">
+            <div style="text-align:left;" v-html="line"/>
+        </div>
         <b-row>
             <b-col>
                 {{author}}

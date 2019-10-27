@@ -1,6 +1,6 @@
 <template>
   <div style="margin-left: auto; margin-right: auto;max-width:1000px">
-    <ArticleViewer :title="title" :content="content" :date="date" :author="author" />
+    <ArticleViewer :title="title" :content="content.split('\n')" :date="date" :author="author" />
   </div>
 </template>
 <script>

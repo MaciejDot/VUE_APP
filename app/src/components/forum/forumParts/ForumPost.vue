@@ -4,7 +4,9 @@
     margin-right: auto;max-width:1000px; text-align:auto;">
   <b-media style="position:relative;min-height:500px;">
    <div style="text-align:left;">{{author}}</div>
-    <div class="row" v-html ="content" />
+   <div v-for="(contentLine,index) in content" :key="index">
+    <div class="row" v-html ="contentLine" />
+    </div>
     <div style="text-align:right; border-top-style: solid; border-top-width: thin;position:absolute;width:100%;bottom: 5px;">
         {{date}}
     </div>

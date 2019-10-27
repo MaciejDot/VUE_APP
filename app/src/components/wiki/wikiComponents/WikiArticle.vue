@@ -23,8 +23,9 @@
     <b-row>
       <b-col cols="12" v-for="section in sections" :key="section.title">
         <h2 :id="section.title.replace(/ /g,'-')">{{section.title}}</h2>
+        <div v-for="(line,index) in section.content.split('\n')" :key="index">
         <div v-html="section.content" />
-        <!--div table of contentif index == 0 -->
+        </div>
       </b-col>
     </b-row>
   </b-container>

@@ -10,6 +10,9 @@ import WikiArticle from './components/wiki/wikiComponents/WikiArticle'
 import RichTextEditorArticle from './components/richtexteditor/RichTextEditorArticle.vue'
 import ArticleView from './components/articles/ArticleView.vue'
 import RichTextEditor from './components/richtexteditor/RichTextEditor.vue'
+import Login from './components/account/Login.vue'
+
+
 export default [
  { path: '', name:"Main Page", component: MainPage },
  { path: '/rich',component:RichTextEditor},
@@ -24,4 +27,5 @@ export default [
  { path: '/Forum/:subjectName/:threadId', component:ForumThreadPage, query:{page:1}},
  { path: '/Forum/*/:subjectId/creator', component: ForumThreadCreator},
  { path: '/Art', component: RichTextEditorArticle},
+ { path: '/Login', component:Login}
 ];

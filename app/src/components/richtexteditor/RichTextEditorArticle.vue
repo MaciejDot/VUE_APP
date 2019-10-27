@@ -45,7 +45,7 @@
     </div>
 </template>
 <script>
-import {BContainer , BButton, BCard, BFormInput, BFormFile, BModal, BRow, BCol, BImg } from 'bootstrap-vue'
+import {BContainer , BButton,  BFormInput, BFormFile, BModal, BRow, BCol} from 'bootstrap-vue'
 import Editor from './customEditorBase/Editor.vue'
 export default {
     name:"RichTextEditorArticle",
@@ -62,7 +62,7 @@ export default {
     },
     components:{
         Editor,
-        BContainer , BButton, BCard, BFormInput, BFormFile, BModal, BRow, BCol, BImg
+        BContainer , BButton, BFormInput, BFormFile, BModal, BRow, BCol
     },
     methods:{
         hideModal: function(){

@@ -58,12 +58,93 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 #app {
   font-family: Georgia, serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+@media (max-width: 199px) and (min-width: 150px){
+   iframe {
+        width: 100px;
+        height: 50px;
+    }
+    .iframe-instagram{
+    width: 100px;
+    height: 250px;
+  }
+}
+@media (max-width: 239px) and (min-width: 200px){
+   iframe {
+        width: 140px;
+        height: 90px;
+    }
+    .iframe-instagram{
+    width: 140px;
+    height: 300px;
+  }
+}
+@media (max-width: 299px) and (min-width: 240px){
+   iframe {
+        width: 180px;
+        height: 100px;
+    }
+    .iframe-instagram{
+    width: 180px;
+    height: 380px;
+  }
+}
+@media (max-width: 345px) and (min-width: 300px){
+   iframe {
+        width: 230px;
+        height: 140px;
+    }
+    .iframe-instagram{
+    width: 230px;
+    height: 430px;
+  }
+}
+@media (max-width: 399px) and (min-width: 346px){
+   iframe {
+        width: 250px;
+        height: 150px;
+    }
+    .iframe-instagram{
+    width: 250px;
+    height: 460px;
+  }
+}
+@media (max-width: 450px) and (min-width: 400px){
+  iframe {
+        width: 300px;
+        height: 170px;
+    }
+    .iframe-instagram{
+    width: 300px;
+    height: 520px;
+  }
+}
+@media (max-width:700px) and (min-width:451px) {
+  iframe {
+        width: 370px;
+        height: 203px;
+    }
+    .iframe-instagram{
+    width: 370px;
+    height: 580px;
+  }
+}
+
+@media (min-width:701px) {
+  iframe {
+        width: 640px;
+        height: 360px;
+    }
+  .iframe-instagram{
+    width: 636px;
+    height: 840px;
+  }
 }
 </style>
