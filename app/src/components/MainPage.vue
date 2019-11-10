@@ -2,7 +2,7 @@
     <div id="app" ref="app">
       <b-carousel
     :interval="25000"
-      controls
+    controls
       indicators
       background="#ababab"
       img-width="1024"
@@ -12,6 +12,7 @@
     <b-carousel-slide
       class="slide"
       caption="Strength"
+      text-html="<b>df</b>"
       img-src="/background.jpg"
     ></b-carousel-slide>
     <b-carousel-slide
@@ -30,9 +31,7 @@
       img-src="/background.jpg"
     ></b-carousel-slide>
   </b-carousel>
-      HELLO?!?!?
-      
-    </div>
+  </div>
 </template>
 <script>
 import {BCarousel} from 'bootstrap-vue'
@@ -44,9 +43,8 @@ import {BCarousel} from 'bootstrap-vue'
   }
 </script>
 <style>
-/*how to inject css*/
 .slide img {
-  filter: blur(4px);
+  filter: blur(1.5px);
   transition: filter 1s;
 }
 .slide img:hover {

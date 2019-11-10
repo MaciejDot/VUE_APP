@@ -1,4 +1,5 @@
 <template>
+<div class="background-page">
   <b-container>
     <b-row>
       <b-col lg="6" md="12" v-for="subject in subjects" :key="subject.path">
@@ -13,6 +14,7 @@
       </b-col>
     </b-row>
   </b-container>
+  </div>
 </template>
 <script>
 import ForumSubject from "./forumParts/ForumSubject.vue";
@@ -25,7 +27,7 @@ export default {
     };
   },
   mounted: function() {
-    this.$api.get("/ForumViewer/GetSubjects").then(r => {
+    this.$axios.api().get("/ForumViewer/GetSubjects").then(r => {
       this.subjects = r.data.subjects;
     });
   },
@@ -35,3 +37,10 @@ export default {
   }
 };
 </script>
+<style scoped>
+.background-page {
+  background: url(/background.jpg) no-repeat;
+  width: 100vw;
+  height: auto;
+}
+</style>

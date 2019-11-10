@@ -1,39 +1,107 @@
 <template>
-  <b-container>
-    <h1>{{title}}</h1>
-    <ForumThread
-      v-for="thread in threads"
-      :key="thread.id"
-      :link="`/forum/${subjectName}/${thread.id}?page=1`"
-      :title="thread.title"
-      :op="thread.author"
-      :replies="thread.replies"
-      :created="thread.created"
-      :last-activity="thread.lastActivity"
-    />
-    <b-row>
-      <b-col></b-col>
-      <b-col>All threads count : {{allThreadsCount}}</b-col>
-    </b-row>
-  </b-container>
+  <div class="background-page">
+    <b-container>
+      <h1>{{title}}</h1>
+      <ForumAddThread v-if="loged()" :link="`/Forum/*/Creator/${subjectName}`" />
+      <b-container>
+        <b-pagination-nav
+          v-if="numberOfPages>1"
+          v-model="pageNum"
+          class="pagination-custom"
+          :link-gen="linkGen"
+          :number-of-pages="numberOfPages"
+          use-router
+          align="fill"
+        ></b-pagination-nav>
+      </b-container>
+      <ForumThread
+        v-for="thread in threads"
+        :key="thread.id"
+        :link="`/forum/${subjectName}/${thread.id}?page=1`"
+        :title="thread.title"
+        :op="thread.author"
+        :replies="thread.replies"
+        :created="thread.created"
+        :last-activity="thread.lastActivity"
+      />
+      <b-container>
+        <b-pagination-nav
+          v-if="numberOfPages>1"
+          v-model="pageNum"
+          class="pagination-custom"
+          :link-gen="linkGen"
+          :number-of-pages="numberOfPages"
+          use-router
+          align="fill"
+        ></b-pagination-nav>
+      </b-container>
+      <b-row>
+        <b-col />
+        <b-col>All threads count : {{allThreadsCount}}</b-col>
+      </b-row>
+    </b-container>
+  </div>
 </template>
 <script>
 import ForumThread from "./forumParts/ForumThread.vue";
-import { BRow, BCol, BContainer } from "bootstrap-vue";
+import ForumAddThread from "./forumParts/ForumAddThread.vue";
+import { BRow, BCol, BContainer, BPaginationNav } from "bootstrap-vue";
 export default {
-  components: { BRow, BCol, ForumThread, BContainer },
+  components: {
+    BRow,
+    BCol,
+    ForumThread,
+    BContainer,
+    ForumAddThread,
+    BPaginationNav
+  },
   name: "ForumThreadList",
   data: function() {
     return {
       subjectId: "",
       threads: [],
       allThreadsCount: 0,
-      title: ""
+      title: "",
+      numberOfPages: 1,
+      subjectName: this.$route.params.subjectName,
+      pageNum: this.$route.params.page
     };
   },
+  methods: {
+    loged: function() {
+      return !(localStorage["token"] == undefined);
+    },
+    linkGen(pageNum) {
+      return `/Forum/${this.$route.params.subjectName}?page=${pageNum}`;
+    }
+  },
+  watch: {
+    "$route.query.page": function() {
+      if (this.pageNum != this.$route.query.page) {
+        this.pageNum = this.$route.query.page;
+        this.$axios
+          .api()
+          .get("/ForumViewer/GetThreads", {
+            params: {
+              subjectName: this.subjectName,
+              page: this.$route.query.page
+            }
+          })
+          .then(r => {
+            (this.title = r.data.title), (this.threads = r.data.threads);
+            this.allThreadsCount = r.data.allThreadsCount;
+            this.numberOfPages =
+              Math.ceil(r.data.allThreadsCount / 20) > 1
+                ? Math.ceil(r.data.allThreadsCount / 20)
+                : 1;
+          });
+      }
+    }
+  },
   mounted: function() {
-    this.subjectName = this.$route.params.subjectName;
-    this.$api
+    this.$route.query.page === undefined ?this.$route.query.page=1:null;
+    this.$axios
+      .api()
       .get("/ForumViewer/GetThreads", {
         params: {
           subjectName: this.subjectName,
@@ -43,7 +111,28 @@ export default {
       .then(r => {
         (this.title = r.data.title), (this.threads = r.data.threads);
         this.allThreadsCount = r.data.allThreadsCount;
+        this.numberOfPages =
+          Math.ceil(r.data.allThreadsCount / 20) > 1
+            ? Math.ceil(r.data.allThreadsCount / 20)
+            : 1;
       });
   }
 };
 </script>
+<style scoped>
+.background-page {
+  background: url(/background.jpg) no-repeat;
+  width: 100vw;
+  height: auto;
+}
+</style>
+<style>
+.pagination-custom ul {
+  box-shadow: 2px 2px 5px 0px rgba(120, 111, 120, 1);
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.pagination-custom a {
+  color: black;
+}
+</style>

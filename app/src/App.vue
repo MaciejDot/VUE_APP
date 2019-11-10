@@ -1,64 +1,100 @@
 <template>
   <div id="app" style="margin-top:0px; position:relative;">
-  <b-navbar toggleable="lg" type="dark" variant="info" :sticky="true">
-    <b-navbar-brand href="#">Calisthenics Encyclopedia</b-navbar-brand>
-
-    <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
-    <b-collapse id="nav-collapse" is-nav>
-      <b-navbar-nav>
-        <b-nav-item ><router-link 
-        class="nav-link"
-          :to="{name:'Main Page'}">Main Page</router-link></b-nav-item>
+    <b-navbar class="navbar-shadow" toggleable="lg" type="dark" variant="info" :sticky="true">
+      <b-navbar-brand href="#">Calisthenics Encyclopedia</b-navbar-brand>
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+      <b-collapse id="nav-collapse" is-nav>
+        <b-navbar-nav>
           <b-nav-item>
-        <router-link
-        class="nav-link"
-          to="/wiki">Exercises Wiki</router-link>
-      </b-nav-item>
-      <b-nav-item>
-        <router-link
-        class="nav-link"
-            to="/workout">Workout Program</router-link>
-      </b-nav-item>
-      <b-nav-item>
-      <router-link 
-      class="nav-link"
-            to="/Forum">Forum</router-link>
-      </b-nav-item>
-      <b-nav-item>
-        <router-link
-            class="nav-link"
-            to="/articles">Articles</router-link>
-      </b-nav-item>
-      </b-navbar-nav>
-
-      <!-- Right aligned nav items -->
-      <b-navbar-nav class="ml-auto">
-        <b-nav-form style="justify-content: center">
-          <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
-          <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
-        </b-nav-form>
-        <b-nav-item-dropdown right>
-          <!-- Using 'button-content' slot -->
-          <template slot="button-content"><em>User</em></template>
-          <b-dropdown-item href="#">Profile</b-dropdown-item>
-          <b-dropdown-item href="#">Sign Out</b-dropdown-item>
-        </b-nav-item-dropdown>
-      </b-navbar-nav>
-    </b-collapse>
-  </b-navbar>
+            <router-link class="nav-link" :to="{name:'Main Page'}">Main Page</router-link>
+          </b-nav-item>
+          <b-nav-item>
+            <router-link class="nav-link" to="/wiki">Exercises Wiki</router-link>
+          </b-nav-item>
+          <b-nav-item>
+            <router-link class="nav-link" to="/workout">Workout Program</router-link>
+          </b-nav-item>
+          <b-nav-item>
+            <router-link class="nav-link" to="/Forum">Forum</router-link>
+          </b-nav-item>
+          <b-nav-item>
+            <router-link class="nav-link" to="/articles">Articles</router-link>
+          </b-nav-item>
+        </b-navbar-nav>
+        <b-navbar-nav class="ml-auto">
+          <b-nav-form style="justify-content: center">
+            <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
+            <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
+          </b-nav-form>
+          <b-nav-item-dropdown v-if="loged()" right>
+            <template slot="button-content">
+              <em>{{username()}}</em>
+            </template>
+            <b-dropdown-item href="#">Profile</b-dropdown-item>
+            <b-dropdown-item href="#" @click="signOut()">Sign Out</b-dropdown-item>
+          </b-nav-item-dropdown>
+          <b-nav-item v-else>
+              <router-link class="nav-link" to="/LogIn">Log In</router-link>
+            </b-nav-item>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
     <router-view></router-view>
   </div>
 </template>
 <script>
-import { BNavbar } from 'bootstrap-vue'
+import { BNavbar } from "bootstrap-vue";
 export default {
-  name: 'app',
-  components: {BNavbar}
-}
+  name: "app",
+  components: { BNavbar },
+  data: function(){
+    return {
+      usernameStatic: null
+    }
+  },
+  methods: {
+    signOut: function() {
+      this.$axios
+        .api()
+        .delete("Token/DeleteToken")
+        .then(() => {
+          localStorage.clear();
+          this.$router.push({ path: "SuccessSignOut" });
+        });
+    },
+    loged: function(){
+      return !(
+        localStorage["token"] == undefined
+      );
+    },
+    username: function() {
+      if(this.usernameStatic!=null){
+        return this.usernameStatic
+      }
+      this.$axios.api()
+        .get("AccountInfo/GetUsername")
+        .then(r=>{
+          this.usernameStatic=r.data.userName;
+          return this.usernameStatic;
+        })
+        .catch(()=>{
+          localStorage.clear();
+          return this.loged();
+        }
+        )
+    }
+  }
+};
 </script>
 
-<style>
+<style lang="scss">
+.navbar-shadow {
+  box-shadow: 0px 5px 5px rgba(40, 40, 40, 0.2),
+    0px 5px 5px rgba(40, 40, 40, 0.2), 0px 5px 5px rgba(40, 40, 40, 0.4),
+    0px 5px 5px rgba(40, 40, 40, 0.2), 0px 5px 5px rgba(40, 40, 40, 0.2),
+    inset 0px 5px 5px rgba(40, 40, 40, 0.1),
+    inset 0px 5px 5px rgba(40, 40, 40, 0.1);
+}
 #app {
   font-family: Georgia, serif;
   -webkit-font-smoothing: antialiased;
@@ -66,83 +102,83 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
-@media (max-width: 199px) and (min-width: 150px){
-   iframe {
-        width: 100px;
-        height: 50px;
-    }
-    .iframe-instagram{
+@media (max-width: 199px) and (min-width: 150px) {
+  iframe {
+    width: 100px;
+    height: 50px;
+  }
+  .iframe-instagram {
     width: 100px;
     height: 250px;
   }
 }
-@media (max-width: 239px) and (min-width: 200px){
-   iframe {
-        width: 140px;
-        height: 90px;
-    }
-    .iframe-instagram{
+@media (max-width: 239px) and (min-width: 200px) {
+  iframe {
+    width: 140px;
+    height: 90px;
+  }
+  .iframe-instagram {
     width: 140px;
     height: 300px;
   }
 }
-@media (max-width: 299px) and (min-width: 240px){
-   iframe {
-        width: 180px;
-        height: 100px;
-    }
-    .iframe-instagram{
+@media (max-width: 299px) and (min-width: 240px) {
+  iframe {
+    width: 180px;
+    height: 100px;
+  }
+  .iframe-instagram {
     width: 180px;
     height: 380px;
   }
 }
-@media (max-width: 345px) and (min-width: 300px){
-   iframe {
-        width: 230px;
-        height: 140px;
-    }
-    .iframe-instagram{
+@media (max-width: 345px) and (min-width: 300px) {
+  iframe {
+    width: 230px;
+    height: 140px;
+  }
+  .iframe-instagram {
     width: 230px;
     height: 430px;
   }
 }
-@media (max-width: 399px) and (min-width: 346px){
-   iframe {
-        width: 250px;
-        height: 150px;
-    }
-    .iframe-instagram{
+@media (max-width: 399px) and (min-width: 346px) {
+  iframe {
+    width: 250px;
+    height: 150px;
+  }
+  .iframe-instagram {
     width: 250px;
     height: 460px;
   }
 }
-@media (max-width: 450px) and (min-width: 400px){
+@media (max-width: 450px) and (min-width: 400px) {
   iframe {
-        width: 300px;
-        height: 170px;
-    }
-    .iframe-instagram{
+    width: 300px;
+    height: 170px;
+  }
+  .iframe-instagram {
     width: 300px;
     height: 520px;
   }
 }
-@media (max-width:700px) and (min-width:451px) {
+@media (max-width: 700px) and (min-width: 451px) {
   iframe {
-        width: 370px;
-        height: 203px;
-    }
-    .iframe-instagram{
+    width: 370px;
+    height: 203px;
+  }
+  .iframe-instagram {
     width: 370px;
     height: 580px;
   }
 }
 
-@media (min-width:701px) {
+@media (min-width: 701px) {
   iframe {
-        width: 640px;
-        height: 360px;
-    }
-  .iframe-instagram{
+    width: 640px;
+    height: 360px;
+  }
+  .iframe-instagram {
     width: 636px;
     height: 840px;
   }

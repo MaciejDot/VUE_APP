@@ -11,11 +11,6 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUser, faChartArea, faSearch} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { dom } from '@fortawesome/fontawesome-svg-core'
-
-//import Embed from '@editorjs/embed'
-//const Embed = require('@editorjs/embed');
-//Vue.use(require('@editorjs/embed'))
-//goog.require( 'goog.html.sanitizer.HtmlSanitizer' );
 var VueScrollTo = require('vue-scrollto');
 Vue.use(VueScrollTo)
 
@@ -27,16 +22,22 @@ dom.watch()
 Vue.use(VueRouter);
 const router = new VueRouter({
   routes: routes
-})
+});
 
 Vue.use(BootstrapVue)
 Vue.prototype.$baseUrlApi="https://localhost:5001";
-Vue.prototype.$api=axios.create({
-  baseURL: 'https://localhost:5001',
-  headers: {
-    'Content-Type': "application/json",
-  },
-})
+var headers=function(){ return localStorage['token']!=undefined?{
+  'Content-Type': "application/json",
+  'Authorization': `Bearer ${localStorage['token']}`
+}:{
+  'Content-Type': "application/json"
+}}
+
+Vue.prototype.$axios={api: function(){
+  return axios.create({
+  baseURL: "https://localhost:5001",
+  headers: headers(),
+})}}
 new Vue({
   router: router,
   render: h => h(App)

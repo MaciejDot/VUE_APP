@@ -17,7 +17,7 @@ export default {
     };
   },
   mounted: function() {
-    this.$api
+    this.$axios.api()
       .get("/ArticleViewer/GetArticle?Id=" + this.$route.params.id)
       .then(response => {
         this.title = response.data.title;

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="background-page">
     <div
       style="/*position: absolute;*/ top: 0px; left: 0px; width: 100%; height: 100%; /*overflow: hidden;*/ pointer-events: none; z-index: -100;"
     >
@@ -7,6 +7,7 @@
     </div>
     <b-container>
       <b-pagination-nav
+        v-if="numberOfPages>1"
         v-model="pageNum"
         class="pagination-custom"
         :link-gen="linkGen"
@@ -27,6 +28,7 @@
     />
     <b-container>
       <b-pagination-nav
+        v-if="numberOfPages>1"
         v-model="pageNum"
         class="pagination-custom"
         :link-gen="linkGen"
@@ -51,7 +53,7 @@ export default {
     };
   },
   mounted: function() {
-    this.$api
+    this.$axios.api()
       .get("/ArticleViewer/GetArticlesThumbnails", {
         params: {
           page:
@@ -65,7 +67,7 @@ export default {
   },
   methods: {
     linkGen(pageNum) {
-      return pageNum === 1 ? "" : `/${pageNum}`;
+      return pageNum === 1 ? "" : `/articles/${pageNum}`;
     }
   },
   components: {
@@ -83,5 +85,12 @@ export default {
 }
 .pagination-custom a {
   color: black;
+}
+</style>
+<style scoped>
+.background-page {
+  background: url(/background.jpg) no-repeat;
+  width: 100vw;
+  height: auto;
 }
 </style>

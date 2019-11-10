@@ -75,7 +75,7 @@ export default {
                 formData.append('Description', this.description);
                 formData.append('Title', this.title);
                 formData.append('file', this.file)
-                this.$api.post('/ArticleCreator/CreateArticle',
+                this.$axios.api().post('/ArticleCreator/CreateArticle',
                     formData
                 ).then(response =>
                     {alert(response.articleId)}

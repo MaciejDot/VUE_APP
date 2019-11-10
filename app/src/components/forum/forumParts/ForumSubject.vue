@@ -1,7 +1,7 @@
 <template>
   <b-card
     v-on:click="resolveLink()"
-    style="padding: 10px;cursor: pointer;background-color:#f8f9fa!important;border-radius:10px;box-shadow: 2px 2px 5px 0px rgba(120,111,120,1);margin:10px;"
+    style="padding: 10px;cursor: pointer;background-color:#f8f9fa!important;border-radius:10px;box-shadow: 2px 2px 5px 0px rgba(120,111,120,1);margin:10px;color:black"
   >
     <img
       class="thumbnail-image"
@@ -42,7 +42,6 @@ export default {
 </script>
 <style scoped>
 .article-title {
-  color: black;
   font-family: Georgia, serif;
 }
 .thumbnail-image {

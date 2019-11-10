@@ -43,7 +43,7 @@ export default {
     };
   },
   mounted: function() {
-    this.$api
+    this.$axios.api()
       .get("/WikiViewer/GetWikiArticle", {
         params: {
           name: this.$route.params.exercise

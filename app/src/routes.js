@@ -9,13 +9,11 @@ import MainPage from './components/MainPage'
 import WikiArticle from './components/wiki/wikiComponents/WikiArticle'
 import RichTextEditorArticle from './components/richtexteditor/RichTextEditorArticle.vue'
 import ArticleView from './components/articles/ArticleView.vue'
-import RichTextEditor from './components/richtexteditor/RichTextEditor.vue'
 import Login from './components/account/Login.vue'
-
-
+import SuccessSignOut from'./components/account/SuccessSignOut.vue'
+import Register from './components/account/Register.vue'
 export default [
  { path: '', name:"Main Page", component: MainPage },
- { path: '/rich',component:RichTextEditor},
  { path: '/workout', component: ChooseWorkout },
  { path: '/wiki', component: MainPageWiki},
  { path: '/wiki/:exercise', component: WikiArticle},
@@ -23,9 +21,11 @@ export default [
  { path: '/articles', component: MainPageArticles},
  { path: '/articles/:page', component: MainPageArticles},
  { path: '/article/:id', component: ArticleView },
- { path: '/Forum/:subjectName', name:'Forum Subject Threads', component:ForumThreadList, query:{page:1}},
- { path: '/Forum/:subjectName/:threadId', component:ForumThreadPage, query:{page:1}},
- { path: '/Forum/*/:subjectId/creator', component: ForumThreadCreator},
+ { path: '/Forum/:subjectName', name:'Forum Subject Threads', component:ForumThreadList, query:{page:{default:1}}},
+ { path: '/Forum/:subjectName/:threadId', component:ForumThreadPage, query:{page:{default:1}}},
+ { path: '/Forum/*/Creator/:subjectName', component: ForumThreadCreator},
  { path: '/Art', component: RichTextEditorArticle},
- { path: '/Login', component:Login}
+ { path: '/Login', component:Login},
+ { path: '/Register', component:Register},
+ { path:'/SuccessSignOut',component:SuccessSignOut}
 ];
