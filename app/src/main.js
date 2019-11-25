@@ -21,6 +21,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 dom.watch()
 Vue.use(VueRouter);
 const router = new VueRouter({
+  mode: 'history',
   routes: routes
 });
 
@@ -32,12 +33,44 @@ var headers=function(){ return localStorage['token']!=undefined?{
 }:{
   'Content-Type': "application/json"
 }}
-
-Vue.prototype.$axios={api: function(){
-  return axios.create({
+var api= function(){
+  let ax=axios.create({
   baseURL: "https://localhost:5001",
   headers: headers(),
-})}}
+  timeout: 3000,
+})
+ax.interceptors.response.use(function (response) {
+  return response;
+}, function (error) {
+  if(error.response.status == 404){
+    router.push('/404')
+  }
+  return Promise.reject(error);
+});
+return ax;
+}
+Vue.prototype.$axios={api: api}
+
+var roles = null;
+Vue.prototype.$account= {
+  isInRole : function(role){
+    if(roles!=null){
+      return roles.includes(role);
+    }
+    else if(localStorage["token"]!=undefined){
+        api().get('/AccountInfo').then(r=>{
+        roles=r.data.roles;
+        return roles.includes(role);
+      })
+      .catch(()=>{
+        return false;
+      })
+    }
+    else{
+      return false;
+    }
+  }
+}
 new Vue({
   router: router,
   render: h => h(App)

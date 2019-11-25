@@ -22,10 +22,6 @@
           </b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
-          <b-nav-form style="justify-content: center">
-            <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
-            <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
-          </b-nav-form>
           <b-nav-item-dropdown v-if="loged()" right>
             <template slot="button-content">
               <em>{{username()}}</em>
@@ -39,7 +35,7 @@
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
-    <router-view></router-view>
+    <router-view class="default-background"></router-view>
   </div>
 </template>
 <script>
@@ -56,7 +52,7 @@ export default {
     signOut: function() {
       this.$axios
         .api()
-        .delete("Token/DeleteToken")
+        .delete("/Token")
         .then(() => {
           localStorage.clear();
           this.$router.push({ path: "SuccessSignOut" });
@@ -72,7 +68,7 @@ export default {
         return this.usernameStatic
       }
       this.$axios.api()
-        .get("AccountInfo/GetUsername")
+        .get("/AccountInfo")
         .then(r=>{
           this.usernameStatic=r.data.userName;
           return this.usernameStatic;
@@ -101,6 +97,9 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+body{
+  background-color: #BFD8EE;
 }
 @media (max-width: 199px) and (min-width: 150px) {
   iframe {

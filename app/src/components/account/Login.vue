@@ -32,7 +32,7 @@
           <a href="#">Forgot password?</a>
         </div>
         <div class="link">
-          <router-link to="/Register">Register</router-link>>
+          <router-link to="/Register">Register</router-link>
         </div>
       </div>
     </div>
@@ -49,6 +49,9 @@ export default {
   },
    mounted() {
     var self=this;
+    if(localStorage['token']!=undefined){
+      this.$router.push({ path: "/" });
+    }
     window.addEventListener("keypress", function(e) {
       e.keyCode==13?self.logIn():null;
 
@@ -57,7 +60,7 @@ export default {
   methods: {
     logIn: function() {
       this.$axios.api()
-        .post("/Token/GetTokenWithUsernameAndPassword", {
+        .post("/Token", {
             username: this.username,
             password: this.password
         })
@@ -79,11 +82,6 @@ export default {
 .separator {
   height: 40px;
 }
-.background-login {
-  background: url(/background.jpg) no-repeat;
-  width: 100vw;
-  height: 100vh;
-}
 .login-modal {
   filter: blur(0.3px);
   display: block;
@@ -91,7 +89,7 @@ export default {
   margin-right: auto;
   margin-bottom: 80px;
   width: 430px;
-  height: 600px;
+  height: 700px;
   padding: 60px 35px 35px 35px;
   border-radius: 4px;
   background-color: #f8f9fa !important;

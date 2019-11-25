@@ -39,7 +39,12 @@ export default {
     components: {BCard, BMedia, BRow, BCol},
     methods:{
       resolveLink(){
+        if(this.to!=0){
          this.$router.push({path:`/article/${this.to}`});
+        }
+        else{
+          this.$router.push({path:"/create-article"})
+        }
       }
     }
 

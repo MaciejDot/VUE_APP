@@ -1,12 +1,14 @@
 <template>
   <b-container id="wikiArticle">
     <h1>{{title}}</h1>
-    <b-card>
-      <b-row>
-        <b-col cols="12" v-for="section in sectionsMap" :key="section">
-          <a
-            href="#"
-            v-scroll-to="{
+    <b-row>
+      <b-card style="max-width:300px;border-width:1px;border-style:solid;border-color:black">
+        <b-row>
+          <b-col cols="12" v-for="section in sectionsMap" :key="section">
+            <a
+              href="#"
+              style="color:black;"
+              v-scroll-to="{
           el: `#${section.replace(/ /g,'-')}`,
           duration: 500,
           easing: 'linear',
@@ -16,17 +18,18 @@
           x: false,
           y: true
         }"
-          >{{section}}</a>
+            >{{section}}</a>
+          </b-col>
+        </b-row>
+      </b-card>
+      <b-row>
+        <b-col cols="12" v-for="section in sections" :key="section.title">
+          <h2 :id="section.title.replace(/ /g,'-')">{{section.title}}</h2>
+          <div v-for="(line,index) in section.content.split('\n')" :key="index">
+            <div v-html="section.content" />
+          </div>
         </b-col>
       </b-row>
-    </b-card>
-    <b-row>
-      <b-col cols="12" v-for="section in sections" :key="section.title">
-        <h2 :id="section.title.replace(/ /g,'-')">{{section.title}}</h2>
-        <div v-for="(line,index) in section.content.split('\n')" :key="index">
-        <div v-html="section.content" />
-        </div>
-      </b-col>
     </b-row>
   </b-container>
 </template>
@@ -43,12 +46,9 @@ export default {
     };
   },
   mounted: function() {
-    this.$axios.api()
-      .get("/WikiViewer/GetWikiArticle", {
-        params: {
-          name: this.$route.params.exercise
-        }
-      })
+    this.$axios
+      .api()
+      .get(`/WikiExercise/${this.$route.params.exercise}`)
       .then(response => {
         this.title = response.data.article.name;
         this.sections = response.data.article.sections;

@@ -62,7 +62,7 @@ export default {
   methods: {
     post: function() {
       this.$axios.api().post(
-        '/ForumWriter/CreateThread',
+        '/Thread',
         {
           SubjectName:this.$route.params.subjectName,
           Content:this.content,

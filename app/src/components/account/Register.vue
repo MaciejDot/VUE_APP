@@ -15,6 +15,7 @@
               />
             </svg>
             <input v-model="username" type="username" class="user-input" placeholder="Username" />
+            <div v-if="errorUsername!=''" class="error-message">{{errorUsername}}</div>
           </div>
           <div class="username">
             <svg fill="#222" viewBox="0 0 1024 1024">
@@ -24,6 +25,7 @@
               />
             </svg>
             <input v-model="email" type="username" class="user-input" placeholder="Email" />
+            <div v-if="errorEmail!=''" class="error-message">{{errorEmail}}</div>
           </div>
           <div class="password">
             <svg fill="#222" viewBox="0 0 1024 1024">
@@ -33,6 +35,7 @@
               />
             </svg>
             <input v-model="password" type="password" class="pass-input" placeholder="Password" />
+            <div v-if="errorPassword!=''" class="error-message">{{errorPassword}}</div>
           </div>
           <div class="password">
             <svg fill="#222" viewBox="0 0 1024 1024">
@@ -42,6 +45,7 @@
               />
             </svg>
             <input v-model="repeatPassword" type="password" class="pass-input" placeholder="repeat password" />
+            <div v-if="errorRepeatPassword!=''" class="error-message">{{errorRepeatPassword}}</div>
           </div>
           <div v-if="error!=''" class="error-message">{{error}}</div>
         </div>
@@ -59,19 +63,62 @@ export default {
       error:"",
       repeatPassword: "",
       email:"",
+      errorRepeatPassword:'',
+      errorPassword:'',
+      errorEmail:'',
+      errorUsername:''
     };
   },
    mounted() {
     var self=this;
+    if(localStorage['token']!=undefined){
+      this.$router.push({ path: "/" });
+    }
     window.addEventListener("keypress", function(e) {
       e.keyCode==13?self.signIn():null;
 
     });
   },
   methods: {
+    registerModelValidation: function(){
+        let answear = true;
+        if(this.username.length < 6){
+            this.errorUsername ="Username Should be at least 6 characters long";
+            answear = false;
+        }
+        else{
+            this.errorUsername ="";
+        }
+        
+        let emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/i
+        if(this.email.match(emailRegexp) !=this.email){
+            this.errorEmail="This is not a valid email"
+            answear = false;
+        }
+        else{
+            this.errorEmail=""
+        }
+        if(this.password.length<8){
+            this.errorPassword="password should at least be 8 character long"
+            answear = false;
+        }
+        else{
+            this.errorPassword=""
+        }
+        if(this.repeatPassword!=this.password){
+            this.errorRepeatPassword="passwords don't match"
+            answear = false;
+        }
+        else{
+            this.errorRepeatPassword=""
+        }
+        return answear;
+    },
     signIn: function() {
+        if(this.registerModelValidation()){
       this.$axios.api()
-        .post("/Token/GetTokenWithUsernameAndPassword", {
+        .post("/Register", {
+            email: this.email,
             username: this.username,
             password: this.password
         })
@@ -79,8 +126,9 @@ export default {
           localStorage["token"] = t.data.token;
           this.$router.push({ path: "/" });
         }).catch(()=>{
-          this.error="Given credentials are incorrect...";
+          this.error="Something went wrong ... ";
         });
+        }
     }
   },
   name: "Register"
@@ -93,11 +141,6 @@ export default {
 .separator {
   height: 40px;
 }
-.background-login {
-  background: url(/background.jpg) no-repeat;
-  width: 100vw;
-  height: 100vh;
-}
 .login-modal {
   filter: blur(0.3px);
   display: block;
@@ -105,7 +148,7 @@ export default {
   margin-right: auto;
   margin-bottom: 80px;
   width: 430px;
-  height: 600px;
+  height: 800px;
   padding: 60px 35px 35px 35px;
   border-radius: 4px;
   background-color: #f8f9fa !important;

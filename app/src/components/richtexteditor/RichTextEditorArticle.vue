@@ -26,6 +26,7 @@
         />
         <div style="height:30px" />
         <b-container>
+            <div class="red" v-if="error!=''">{{error}}</div>
             <b-row style="margin-left:auto;margin-right:auto;max-width: 500px;">
                 <b-button block pill variant="primary" @click="submitArticle()" :disabled="!articleIsValid()">Create</b-button>
             </b-row>
@@ -58,6 +59,7 @@ export default {
             content:'',
             thumbnailSrc:'',
             visableContent:[],
+            error:''
         }
     },
     components:{
@@ -71,22 +73,23 @@ export default {
         submit: function(){
             this.$refs['are-sure-modal'].hide();
             let formData = new FormData();
-                formData.append('Content', this.$refs.editor.compileToHtml().join(','));
+                formData.append('Content', this.content);
                 formData.append('Description', this.description);
                 formData.append('Title', this.title);
                 formData.append('file', this.file)
-                this.$axios.api().post('/ArticleCreator/CreateArticle',
+                this.$axios.api().post('/Article',
                     formData
                 ).then(response =>
-                    {alert(response.articleId)}
-                )
+                    this.$router.push({ path: `/article/${response.data.article.articleId}`})
+                ).catch(()=>{
+                    this.error ="Something went wrong...";
+                })
         },
         articleIsValid: function(){
             return ( this.file != null && this.title != '' && this.description != '' && (this.content!='' ));
         },
         submitArticle: function(){
             if(this.articleIsValid()){
-                this.visableContent =this.$refs.editor.compileToHtml();
                 this.$refs['are-sure-modal'].show();
             }
         },
@@ -100,3 +103,8 @@ export default {
     }
 }
 </script>
+<style scoped>
+.red{
+    color:red;
+}
+</style>

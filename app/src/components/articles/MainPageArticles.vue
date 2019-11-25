@@ -5,6 +5,11 @@
     >
       <h1>Articles</h1>
     </div>
+    <ArticleThumbnail
+      v-if="$account.isInRole('admin') && pageNum==1"
+      title="Create a new article"
+      :to="0"
+    />
     <b-container>
       <b-pagination-nav
         v-if="numberOfPages>1"
@@ -20,7 +25,7 @@
       v-for="article in articles"
       :author="article.author"
       :key="article"
-      :imagePath="`${$baseUrlApi}/ArticleViewer/GetThumbnailPicture?thumbnailId=${article.thumbnailId}`"
+      :imagePath="`${$baseUrlApi}/ArticleThumbnail/${article.thumbnailId}`"
       :title="article.title"
       :shortDescription="article.description"
       :date="article.created"
@@ -54,12 +59,7 @@ export default {
   },
   mounted: function() {
     this.$axios.api()
-      .get("/ArticleViewer/GetArticlesThumbnails", {
-        params: {
-          page:
-            this.$route.params.page == undefined ? 1 : this.$route.params.page
-        }
-      })
+      .get(`/Article/${this.$route.params.page == undefined ? 1 : this.$route.params.page}`)
       .then(response => {
         this.articles = response.data.articles;
         this.numberOfPages = response.data.allArticlesCount / 20;
@@ -85,12 +85,5 @@ export default {
 }
 .pagination-custom a {
   color: black;
-}
-</style>
-<style scoped>
-.background-page {
-  background: url(/background.jpg) no-repeat;
-  width: 100vw;
-  height: auto;
 }
 </style>

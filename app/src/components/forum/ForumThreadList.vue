@@ -2,7 +2,7 @@
   <div class="background-page">
     <b-container>
       <h1>{{title}}</h1>
-      <ForumAddThread v-if="loged()" :link="`/Forum/*/Creator/${subjectName}`" />
+      <ForumAddThread v-if="loged()" :link="`/create-thread/${subjectName}`" />
       <b-container>
         <b-pagination-nav
           v-if="numberOfPages>1"
@@ -81,12 +81,7 @@ export default {
         this.pageNum = this.$route.query.page;
         this.$axios
           .api()
-          .get("/ForumViewer/GetThreads", {
-            params: {
-              subjectName: this.subjectName,
-              page: this.$route.query.page
-            }
-          })
+          .get(`/Thread/${this.subjectName}/${this.$route.query.page}`)
           .then(r => {
             (this.title = r.data.title), (this.threads = r.data.threads);
             this.allThreadsCount = r.data.allThreadsCount;
@@ -94,20 +89,20 @@ export default {
               Math.ceil(r.data.allThreadsCount / 20) > 1
                 ? Math.ceil(r.data.allThreadsCount / 20)
                 : 1;
+          })
+          .catch(e => {
+            if (e.response.status == 404) {
+              this.$router.push({ path: "/404" });
+            }
           });
       }
     }
   },
   mounted: function() {
-    this.$route.query.page === undefined ?this.$route.query.page=1:null;
+    this.$route.query.page === undefined ? (this.$route.query.page = 1) : null;
     this.$axios
       .api()
-      .get("/ForumViewer/GetThreads", {
-        params: {
-          subjectName: this.subjectName,
-          page: this.$route.query.page
-        }
-      })
+      .get(`/Thread/${this.subjectName}/${this.$route.query.page}`)
       .then(r => {
         (this.title = r.data.title), (this.threads = r.data.threads);
         this.allThreadsCount = r.data.allThreadsCount;
@@ -115,17 +110,15 @@ export default {
           Math.ceil(r.data.allThreadsCount / 20) > 1
             ? Math.ceil(r.data.allThreadsCount / 20)
             : 1;
+      })
+      .catch(e => {
+        if (e.response.status == 404) {
+          this.$router.push({ path: "/404" });
+        }
       });
   }
 };
 </script>
-<style scoped>
-.background-page {
-  background: url(/background.jpg) no-repeat;
-  width: 100vw;
-  height: auto;
-}
-</style>
 <style>
 .pagination-custom ul {
   box-shadow: 2px 2px 5px 0px rgba(120, 111, 120, 1);

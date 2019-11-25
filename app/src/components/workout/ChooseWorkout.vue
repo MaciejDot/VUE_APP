@@ -1,10 +1,12 @@
 <template>
-    <div>
+    <b-container>
       ChooseWorkout
-    </div>
+    </b-container>
   </template>
 <script>
+import {BContainer} from 'bootstrap-vue'
 export default {
-    name: 'ChooseWorkout'
+    name: 'ChooseWorkout',
+    components: {BContainer}
   }
 </script>

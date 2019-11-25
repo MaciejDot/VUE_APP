@@ -22,7 +22,7 @@
       v-for="post in posts"
       :key="post.Id"
       :content="post.content.split('\n')"
-      :date="post.date"
+      :date="post.created"
       :author="post.author"
     />
     <RichTextEditor v-if="pageNum==numberOfPages" ref="editor" :post="post" :error="error" />
@@ -64,11 +64,21 @@ export default {
       var self = this;
       this.$axios
         .api()
-        .post("/ForumWriter/PostAnswear", {
+        .post("/Post", {
           ThreadId: this.$route.params.threadId,
           Content: self.$refs.editor.content
         })
-        .then(() => this.$router.go(this.$router.currentRoute))
+        .then(() => {
+          this.$axios
+            .api()
+            .get(`/Post/${this.$route.params.subjectName}/${this.$route.params.threadId}/${this.$route.query.page}`)
+            .then(r => {
+              let partialPost = r.data.posts;
+              this.posts = partialPost;
+              this.thread = r.data.thread;
+              this.numberOfPages = Math.ceil((r.data.allPostsCount + 1) / 20);
+            });
+        })
         .catch(() => (this.error = "Something went wrong"));
     },
     linkGen(pageNum) {
@@ -81,50 +91,41 @@ export default {
         this.pageNum = this.$route.query.page;
         this.$axios
           .api()
-          .get("/ForumViewer/GetPosts", {
-            params: {
-              subjectName: this.$route.params.subjectName,
-              threadId: this.$route.params.threadId,
-              page: this.$route.query.page
-            }
-          })
+          .get(`/Post/${this.$route.params.subjectName}/${this.$route.params.threadId}/${this.$route.query.page}`)
           .then(r => {
             let partialPost = r.data.posts;
             this.posts = partialPost;
             this.thread = r.data.thread;
             this.numberOfPages = Math.ceil((r.data.allPostsCount + 1) / 20);
+          })
+          .catch(e => {
+            if (e.response.status == 404) {
+              this.$router.push({ path: "/404" });
+            }
           });
       }
     }
   },
   mounted: function() {
-    this.$route.query.page === undefined ?this.$route.query.page=1:null;
+    this.$route.query.page === undefined ? (this.$route.query.page = 1) : null;
     this.pageNum = this.$route.query.page;
     this.$axios
       .api()
-      .get("/ForumViewer/GetPosts", {
-        params: {
-          subjectName: this.$route.params.subjectName,
-          threadId: this.$route.params.threadId,
-          page: this.$route.query.page
-        }
-      })
+      .get(`/Post/${this.$route.params.subjectName}/${this.$route.params.threadId}/${this.$route.query.page}`)
       .then(r => {
         let partialPost = r.data.posts;
         this.posts = partialPost;
         this.thread = r.data.thread;
         this.numberOfPages = Math.ceil((r.data.allPostsCount + 1) / 20);
+      })
+      .catch(e => {
+        if (e.response.status == 404) {
+          this.$router.push({ path: "/404" });
+        }
       });
   }
 };
 </script>
-<style scoped>
-.background-page {
-  background: url(/background.jpg) no-repeat;
-  width: 100vw;
-  height: auto;
-}
-</style>
 <style>
 .pagination-custom ul {
   box-shadow: 2px 2px 5px 0px rgba(120, 111, 120, 1);

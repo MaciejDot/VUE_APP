@@ -1,32 +1,6 @@
-<template>
-    <textarea class="editor" v-model="value"/>
-</template>
-<script>
-export default {
-    name: 'Editor',
-    data: function(){
-        return {
-            compiledContent:[],
-        }
-    },
-    props:{
-        value:{
-            Type:String,
-            default:''
-        }
-    },
-    model: {
-      prop: 'value',
-      event: 'input'
-    },
-    watch:{
-        value:function(){
-            this.$emit('input',this.value)
-        }
-    },
-    methods:{
-        compileToHtml: function(){
-            let compiled = String(this.value)//.replace(/&/g, '&amp;')
+export default{
+    compileToHtml: function(value){
+            let compiled = String(value)//.replace(/&/g, '&amp;')
             .replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
             let regexInstagram = new RegExp('(https?://www.)?instagram.com(/p/\\w+/?)','g');
             let regexYoutube = new RegExp('http(?:s?)://(?:www.)?youtu(?:be.com/watch\\?v=|.be/)([\\w\\-\\_]*)(&(amp;)?‌​[\\w\\?‌​=]*)?(.*)','g');
@@ -39,19 +13,5 @@ export default {
             compiled = compiled.replace(regexInstagram, (match)=>`<iframe class="iframe-instagram" src="${match}embed" />${splitID}`)
             compiled = `<p>${compiled.replace(/\n/g,'</p><p>')}</p>`;
             return compiled.split(splitID);
-        },
     }
 }
-</script>
-<style scoped>
-.editor{
-    width:100%;
-    height:20ex;
-}
-@media(min-width: 500px){
-.editor{
-    width:100%;
-    height:40ex;
-}
-}
-</style>
