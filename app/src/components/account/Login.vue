@@ -59,9 +59,9 @@ export default {
   },
   methods: {
     logIn: function() {
-      this.$axios.api()
+      this.$axios.account()
         .post("/Token", {
-            username: this.username,
+            email: this.username,
             password: this.password
         })
         .then(t => {

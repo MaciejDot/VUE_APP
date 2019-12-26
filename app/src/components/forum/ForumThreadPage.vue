@@ -65,7 +65,7 @@ export default {
       this.$axios
         .api()
         .post("/Post", {
-          ThreadId: this.$route.params.threadId,
+          ThreadId: parseInt(this.$route.params.threadId),
           Content: self.$refs.editor.content
         })
         .then(() => {

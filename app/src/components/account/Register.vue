@@ -116,7 +116,7 @@ export default {
     },
     signIn: function() {
         if(this.registerModelValidation()){
-      this.$axios.api()
+      this.$axios.account()
         .post("/Register", {
             email: this.email,
             username: this.username,

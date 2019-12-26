@@ -30,8 +30,8 @@
             <b-dropdown-item href="#" @click="signOut()">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item v-else>
-              <router-link class="nav-link" to="/LogIn">Log In</router-link>
-            </b-nav-item>
+            <router-link class="nav-link" to="/LogIn">Log In</router-link>
+          </b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -43,41 +43,47 @@ import { BNavbar } from "bootstrap-vue";
 export default {
   name: "app",
   components: { BNavbar },
-  data: function(){
+  data: function() {
     return {
       usernameStatic: null
-    }
+    };
+  },
+  mounted: function() {
+    window.setInterval(() => {
+      if (localStorage["token"] != undefined) {
+        this.$axios
+          .account()
+          .get("/Token")
+          .then(t => {
+            localStorage["token"] = t.data.token;
+          });
+      }
+    }, 2 * 60 * 
+     1000);
   },
   methods: {
     signOut: function() {
-      this.$axios
-        .api()
-        .delete("/Token")
-        .then(() => {
-          localStorage.clear();
-          this.$router.push({ path: "SuccessSignOut" });
-        });
+      localStorage.clear();
+      this.$router.push({ path: "SuccessSignOut" });
     },
-    loged: function(){
-      return !(
-        localStorage["token"] == undefined
-      );
+    loged: function() {
+      return !(localStorage["token"] == undefined);
     },
     username: function() {
-      if(this.usernameStatic!=null){
-        return this.usernameStatic
+      if (this.usernameStatic != null) {
+        return this.usernameStatic;
       }
-      this.$axios.api()
+      this.$axios
+        .account()
         .get("/AccountInfo")
-        .then(r=>{
-          this.usernameStatic=r.data.userName;
+        .then(r => {
+          this.usernameStatic = r.data.username;
           return this.usernameStatic;
         })
-        .catch(()=>{
+        .catch(() => {
           localStorage.clear();
           return this.loged();
-        }
-        )
+        });
     }
   }
 };
@@ -98,8 +104,8 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
-body{
-  background-color: #BFD8EE;
+body {
+  background-color: #bfd8ee;
 }
 @media (max-width: 199px) and (min-width: 150px) {
   iframe {
