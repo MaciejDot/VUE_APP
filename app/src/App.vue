@@ -1,7 +1,7 @@
 <template>
   <div id="app" style="margin-top:0px; position:relative;">
-    <b-navbar style="border: 1px solid #e7e7e7;" toggleable="lg" type="light" variant="light" :sticky="true">
-      <b-navbar-brand href="#">Calisthenics Encyclopedia</b-navbar-brand>
+    <b-navbar style="border: 1px solid #e7e7e7;" toggleable="lg" type="light" variant="white" :sticky="true">
+      <b-navbar-brand  to="/">Calisthenics Encyclopedia</b-navbar-brand>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
@@ -87,6 +87,9 @@ export default {
 </script>
 
 <style lang="scss">
+h1{
+  margin: 20px !important;
+}
 #app {
   font-family: Georgia, serif;
   -webkit-font-smoothing: antialiased;

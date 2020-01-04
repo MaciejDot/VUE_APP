@@ -2,7 +2,7 @@
 <div @click="resolveLink()">
 <div style="padding: 5px;cursor: pointer;">
   <b-card style="border-radius: 3px;
-    border: 1px solid #e7e7e7;box-shadow: 2px 2px 5px 0px rgba(120,111,120,1);margin-left: auto;
+    border: 1px solid #e7e7e7;margin-left: auto;
     margin-right: auto;max-width:1000px; margin-bottom:30px;">
   <b-row>
     <b-col sm="12" md="6">

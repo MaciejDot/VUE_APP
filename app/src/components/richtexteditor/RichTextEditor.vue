@@ -14,10 +14,13 @@
             <div v-html="content"/>
             </div>
         </div>
-        <b-button pill @click="toggleVisual()">Toggle Visual</b-button>
+        <b-button style="border-radius: 3px;
+    border: 1px solid #e7e7e7;"
+    variant="white" @click="toggleVisual()">Toggle Visual</b-button>
         <div class="separator" />
         <div>
-            <b-button pill variant="primary" @click="post()">{{postButtonName}}</b-button>
+            <b-button style="border-radius: 3px;
+    border: 1px solid #e7e7e7;" variant="white" @click="post()">{{postButtonName}}</b-button>
         </div>
         <div class="separator" />
         <div class="error" v-if="error!=null">
@@ -61,6 +64,6 @@ export default {
     height:10px;
 }
 .card-editor{border-radius: 3px;
-    border: 1px solid #e7e7e7;padding:10px;box-shadow: 2px 2px 5px 0px rgba(120,111,120,1);margin-left: auto;
+    border: 1px solid #e7e7e7;padding:10px;margin-left: auto;
     margin-right: auto;max-width:1000px;max-height:60%;}
 </style>

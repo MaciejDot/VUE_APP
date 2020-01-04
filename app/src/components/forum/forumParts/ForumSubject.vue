@@ -2,7 +2,7 @@
   <b-card
     v-on:click="resolveLink()"
     style="padding: 10px;cursor: pointer;border-radius: 3px;
-    border: 1px solid #e7e7e7;box-shadow: 2px 2px 5px 0px rgba(120,111,120,1);margin:10px;color:black"
+    border: 1px solid #e7e7e7;margin:10px;color:black"
   >
     <img
       class="thumbnail-image"

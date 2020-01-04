@@ -1,5 +1,6 @@
 <template>
 <div class="background-page">
+  <h1>Forum</h1>
   <b-container>
     <b-row>
       <b-col lg="6" md="12" v-for="subject in subjects" :key="subject.path">

@@ -91,12 +91,9 @@ export default {
   width: 430px;
   height: 700px;
   padding: 60px 35px 35px 35px;
-  border-radius: 4px;
-  background-color: #f8f9fa !important;
-  box-shadow: 0px 20px 20px rgba(0, 0, 0, 0.2), 0px 5px 10px rgba(0, 0, 0, 0.2),
-    0px 70px 50px rgba(0, 0, 0, 0.4), 30px 50px 50px rgba(0, 0, 0, 0.2),
-    -30px 50px 50px rgba(0, 0, 0, 0.2), inset 20px 0px 60px rgba(0, 0, 0, 0.1),
-    inset -20px 0px 60px rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  border: 1px solid #e7e7e7;
+  background-color: white ;
 }
 @media (max-width: 600px) {
   .login-modal {
@@ -170,35 +167,8 @@ export default {
   color: black;
   text-align: center;
   letter-spacing: 1px;
-  background: radial-gradient(
-    circle,
-    #24cfaa,
-    #26c5a3,
-    #28bb9c,
-    #29b294,
-    #2aa88d
-  );
+  background: white;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-}
-.signin-button:hover {
-  background: radial-gradient(
-    circle,
-    #2fdbb6,
-    #32d6b3,
-    #32c9a8,
-    #36c7a7,
-    #38bb9f
-  );
-}
-.signin-button:active {
-  background: radial-gradient(
-    circle,
-    #1da88a,
-    #1ea084,
-    #229c82,
-    #23947b,
-    #238d76
-  );
 }
 .link {
   padding-top: 20px;
