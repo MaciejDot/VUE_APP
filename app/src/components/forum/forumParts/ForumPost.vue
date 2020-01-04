@@ -1,6 +1,7 @@
 <template>
 <div style="padding:5px;">
-  <b-card style="background-color:#f8f9fa!important;border-radius:10px;padding:10px;min-height:500px;box-shadow: 2px 2px 5px 0px rgba(120,111,120,1);margin-left: auto;
+  <b-card style="border-radius: 3px;
+    border: 1px solid #e7e7e7;padding:10px;min-height:500px;box-shadow: 2px 2px 5px 0px rgba(120,111,120,1);margin-left: auto;
     margin-right: auto;max-width:1000px; text-align:auto;">
   <b-media style="position:relative;min-height:500px;">
    <div style="text-align:left;">{{author}}</div>

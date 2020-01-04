@@ -25,7 +25,7 @@
       v-for="article in articles"
       :author="article.author"
       :key="article"
-      :imagePath="`${$baseUrlApi}/ArticleThumbnail/${article.thumbnailId}`"
+      :imagePath="`${$baseUrlArticleApi}/ArticleThumbnail/${article.thumbnailId}`"
       :title="article.title"
       :shortDescription="article.description"
       :date="article.created"
@@ -58,7 +58,7 @@ export default {
     };
   },
   mounted: function() {
-    this.$axios.api()
+    this.$axios.article()
       .get(`/Article/${this.$route.params.page == undefined ? 1 : this.$route.params.page}`)
       .then(response => {
         this.articles = response.data.articles;

@@ -61,7 +61,7 @@ export default {
   },
   methods: {
     post: function() {
-      this.$axios.api().post(
+      this.$axios.forum().post(
         '/Thread',
         {
           SubjectName:this.$route.params.subjectName,

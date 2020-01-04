@@ -77,7 +77,7 @@ export default {
                 formData.append('Description', this.description);
                 formData.append('Title', this.title);
                 formData.append('file', this.file)
-                this.$axios.api().post('/Article',
+                this.$axios.article().post('/Article',
                     formData
                 ).then(response =>
                     this.$router.push({ path: `/article/${response.data.article.articleId}`})

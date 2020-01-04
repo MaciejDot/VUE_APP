@@ -1,7 +1,8 @@
 <template>
   <b-card
     v-on:click="resolveLink()"
-    style="padding: 10px;cursor: pointer;background-color:#f8f9fa!important;border-radius:10px;box-shadow: 2px 2px 5px 0px rgba(120,111,120,1);margin:10px;color:black"
+    style="padding: 10px;cursor: pointer;border-radius: 3px;
+    border: 1px solid #e7e7e7;box-shadow: 2px 2px 5px 0px rgba(120,111,120,1);margin:10px;color:black"
   >
     <img
       class="thumbnail-image"
@@ -49,10 +50,8 @@ export default {
   background-size: 100%;
   background-repeat: no-repeat;
   visibility: visible;
-  border-radius: 10px;
   width: -webkit-fill-available;
   margin: 0;
-  border-radius:10px;
   margin-left: auto;
   margin-right: auto;
   padding-top: 62.5%;

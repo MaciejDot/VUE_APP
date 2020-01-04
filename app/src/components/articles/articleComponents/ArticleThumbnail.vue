@@ -1,16 +1,17 @@
 <template>
 <div @click="resolveLink()">
 <div style="padding: 5px;cursor: pointer;">
-  <b-card style="background-color:#f8f9fa!important;border-radius:10px;box-shadow: 2px 2px 5px 0px rgba(120,111,120,1);margin-left: auto;
-    margin-right: auto;max-width:1000px;">
+  <b-card style="border-radius: 3px;
+    border: 1px solid #e7e7e7;box-shadow: 2px 2px 5px 0px rgba(120,111,120,1);margin-left: auto;
+    margin-right: auto;max-width:1000px; margin-bottom:30px;">
   <b-row>
-    <b-col sm="12" md="4">
+    <b-col sm="12" md="6">
   <img 
     class="thumbnail-image" 
     :style='`background-image: url(`+imagePath+`);`' 
   />
   </b-col>
-  <b-col sm="12" md="8">
+  <b-col sm="12" md="6">
   <h2 class="article-title">
 {{title}}
   </h2>
@@ -59,11 +60,8 @@ export default {
     background-position: 0% 50%; 
     background-size: 100%; 
     background-repeat: no-repeat;
-    margin-top: 0px; 
     visibility: visible;
-    border-radius: 10px;
     margin: 0;
-    border-radius:10px;
     width: -webkit-fill-available;
     padding-top: 62.5%;
 }

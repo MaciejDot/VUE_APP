@@ -37,6 +37,8 @@ const router = new VueRouter({
 
 Vue.use(BootstrapVue)
 Vue.prototype.$baseUrlApi = "https://localhost:5001";
+Vue.prototype.$baseUrlArticleApi ="https://localhost:44379";
+Vue.prototype.$baseUrlForumApi ="https://localhost:44362";
 var headers = function () {
   return localStorage['token'] != undefined ? {
     'Content-Type': "application/json",
@@ -69,12 +71,34 @@ var accountApi = function(){
     timeout: 50000,
   })
 }
-Vue.prototype.$axios = {
-  api: api,
-  account : accountApi
+var forumApi = function(){
+  return axios.create({
+    baseURL: "https://localhost:44362",
+    headers: headers(),
+    timeout: 50000,
+  })
+}
+var articleApi = function(){
+  return axios.create({
+    baseURL: "https://localhost:44379",
+    headers: headers(),
+    timeout: 50000,
+  })
 }
 
+Vue.prototype.$axios = {
+  api: api,
+  account : accountApi,
+  forum : forumApi,
+  article : articleApi
+
+}
+
+
 var roles = null;
+Vue.extend({
+  mixins : [require('./proxy.js')]
+})
 Vue.prototype.$account = {
   isInRole: function (role) {
     if (roles != null) {

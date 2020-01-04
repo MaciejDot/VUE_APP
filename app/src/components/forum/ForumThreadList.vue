@@ -80,7 +80,7 @@ export default {
       if (this.pageNum != this.$route.query.page) {
         this.pageNum = this.$route.query.page;
         this.$axios
-          .api()
+          .forum()
           .get(`/Thread/${this.subjectName}/${this.$route.query.page}`)
           .then(r => {
             (this.title = r.data.title), (this.threads = r.data.threads);
@@ -101,7 +101,7 @@ export default {
   mounted: function() {
     this.$route.query.page === undefined ? (this.$route.query.page = 1) : null;
     this.$axios
-      .api()
+      .forum()
       .get(`/Thread/${this.subjectName}/${this.$route.query.page}`)
       .then(r => {
         (this.title = r.data.title), (this.threads = r.data.threads);

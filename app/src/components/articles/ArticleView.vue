@@ -17,7 +17,7 @@ export default {
     };
   },
   mounted: function() {
-    this.$axios.api()
+    this.$axios.article()
       .get(`/Article/1/${this.$route.params.id}`)
       .then(response => {
         this.title = response.data.title;

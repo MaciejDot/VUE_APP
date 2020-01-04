@@ -1,13 +1,10 @@
 <template>
   <div id="app" style="margin-top:0px; position:relative;">
-    <b-navbar class="navbar-shadow" toggleable="lg" type="dark" variant="info" :sticky="true">
+    <b-navbar style="border: 1px solid #e7e7e7;" toggleable="lg" type="light" variant="light" :sticky="true">
       <b-navbar-brand href="#">Calisthenics Encyclopedia</b-navbar-brand>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item>
-            <router-link class="nav-link" :to="{name:'Main Page'}">Main Page</router-link>
-          </b-nav-item>
           <b-nav-item>
             <router-link class="nav-link" to="/wiki">Exercises Wiki</router-link>
           </b-nav-item>
@@ -90,13 +87,6 @@ export default {
 </script>
 
 <style lang="scss">
-.navbar-shadow {
-  box-shadow: 0px 5px 5px rgba(40, 40, 40, 0.2),
-    0px 5px 5px rgba(40, 40, 40, 0.2), 0px 5px 5px rgba(40, 40, 40, 0.4),
-    0px 5px 5px rgba(40, 40, 40, 0.2), 0px 5px 5px rgba(40, 40, 40, 0.2),
-    inset 0px 5px 5px rgba(40, 40, 40, 0.1),
-    inset 0px 5px 5px rgba(40, 40, 40, 0.1);
-}
 #app {
   font-family: Georgia, serif;
   -webkit-font-smoothing: antialiased;

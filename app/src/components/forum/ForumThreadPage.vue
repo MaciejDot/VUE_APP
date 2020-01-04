@@ -63,14 +63,14 @@ export default {
     post: function() {
       var self = this;
       this.$axios
-        .api()
+        .forum()
         .post("/Post", {
           ThreadId: parseInt(this.$route.params.threadId),
           Content: self.$refs.editor.content
         })
         .then(() => {
           this.$axios
-            .api()
+            .forum()
             .get(`/Post/${this.$route.params.subjectName}/${this.$route.params.threadId}/${this.$route.query.page}`)
             .then(r => {
               let partialPost = r.data.posts;
@@ -90,7 +90,7 @@ export default {
       if (this.pageNum != this.$route.query.page) {
         this.pageNum = this.$route.query.page;
         this.$axios
-          .api()
+          .forum()
           .get(`/Post/${this.$route.params.subjectName}/${this.$route.params.threadId}/${this.$route.query.page}`)
           .then(r => {
             let partialPost = r.data.posts;
@@ -110,7 +110,7 @@ export default {
     this.$route.query.page === undefined ? (this.$route.query.page = 1) : null;
     this.pageNum = this.$route.query.page;
     this.$axios
-      .api()
+      .forum()
       .get(`/Post/${this.$route.params.subjectName}/${this.$route.params.threadId}/${this.$route.query.page}`)
       .then(r => {
         let partialPost = r.data.posts;

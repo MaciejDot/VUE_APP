@@ -7,7 +7,7 @@
           :link="'/Forum/'+subject.title+'?page=1'"
           :title="subject.title"
           :description="subject.description"
-          :thumbnail="`${$baseUrlApi}/SubjectThumbnail/${subject.thumbnailId}`"
+          :thumbnail="`${$baseUrlForumApi}/SubjectThumbnail/${subject.thumbnailId}`"
           :lastActivity="subject.lastActivity"
           :postCount="subject.postCount"
         />
@@ -27,7 +27,7 @@ export default {
     };
   },
   mounted: function() {
-    this.$axios.api().get("/Subject").then(r => {
+    this.$axios.forum().get("/Subject").then(r => {
       this.subjects = r.data.subjects;
     });
   },
