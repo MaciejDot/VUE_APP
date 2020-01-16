@@ -24,6 +24,7 @@
       :content="post.content.split('\n')"
       :date="post.created"
       :author="post.author"
+      :edited="post.edited"
     />
     <RichTextEditor v-if="pageNum==numberOfPages" ref="editor" :post="post" :error="error" />
     <b-container>
