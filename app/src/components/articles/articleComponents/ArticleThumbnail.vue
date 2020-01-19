@@ -25,7 +25,7 @@
       {{author}}
     </b-col>
     <b-col>
-      {{date}}
+      {{dateCreated}}
       </b-col>
   </b-row>
   </b-card>
@@ -34,10 +34,16 @@
 </template>
 <script>
 import {BCard, BMedia, BRow, BCol} from 'bootstrap-vue'
+import getFormattedDate from "../../../dateFormatter.js"
 export default {
     name:'ArticleThumbnail',
     props: ['author','imagePath','title','shortDescription','date','to'],
     components: {BCard, BMedia, BRow, BCol},
+    data: function(){
+      return{
+        dateCreated: getFormattedDate(this.date)
+      }
+    },
     methods:{
       resolveLink(){
         if(this.to!=0){

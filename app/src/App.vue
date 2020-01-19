@@ -97,13 +97,21 @@ h1{
 body {
   background-color: #bfd8ee;
 }
+iframe {
+    border: 1px solid #eee;
+    border-radius: 2px;
+  }
+  .iframe-instagram {
+    border: 1px solid #eee;
+    border-radius: 2px;
+  }
 @media (max-width: 199px) and (min-width: 150px) {
   iframe {
     width: 100px;
     height: 50px;
   }
   .iframe-instagram {
-    width: 100px;
+    width: 110px;
     height: 250px;
   }
 }
@@ -113,7 +121,7 @@ body {
     height: 90px;
   }
   .iframe-instagram {
-    width: 140px;
+    width: 143px;
     height: 300px;
   }
 }
@@ -123,7 +131,7 @@ body {
     height: 100px;
   }
   .iframe-instagram {
-    width: 180px;
+    width: 190px;
     height: 380px;
   }
 }
@@ -153,7 +161,7 @@ body {
     height: 170px;
   }
   .iframe-instagram {
-    width: 300px;
+    width: 310px;
     height: 520px;
   }
 }
@@ -174,7 +182,7 @@ body {
     height: 360px;
   }
   .iframe-instagram {
-    width: 636px;
+    width: 641px;
     height: 840px;
   }
 }

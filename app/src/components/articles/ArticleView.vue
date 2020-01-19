@@ -5,6 +5,7 @@
 </template>
 <script>
 import ArticleViewer from "./articleComponents/ArticleViewer.vue";
+import getFormattedDate from "../../dateFormatter.js"
 export default {
   components: { ArticleViewer },
   name: "ArticleView",
@@ -21,7 +22,7 @@ export default {
       .get(`/Article/1/${this.$route.params.id}`)
       .then(response => {
         this.title = response.data.title;
-        this.date = response.data.created;
+        this.date = getFormattedDate(response.data.created);
         this.content = response.data.content;
         this.author = response.data.author;
       });

@@ -12,12 +12,13 @@
     <div>{{description}}</div>
     <b-row>
       <b-col>Post Count: {{postCount}}</b-col>
-      <b-col>Last Activity: {{lastActivity}}</b-col>
+      <b-col>Last Activity: {{activity}}</b-col>
     </b-row>
   </b-card>
 </template>
 <script>
 import { BRow, BCol, BCard } from "bootstrap-vue";
+import getFormattedDate from "../../../dateFormatter.js"
 export default {
   name: "ForumSubject",
   components: { BRow, BCol, BCard },
@@ -31,7 +32,8 @@ export default {
   ],
   data: function() {
     return {
-      goToLocation: ""
+      goToLocation: "",
+      activity: getFormattedDate(this.lastActivity)
     };
   },
   methods: {

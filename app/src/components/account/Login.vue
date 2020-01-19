@@ -121,7 +121,7 @@ export default {
   width: 100%;
   padding: 100px 5px 30px 5px;
 }
-@media (max-width: 380px) {
+@media (max-width: 383px) {
   svg {
     display: none;
   }
