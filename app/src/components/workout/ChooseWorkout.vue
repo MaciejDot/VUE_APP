@@ -47,6 +47,13 @@
                 <p>'Always be patient'</p>
               </b-card>
             </b-col>
+             <b-col md="6" sm="12">
+              <b-card style="height:230px">
+                <p>Statistics</p>
+                <p>Maxes</p>
+                <p>10 s planche</p>
+              </b-card>
+            </b-col>
           </b-row>
         </b-col>
       </b-row>

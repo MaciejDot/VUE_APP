@@ -21,9 +21,12 @@ import {
 import {
   dom
 } from '@fortawesome/fontawesome-svg-core'
+import 'vue-select/dist/vue-select.css';
 var VueScrollTo = require('vue-scrollto');
 Vue.use(VueScrollTo)
+import vSelect from 'vue-select'
 
+Vue.component('v-select', vSelect)
 
 library.add(faUser, faChartArea, faSearch)
 
@@ -66,7 +69,7 @@ var api = function () {
 
 var accountApi = function(){
   return axios.create({
-    baseURL: "https://localhost:44344",
+    baseURL: "/api",
     headers: headers(),
     timeout: 50000,
   })
@@ -96,9 +99,7 @@ Vue.prototype.$axios = {
 
 
 var roles = null;
-Vue.extend({
-  mixins : [require('./proxy.js')]
-})
+
 Vue.prototype.$account = {
   isInRole: function (role) {
     if (roles != null) {

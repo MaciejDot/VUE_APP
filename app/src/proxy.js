@@ -1,13 +1,10 @@
-module.exports = {
-        dev: {
-            proxyTable: {
-                'https://localhost:44344/**': {
-                    target: '/api',
+var proxy = require('http-proxy-middleware');
+export default proxy({
+                '^/api/**': {
+                    target: 'https://localhost:44344',
                     changeOrigin: true,
                     pathRewrite: {
-                        '^https://localhost:44344': ''
+                        '^/api': ''
                     }
                 }
-            }
-        }
-    }
+            })
