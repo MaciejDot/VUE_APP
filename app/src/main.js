@@ -25,7 +25,8 @@ import 'vue-select/dist/vue-select.css';
 var VueScrollTo = require('vue-scrollto');
 Vue.use(VueScrollTo)
 import vSelect from 'vue-select'
-
+import VueSimpleContextMenu from 'vue-simple-context-menu'
+Vue.component('vue-simple-context-menu', VueSimpleContextMenu)
 Vue.component('v-select', vSelect)
 
 library.add(faUser, faChartArea, faSearch)
@@ -69,7 +70,7 @@ var api = function () {
 
 var accountApi = function(){
   return axios.create({
-    baseURL: "/api",
+    baseURL: "https://localhost:44344",
     headers: headers(),
     timeout: 50000,
   })
@@ -88,12 +89,17 @@ var articleApi = function(){
     timeout: 50000,
   })
 }
-
+var workoutApi = ()=> axios.create({
+  baseURL: "https://localhost:44341",
+  headers: headers(),
+  timeout: 50000,
+});
 Vue.prototype.$axios = {
   api: api,
   account : accountApi,
   forum : forumApi,
-  article : articleApi
+  article : articleApi,
+  workout : workoutApi
 
 }
 

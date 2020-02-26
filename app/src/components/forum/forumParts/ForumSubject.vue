@@ -6,6 +6,7 @@
   >
     <img
       class="thumbnail-image"
+      loading='lazy'
       :style='`background-image: url(`+thumbnail+`);`'
     />
     <h2 class="article-title">{{title}}</h2>
