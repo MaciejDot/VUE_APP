@@ -14,6 +14,7 @@ import NotFound from './components/routing/NotFound.vue'
 import WorkoutCreator from './components/workout/WorkoutCreator'
 import BackLog from './components/workout/BackLog.vue'
 import WorkoutViewer from './components/workout/WorkoutViewer.vue'
+import WorkoutExecution from './components/workout/WorkoutExecution.vue'
 export default [{
         path: '',
         name: "Main Page",
@@ -86,6 +87,14 @@ export default [{
     {
         path: '/WorkoutCreator/:workoutId',
         component: WorkoutCreator
+    },
+    {
+        path: '/WorkoutExecution',
+        component: WorkoutExecution
+    },
+    {
+        path: '/WorkoutExecution/:workoutId',
+        component: WorkoutExecution
     },
     {
         path: '/BackLog',

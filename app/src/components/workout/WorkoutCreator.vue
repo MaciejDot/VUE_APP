@@ -106,7 +106,7 @@
             <b-form-group label="breaks (in s.)" label-for="breaks">
               <b-form-input
                 id="breaks"
-                v-model="exerciseRow.breaks"
+                v-model="exerciseRow.break"
                 style="height:35px;"
                 type="number"
               />
@@ -151,10 +151,10 @@
             <b-form-group label="Max Additional Kgs">{{row.maxAdditionalKgs}}</b-form-group>
           </b-col>
           <b-col cols="12" sm="6" md="4" lg="3">
-            <b-form-group label="series">{{row.breaks}}</b-form-group>
+            <b-form-group label="series">{{row.series}}</b-form-group>
           </b-col>
           <b-col cols="12" sm="6" md="4" lg="3">
-            <b-form-group label="breaks (in s.)">{{row.series}}</b-form-group>
+            <b-form-group label="breaks (in s.)">{{row.break}}</b-form-group>
           </b-col>
         </b-row>
       </div>
@@ -230,7 +230,7 @@
         </b-col>
         <b-col cols="12" sm="6" md="4" lg="3">
           <b-form-group label="breaks (in s.)" label-for="breaks">
-            <b-form-input id="breaks" v-model="exercise.breaks" style="height:35px;" type="number" />
+            <b-form-input id="breaks" v-model="exercise.break" style="height:35px;" type="number" />
           </b-form-group>
         </b-col>
         <b-col cols="12" sm="6" md="4" lg="3">
@@ -356,7 +356,7 @@ export default {
                 minAdditionalKgs: x.minAdditionalKgs,
                 maxAdditionalKgs: x.maxAdditionalKgs,
                 description: x.description,
-                break: x.breaks,
+                break: x.break,
                 series: x.series,
                 order: order
               };
@@ -383,7 +383,7 @@ export default {
                 minAdditionalKgs: x.minAdditionalKgs,
                 maxAdditionalKgs: x.maxAdditionalKgs,
                 description: x.description,
-                break: x.breaks,
+                break: x.break,
                 series: x.series,
                 order: order
               };
@@ -411,7 +411,6 @@ export default {
           this.$refs.menu.hideMenu()
           break;
       }
-      alert(JSON.stringify(event))
     },
     addExercise() {
       if (this.validExercise(this.exercise)) {
