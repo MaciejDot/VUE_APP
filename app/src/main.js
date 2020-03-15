@@ -28,6 +28,13 @@ import vSelect from 'vue-select'
 import VueSimpleContextMenu from 'vue-simple-context-menu'
 Vue.component('vue-simple-context-menu', VueSimpleContextMenu)
 Vue.component('v-select', vSelect)
+import Vuex from 'vuex'
+import VuexPersist from 'vuex-persist';
+
+const vuexPersist = new VuexPersist({
+  key: 'calisthenics_encyclopedia',
+  storage: window.localStorage
+});
 
 library.add(faUser, faChartArea, faSearch)
 
@@ -40,13 +47,30 @@ const router = new VueRouter({
 });
 
 Vue.use(BootstrapVue)
+Vue.use(Vuex)
+const store = new Vuex.Store({
+  state: {},
+  getters: {
+    jwtToken: state => {
+      return state.jwtToken
+    }
+  },
+  mutations: {
+    jwtToken: (state, token) => {
+      state.jwtToken = token;
+    }
+  },
+  plugins: [vuexPersist.plugin]
+});
+//api config
+Vue.prototype.$store = store;
 Vue.prototype.$baseUrlApi = "https://localhost:5001";
-Vue.prototype.$baseUrlArticleApi ="https://localhost:44379";
-Vue.prototype.$baseUrlForumApi ="https://localhost:44362";
+Vue.prototype.$baseUrlArticleApi = "https://localhost:44379";
+Vue.prototype.$baseUrlForumApi = "https://localhost:44362";
 var headers = function () {
-  return localStorage['token'] != undefined ? {
+  return store.getters.jwtToken != undefined ? {
     'Content-Type': "application/json",
-    'Authorization': `Bearer ${localStorage['token']}`
+    'Authorization': `Bearer ${store.getters.jwtToken}`
   } : {
     'Content-Type': "application/json"
   }
@@ -68,38 +92,38 @@ var api = function () {
   return ax;
 }
 
-var accountApi = function(){
+var accountApi = function () {
   return axios.create({
     baseURL: "https://localhost:44344",
     headers: headers(),
     timeout: 50000,
   })
 }
-var forumApi = function(){
+var forumApi = function () {
   return axios.create({
     baseURL: "https://localhost:44362",
     headers: headers(),
     timeout: 50000,
   })
 }
-var articleApi = function(){
+var articleApi = function () {
   return axios.create({
     baseURL: "https://localhost:44379",
     headers: headers(),
     timeout: 50000,
   })
 }
-var workoutApi = ()=> axios.create({
+var workoutApi = () => axios.create({
   baseURL: "https://localhost:44341",
   headers: headers(),
   timeout: 50000,
 });
 Vue.prototype.$axios = {
   api: api,
-  account : accountApi,
-  forum : forumApi,
-  article : articleApi,
-  workout : workoutApi
+  account: accountApi,
+  forum: forumApi,
+  article: articleApi,
+  workout: workoutApi
 
 }
 
@@ -110,7 +134,7 @@ Vue.prototype.$account = {
   isInRole: function (role) {
     if (roles != null) {
       return roles.includes(role);
-    } else if (localStorage["token"] != undefined) {
+    } else if (store.getters.jwtToken != undefined) {
       accountApi().get('/AccountInfo').then(r => {
           roles = r.data.roles;
           return roles.includes(role);
@@ -125,11 +149,11 @@ Vue.prototype.$account = {
 }
 
 setInterval(() => {
-  if (localStorage["token"] != undefined) {
-      accountApi()
+  if (store.getters.jwtToken != undefined) {
+    accountApi()
       .get("/Token")
       .then(t => {
-        localStorage["token"] = t.data.token;
+        store.commit('jwtToken', t.data.token);
       });
   }
 }, 2 * 60 * 1000);

@@ -281,18 +281,19 @@ export default {
           return { value: y.id, label: y.name };
         });
       });
-      if (this.$route.params.workoutId !== undefined) {
+    if (this.$route.params.workoutId !== undefined) {
       this.$axios
         .workout()
         .get(`/Workout/${this.$route.params.workoutId}`)
-        .then(x => {
-          this.nameOfWorkout = x.data.name;
-          this.descriptionOfWorkout = x.data.description;
-          /*this.workoutId = x.data.id;
-          dateOfWorkout : this.dateOfWorkout,
-            mood: this.mood.value,
-            fatigue: this.fatigue.value,*/
-          this.rowsOfWorkout = x.data.exercises.map(x => {
+        .then(response => {
+          let data = response.data;
+          this.nameOfWorkout = data.name;
+          this.descriptionOfWorkout = data.description;
+          this.workoutId = data.id;
+          this.dateOfWorkout = data.dateOfWorkout;
+          this.mood = data.mood.value;
+          this.fatigue = data.fatigue.value;
+          this.rowsOfWorkout = data.exercises.map(x => {
             return {
               selectedExercise: {
                 label: x.exerciseName,
@@ -334,7 +335,7 @@ export default {
           .post("/Workout", {
             name: this.nameOfWorkout,
             description: this.descriptionOfWorkout,
-            dateOfWorkout : this.dateOfWorkout,
+            dateOfWorkout: this.dateOfWorkout,
             mood: this.mood.value,
             fatigue: this.fatigue.value,
             exercises: this.rowsOfWorkout.map(x => {
@@ -359,9 +360,12 @@ export default {
       } else {
         this.$axios
           .workout()
-          .patch(`/WorkoutPlan/${this.workoutId}`, {
+          .patch(`/Workout/${this.workoutId}`, {
             name: this.nameOfWorkout,
             description: this.descriptionOfWorkout,
+            dateOfWorkout: this.dateOfWorkout,
+            mood: this.mood.value,
+            fatigue: this.fatigue.value,
             exercises: this.rowsOfWorkout.map(x => {
               order += 1;
               return {
@@ -369,7 +373,7 @@ export default {
                 reps: parseInt(x.reps),
                 additionalKgs: x.additionalKgs,
                 description: x.description,
-                break: x.breaks,
+                break: parseInt(x.break),
                 series: x.series,
                 order: order
               };

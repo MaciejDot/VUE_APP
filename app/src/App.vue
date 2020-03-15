@@ -15,7 +15,7 @@
             <router-link class="nav-link" to="/articles">Articles</router-link>
           </b-nav-item>
         </b-navbar-nav>
-        <b-navbar-nav class="ml-auto">
+        <b-navbar-nav :key="refreshLogin" class="ml-auto">
           <b-nav-item-dropdown v-if="loged()" right>
             <template slot="button-content">
               <em>{{username()}}</em>
@@ -39,29 +39,17 @@ export default {
   components: { BNavbar },
   data: function() {
     return {
-      usernameStatic: null
+      usernameStatic: null,
+      refreshLogin: 0
     };
-  },
-  mounted: function() {
-    window.setInterval(() => {
-      if (localStorage["token"] != undefined) {
-        this.$axios
-          .account()
-          .get("/Token")
-          .then(t => {
-            localStorage["token"] = t.data.token;
-          });
-      }
-    }, 2 * 60 * 
-     1000);
   },
   methods: {
     signOut: function() {
-      localStorage.clear();
+      this.$store.commit('jwtToken', undefined);
       this.$router.push({ path: "SuccessSignOut" });
     },
     loged: function() {
-      return !(localStorage["token"] == undefined);
+      return this.$store.getters.jwtToken != undefined;
     },
     username: function() {
       if (this.usernameStatic != null) {
@@ -75,7 +63,8 @@ export default {
           return this.usernameStatic;
         })
         .catch(() => {
-          localStorage.clear();
+          this.$store.commit('jwtToken', undefined);
+          this.refreshLogin += 1;
           return this.loged();
         });
     }

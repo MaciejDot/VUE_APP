@@ -356,7 +356,7 @@ export default {
                 minAdditionalKgs: x.minAdditionalKgs,
                 maxAdditionalKgs: x.maxAdditionalKgs,
                 description: x.description,
-                break: x.break,
+                break: parseInt(x.break),
                 series: x.series,
                 order: order
               };
@@ -383,7 +383,7 @@ export default {
                 minAdditionalKgs: x.minAdditionalKgs,
                 maxAdditionalKgs: x.maxAdditionalKgs,
                 description: x.description,
-                break: x.break,
+                break: parseInt(x.break),
                 series: x.series,
                 order: order
               };

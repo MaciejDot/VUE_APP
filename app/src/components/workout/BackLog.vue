@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>BackLog</h2>
-    <day-of-back-log v-for="day in days" :key="day.day" :day="day.day" :trainings="day.trainings" />
+    <day-of-back-log v-for="workout in workouts" :key="workout.id" :day="workout.executed" :trainings="day.trainings" />
   </div>
 </template>
 <script>
@@ -11,48 +11,7 @@ export default {
   components: { DayOfBackLog },
   data: () => {
     return {
-      days: [
-        {
-          day: "2019 November 18",
-          trainings: [
-            {
-              name: "Morning Routine",
-              exercises: [
-                {
-                  exercise: "push ups",
-                  reps: 7,
-                  addKgs: 0
-                },
-                {
-                  exercise: "push ups",
-                  reps: 7,
-                  addKgs: 0
-                },
-                {
-                  exercise: "push ups",
-                  reps: 7,
-                  addKgs: 0
-                },
-                {
-                  exercise: "push ups",
-                  reps: 7,
-                  addKgs: 0
-                },
-                {
-                  exercise: "push ups",
-                  reps: 7,
-                  addKgs: 0
-                },
-                {
-                  exercise: "push ups",
-                  reps: 7,
-                  addKgs: 0
-                },
-              ]
-            }
-          ]
-        }
-      ]
+      workouts:[]
     };
   }
 };

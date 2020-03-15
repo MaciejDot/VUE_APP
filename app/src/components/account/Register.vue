@@ -71,7 +71,7 @@ export default {
   },
    mounted() {
     var self=this;
-    if(localStorage['token']!=undefined){
+    if(self.$store.getters.jwtToken!=undefined){
       this.$router.push({ path: "/" });
     }
     window.addEventListener("keypress", function(e) {
@@ -123,7 +123,7 @@ export default {
             password: this.password
         })
         .then(t => {
-          localStorage["token"] = t.data.token;
+          this.$store.commit('jwtToken', t.data.token);
           this.$router.push({ path: "/" });
         }).catch(()=>{
           this.error="Something went wrong ... ";
