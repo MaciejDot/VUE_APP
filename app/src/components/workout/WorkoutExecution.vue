@@ -11,6 +11,7 @@
               v-model="nameOfWorkout"
               style="height:35px;"
               type="text"
+              :disabled="workoutEdition"
             />
           </b-form-group>
         </b-col>
@@ -22,6 +23,7 @@
               placeholder="Enter description..."
               rows="3"
               max-rows="6"
+              :disabled="workoutEdition"
             ></b-form-textarea>
           </b-form-group>
         </b-col>
@@ -284,12 +286,12 @@ export default {
     if (this.$route.params.workoutId !== undefined) {
       this.$axios
         .workout()
-        .get(`/Workout/${this.$route.params.workoutId}`)
+        .get(`/Workout/${this.$route.params.username}/${this.$route.params.workoutname}`)
         .then(response => {
           let data = response.data;
+          this.workoutEdition = true;
           this.nameOfWorkout = data.name;
           this.descriptionOfWorkout = data.description;
-          this.workoutId = data.id;
           this.dateOfWorkout = data.dateOfWorkout;
           this.mood = data.mood.value;
           this.fatigue = data.fatigue.value;
@@ -329,10 +331,10 @@ export default {
     },
     saveWorkout() {
       let order = 0;
-      if (this.workoutId == -1) {
+      if (!this.workoutEdition) {
         this.$axios
           .workout()
-          .post("/Workout", {
+          .post(`/Workout`, {
             name: this.nameOfWorkout,
             description: this.descriptionOfWorkout,
             dateOfWorkout: this.dateOfWorkout,
@@ -360,9 +362,7 @@ export default {
       } else {
         this.$axios
           .workout()
-          .patch(`/Workout/${this.workoutId}`, {
-            name: this.nameOfWorkout,
-            description: this.descriptionOfWorkout,
+          .patch(`/Workout/${this.$route.params.workoutname}`, {
             dateOfWorkout: this.dateOfWorkout,
             mood: this.mood.value,
             fatigue: this.fatigue.value,
@@ -417,7 +417,7 @@ export default {
       contextMenuOptions: [{ name: "Edit" }, { name: "Delete" }],
       rowsOfWorkout: [],
       exercises: [],
-      workoutId: -1,
+      workoutEdition: false,
       exerciseRow: {
         selectedExercise: null,
         reps: 0,

@@ -1,20 +1,21 @@
-import ChooseWorkout from './components/workout/ChooseWorkout'
-import Forum from './components/forum/Forum'
-import MainPageArticles from './components/articles/MainPageArticles'
-import ForumThreadList from './components/forum/ForumThreadList.vue'
-import ForumThreadPage from './components/forum/ForumThreadPage'
-import ForumThreadCreator from './components/forum/ForumThreadCreator'
-import MainPage from './components/MainPage'
-import RichTextEditorArticle from './components/richtexteditor/RichTextEditorArticle.vue'
-import ArticleView from './components/articles/ArticleView.vue'
-import Login from './components/account/Login.vue'
-import SuccessSignOut from './components/account/SuccessSignOut.vue'
-import Register from './components/account/Register.vue'
-import NotFound from './components/routing/NotFound.vue'
-import WorkoutCreator from './components/workout/WorkoutCreator'
-import BackLog from './components/workout/BackLog.vue'
-import WorkoutViewer from './components/workout/WorkoutViewer.vue'
-import WorkoutExecution from './components/workout/WorkoutExecution.vue'
+import ChooseWorkout from '.././components/workout/ChooseWorkout'
+import Forum from '.././components/forum/Forum'
+import MainPageArticles from '.././components/articles/MainPageArticles'
+import ForumThreadList from '.././components/forum/ForumThreadList.vue'
+import ForumThreadPage from '.././components/forum/ForumThreadPage'
+import ForumThreadCreator from '.././components/forum/ForumThreadCreator'
+import MainPage from '.././components/MainPage'
+import RichTextEditorArticle from '.././components/richtexteditor/RichTextEditorArticle.vue'
+import ArticleView from '.././components/articles/ArticleView.vue'
+import Login from '.././components/account/Login.vue'
+import SuccessSignOut from '.././components/account/SuccessSignOut.vue'
+import Register from '.././components/account/Register.vue'
+import NotFound from '.././components/routing/NotFound.vue'
+import WorkoutCreator from '.././components/workout/WorkoutCreator'
+import BackLog from '.././components/workout/BackLog.vue'
+import WorkoutViewer from '.././components/workout/WorkoutViewer.vue'
+import WorkoutExecution from '.././components/workout/WorkoutExecution.vue'
+
 export default [{
         path: '',
         name: "Main Page",
@@ -85,7 +86,7 @@ export default [{
         component: WorkoutCreator
     },
     {
-        path: '/WorkoutCreator/:workoutId',
+        path: '/WorkoutCreator/:username/:workoutName',
         component: WorkoutCreator
     },
     {
@@ -93,7 +94,7 @@ export default [{
         component: WorkoutExecution
     },
     {
-        path: '/WorkoutExecution/:workoutId',
+        path: '/WorkoutExecution/:username/:workoutName',
         component: WorkoutExecution
     },
     {
@@ -101,7 +102,7 @@ export default [{
         component: BackLog
     },
     {
-        path: '/WorkoutViewer/:workoutId',
+        path: '/WorkoutViewer/:username/:workoutName',
         component: WorkoutViewer
     },
     {

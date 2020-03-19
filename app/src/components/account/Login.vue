@@ -49,8 +49,8 @@ export default {
   },
    mounted() {
     var self=this;
-    if(self.$store.getters.jwtToken!=undefined){
-      this.$router.push({ path: "/" });
+    if(self.$store.getters.logged){
+      self.$router.push({ path: "/" });
     }
     window.addEventListener("keypress", function(e) {
       e.keyCode==13?self.logIn():null;
@@ -66,6 +66,9 @@ export default {
         })
         .then(t => {
           this.$store.commit('jwtToken', t.data.token);
+          // eslint-disable-next-line no-console
+          console.log(this.$store.state.jwtToken);
+          this.$store.dispatch('updateAccountInfo');
           this.$router.push({ path: "/" });
         }).catch(()=>{
           this.error="Given credentials are incorrect...";

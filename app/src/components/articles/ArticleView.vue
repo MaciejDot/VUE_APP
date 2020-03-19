@@ -5,7 +5,7 @@
 </template>
 <script>
 import ArticleViewer from "./articleComponents/ArticleViewer.vue";
-import getFormattedDate from "../../dateFormatter.js"
+import {getFormattedDate} from "../../library/dateFormatter.js"
 export default {
   components: { ArticleViewer },
   name: "ArticleView",

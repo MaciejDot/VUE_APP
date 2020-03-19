@@ -32,7 +32,7 @@
 </template>
 <script>
 import { BCard, BMedia } from "bootstrap-vue";
-import getFormattedDate from "../../../dateFormatter.js";
+import {getFormattedDate} from "../../../library/dateFormatter.js";
 export default {
   name: "ForumPost",
   props: ["title", "content", "author", "date", "edited"],

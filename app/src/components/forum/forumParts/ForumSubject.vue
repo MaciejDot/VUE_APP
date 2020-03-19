@@ -19,7 +19,7 @@
 </template>
 <script>
 import { BRow, BCol, BCard } from "bootstrap-vue";
-import getFormattedDate from "../../../dateFormatter.js"
+import {getFormattedDate} from "../../../library/dateFormatter.js"
 export default {
   name: "ForumSubject",
   components: { BRow, BCol, BCard },

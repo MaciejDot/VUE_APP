@@ -11,6 +11,7 @@
               v-model="nameOfWorkout"
               style="height:35px;"
               type="text"
+              :disabled="workoutEdition"
             />
           </b-form-group>
         </b-col>
@@ -22,6 +23,7 @@
               placeholder="Enter description..."
               rows="3"
               max-rows="6"
+              :disabled="workoutEdition"
             ></b-form-textarea>
           </b-form-group>
         </b-col>
@@ -295,14 +297,14 @@ export default {
             return { value: y.id, label: y.name };
           }))
       );
-    if (this.$route.params.workoutId !== undefined) {
+    if (this.$route.params.workoutName !== undefined) {
       this.$axios
         .workout()
-        .get(`/WorkoutPlan/${this.$route.params.workoutId}`)
+        .get(`/WorkoutPlan/${this.$route.params.username}/${this.$route.params.workoutName}`)
         .then(x => {
+          this.workoutEdition = true;
           this.nameOfWorkout = x.data.name;
           this.descriptionOfWorkout = x.data.description;
-          this.workoutId = x.data.id;
           this.rowsOfWorkout = x.data.exercises.map(x => {
             return {
               selectedExercise: {
@@ -341,11 +343,11 @@ export default {
     },
     saveWorkout() {
       let order = 0;
-      if (this.workoutId == -1) {
+      if (!this.workoutEdition) {
         this.$axios
           .workout()
-          .post("/WorkoutPlan", {
-            name: this.nameOfWorkout,
+          .post(`/WorkoutPlan`, {
+             name: this.nameOfWorkout,
             description: this.descriptionOfWorkout,
             exercises: this.rowsOfWorkout.map(x => {
               order += 1;
@@ -371,9 +373,7 @@ export default {
       } else {
         this.$axios
           .workout()
-          .patch(`/WorkoutPlan/${this.workoutId}`, {
-            name: this.nameOfWorkout,
-            description: this.descriptionOfWorkout,
+          .patch(`/WorkoutPlan/${this.$route.params.workoutName}`, {
             exercises: this.rowsOfWorkout.map(x => {
               order += 1;
               return {
@@ -426,7 +426,7 @@ export default {
       ],
       rowsOfWorkout: [],
       exercises: [],
-      workoutId: -1,
+       workoutEdition: false,
       exerciseRow: {
         selectedExercise: null,
         minNumberOfReps: 0,

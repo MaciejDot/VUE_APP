@@ -18,7 +18,7 @@
 </template>
 <script>
 import {BCard, BMedia, BRow, BCol } from 'bootstrap-vue'
-import getFormattedDate from "../../../dateFormatter.js"
+import {getFormattedDate} from "../../../library/dateFormatter.js"
 export default {
     name:'ForumThread',
     props :['title','link','op','replies','created'],

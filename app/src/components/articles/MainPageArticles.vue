@@ -6,7 +6,7 @@
       <h1>Articles</h1>
     </div>
     <ArticleThumbnail
-      v-if="$account.isInRole('admin') && pageNum==1"
+      v-if="$store.dispatch('userIsInRole','admin') && pageNum==1"
       title="Create a new article"
       :to="0"
     />

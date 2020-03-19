@@ -15,10 +15,10 @@
             <router-link class="nav-link" to="/articles">Articles</router-link>
           </b-nav-item>
         </b-navbar-nav>
-        <b-navbar-nav :key="refreshLogin" class="ml-auto">
-          <b-nav-item-dropdown v-if="loged()" right>
+        <b-navbar-nav class="ml-auto">
+          <b-nav-item-dropdown v-if="$store.getters.logged" right>
             <template slot="button-content">
-              <em>{{username()}}</em>
+              <em>{{$store.state.username}}</em>
             </template>
             <b-dropdown-item href="#">Profile</b-dropdown-item>
             <b-dropdown-item href="#" @click="signOut()">Sign Out</b-dropdown-item>
@@ -37,37 +37,11 @@ import { BNavbar } from "bootstrap-vue";
 export default {
   name: "app",
   components: { BNavbar },
-  data: function() {
-    return {
-      usernameStatic: null,
-      refreshLogin: 0
-    };
-  },
   methods: {
     signOut: function() {
-      this.$store.commit('jwtToken', undefined);
+      this.$store.dispatch('logOut',{instance:this});
       this.$router.push({ path: "SuccessSignOut" });
     },
-    loged: function() {
-      return this.$store.getters.jwtToken != undefined;
-    },
-    username: function() {
-      if (this.usernameStatic != null) {
-        return this.usernameStatic;
-      }
-      this.$axios
-        .account()
-        .get("/AccountInfo")
-        .then(r => {
-          this.usernameStatic = r.data.username;
-          return this.usernameStatic;
-        })
-        .catch(() => {
-          this.$store.commit('jwtToken', undefined);
-          this.refreshLogin += 1;
-          return this.loged();
-        });
-    }
   }
 };
 </script>
