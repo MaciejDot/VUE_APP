@@ -16,11 +16,9 @@
 export default {
   name: "DayOfBackLog",
   props: { day: { Type: String }, trainings: { Type: Array } },
-  data: function() {
-    return {
-      expandedDay: false
-    };
-  },
+  data: () => ({
+    expandedDay: false
+  }),
   methods: {
     expandDay: function() {
       this.expandedDay = !this.expandedDay;

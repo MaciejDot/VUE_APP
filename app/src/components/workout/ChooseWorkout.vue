@@ -14,46 +14,32 @@
             <b-col md="6" sm="12">
               <b-card style="height:230px;cursor:pointer" @click="workoutCreatorLink">
                 <p>
-                  <b>Create new workout</b>
+                  <b>Create new workout plan</b>
                 </p>
               </b-card>
             </b-col>
             <b-col md="6" sm="12">
               <b-card style="height:230px">
                 <p>
-                  <b>Your Workout Plan's</b>
+                  <b>Your workout plans</b>
                 </p>
                 <p v-for="(workoutPlan,index) in workoutPlans" :key="index">
-                  {{workoutPlan.name}}
+                  <router-link class="link" :to="`WorkoutViewer/${username}/${workoutPlan.name}`">{{workoutPlan.name}}</router-link>
                 </p>
               </b-card>
             </b-col>
             <b-col md="6" sm="12">
-              <b-card style="height:230px">new workout / begin workout</b-card>
-            </b-col>
-            <b-col md="6" sm="12">
-              <b-card style="height:230px">
-                <p>Your Goals</p>
-                <p>Planche</p>
-                <p>Vidtorian Cross</p>
+              <b-card style="height:230px;cursor:pointer" @click="workoutExecutionCreatorLink">
+                <p>
+                  <b>Create new workout execution</b>
+                </p>
               </b-card>
             </b-col>
             <b-col md="6" sm="12">
-              <b-card style="height:230px">
-                <p>History of workouts</p>
-              </b-card>
-            </b-col>
-            <b-col md="6" sm="12">
-              <b-card style="height:230px">
-                <p>Notes</p>
-                <p>'Always be patient'</p>
-              </b-card>
-            </b-col>
-            <b-col md="6" sm="12">
-              <b-card style="height:230px">
-                <p>Statistics</p>
-                <p>Maxes</p>
-                <p>10 s planche</p>
+              <b-card style="height:230px;cursor:pointer;">
+                <p>
+                  <b>Calendar / Back log</b>
+                </p>
               </b-card>
             </b-col>
           </b-row>
@@ -65,6 +51,7 @@
 <script>
 import { BCol, BRow, BCard, BContainer } from "bootstrap-vue";
 import { Line } from "vue-chartjs";
+import { mapState } from 'vuex'
 export default {
   name: "ChooseWorkout",
   components: { BCol, BRow, BCard, BContainer, LineChart: Line },
@@ -73,9 +60,15 @@ export default {
       workoutPlans: []
     };
   },
+  computed: mapState({
+    username: state => state.username
+  }),
   methods: {
     workoutCreatorLink: function() {
       this.$router.push({ path: "/WorkoutCreator" });
+    },
+    workoutExecutionCreatorLink: function(){
+      this.$router.push({ path: "/WorkoutExecution" });
     }
   },
   mounted: function() {
@@ -113,6 +106,13 @@ export default {
 };
 </script>
 <style>
+.link:focus, .link:hover {
+    color: rgba(0,0,0,.7);
+    text-decoration: none;
+}
+.link {
+    color: rgba(0,0,0,.5);
+}
 .card {
   border-radius: 2px;
   margin-top: 20px;

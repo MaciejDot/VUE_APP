@@ -41,7 +41,7 @@
       @start="drag=true"
       @end="drag=false"
     >
-      <b-card class="white-card" v-for="(row, index) in rowsOfWorkout" :key="index">
+      <b-card class="white-card draggable-card" v-for="(row, index) in rowsOfWorkout" :key="index">
         <div v-if="editingIndex==index">
           <b-row>
             <b-col cols="12" sm="6" md="4" lg="3">
@@ -258,61 +258,56 @@ export default {
     draggable
   },
   mounted: function() {
-    this.$axios
-      .workout()
-      .get("/Exercise")
-      .then(
-        x =>
-          (this.exercises = x.data.map(y => {
-            return { value: y.id, label: y.name };
-          }))
-      );
-    this.$axios
-      .workout()
-      .get("/Mood")
-      .then(x => {
-        this.moods = x.data.map(y => {
-          return { value: y.id, label: y.name };
-        });
+    Promise.all([
+      this.$store.dispatch("getFatigues"),
+      this.$store.dispatch("getMoods"),
+      this.$store.dispatch("getExercises")
+    ])
+      .then(response => {
+        this.fatigues = response[0];
+        this.moods = response[1];
+        this.exercises = response[2];
+      })
+      .then(() => {
+        if (this.$route.params.username !== undefined) {
+          this.$axios
+            .workout()
+            .get(
+              `/Workout/${this.$route.params.username}/${this.$route.params.workoutName}`
+            )
+            .then(response => {
+              let data = response.data;
+              this.workoutEdition = true;
+              this.nameOfWorkout = data.name;
+              this.descriptionOfWorkout = data.description;
+              this.dateOfWorkout = data.dateOfWorkout;
+              this.mood = {
+                value: data.mood,
+                label: this.moods.find(x => x.value == data.mood).label
+              };
+              this.fatigue = {
+                value: data.fatigue,
+                label: this.fatigues.find(x => x.value == data.fatigue).label
+              };
+              this.rowsOfWorkout = data.exercises.map(x => {
+                return {
+                  selectedExercise: {
+                    label: x.name,
+                    value: x.exerciseId
+                  },
+                  reps: x.reps,
+                  additionalKgs: x.additionalKgs,
+                  description: x.description,
+                  break: x.break,
+                  series: x.series
+                };
+              });
+            })
+            .catch(() => {
+              this.$router.push({ path: "/404" });
+            });
+        }
       });
-    this.$axios
-      .workout()
-      .get("/Fatigue")
-      .then(x => {
-        this.fatigues = x.data.map(y => {
-          return { value: y.id, label: y.name };
-        });
-      });
-    if (this.$route.params.workoutId !== undefined) {
-      this.$axios
-        .workout()
-        .get(`/Workout/${this.$route.params.username}/${this.$route.params.workoutname}`)
-        .then(response => {
-          let data = response.data;
-          this.workoutEdition = true;
-          this.nameOfWorkout = data.name;
-          this.descriptionOfWorkout = data.description;
-          this.dateOfWorkout = data.dateOfWorkout;
-          this.mood = data.mood.value;
-          this.fatigue = data.fatigue.value;
-          this.rowsOfWorkout = data.exercises.map(x => {
-            return {
-              selectedExercise: {
-                label: x.exerciseName,
-                value: x.exerciseId
-              },
-              reps: x.reps,
-              additionalKgs: x.additionalKgs,
-              description: x.description,
-              breaks: x.break,
-              series: x.series
-            };
-          });
-        })
-        .catch(() => {
-          this.$router.push({ path: "/404" });
-        });
-    }
   },
   methods: {
     deleteRow(index) {
@@ -362,7 +357,7 @@ export default {
       } else {
         this.$axios
           .workout()
-          .patch(`/Workout/${this.$route.params.workoutname}`, {
+          .patch(`/Workout/${this.$route.params.workoutName}`, {
             dateOfWorkout: this.dateOfWorkout,
             mood: this.mood.value,
             fatigue: this.fatigue.value,
@@ -506,6 +501,9 @@ svg {
 }
 svg:hover {
   opacity: 0.7;
+}
+.draggable-card {
+  cursor: pointer;
 }
 .break {
   height: 50px;

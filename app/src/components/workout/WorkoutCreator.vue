@@ -30,7 +30,7 @@
       </b-row>
     </b-card>
     <draggable v-model="rowsOfWorkout" :noTransitionOnDrag="true" :options="{disabled: editingIndex != -1}" @start="drag=true" @end="drag=false">
-    <b-card class="white-card" v-for="(row, index) in rowsOfWorkout" :key="index">
+    <b-card class="white-card draggable-card" v-for="(row, index) in rowsOfWorkout" :key="index">
       <div v-if="editingIndex==index">
         <b-row>
           <b-col cols="12" sm="6" md="4" lg="3">
@@ -108,7 +108,7 @@
             <b-form-group label="breaks (in s.)" label-for="breaks">
               <b-form-input
                 id="breaks"
-                v-model="exerciseRow.break"
+                v-model="exerciseRow.breaks"
                 style="height:35px;"
                 type="number"
               />
@@ -156,7 +156,7 @@
             <b-form-group label="series">{{row.series}}</b-form-group>
           </b-col>
           <b-col cols="12" sm="6" md="4" lg="3">
-            <b-form-group label="breaks (in s.)">{{row.break}}</b-form-group>
+            <b-form-group label="breaks (in s.)">{{row.breaks}}</b-form-group>
           </b-col>
         </b-row>
       </div>
@@ -232,7 +232,7 @@
         </b-col>
         <b-col cols="12" sm="6" md="4" lg="3">
           <b-form-group label="breaks (in s.)" label-for="breaks">
-            <b-form-input id="breaks" v-model="exercise.break" style="height:35px;" type="number" />
+            <b-form-input id="breaks" v-model="exercise.breaks" style="height:35px;" type="number" />
           </b-form-group>
         </b-col>
         <b-col cols="12" sm="6" md="4" lg="3">
@@ -288,15 +288,9 @@ export default {
     draggable
   },
   mounted: function() {
-    this.$axios
-      .workout()
-      .get("/Exercise")
-      .then(
-        x =>
-          (this.exercises = x.data.map(y => {
-            return { value: y.id, label: y.name };
-          }))
-      );
+    this.$store.dispatch('getExercises').then(exercises=>{
+      this.exercises = exercises;
+    })
     if (this.$route.params.workoutName !== undefined) {
       this.$axios
         .workout()
@@ -355,10 +349,10 @@ export default {
                 exerciseId: x.selectedExercise.value,
                 minReps: parseInt(x.minNumberOfReps),
                 maxReps: x.maxNumberOfReps,
-                minAdditionalKgs: x.minAdditionalKgs,
+                minAdditionalKgs: parseInt(x.minAdditionalKgs),
                 maxAdditionalKgs: x.maxAdditionalKgs,
                 description: x.description,
-                break: parseInt(x.break),
+                break: parseInt(x.breaks),
                 series: x.series,
                 order: order
               };
@@ -383,7 +377,7 @@ export default {
                 minAdditionalKgs: x.minAdditionalKgs,
                 maxAdditionalKgs: x.maxAdditionalKgs,
                 description: x.description,
-                break: parseInt(x.break),
+                break: parseInt(x.breaks),
                 series: x.series,
                 order: order
               };
@@ -482,6 +476,9 @@ export default {
     &:hover {
       background-color: #efefef;
     }
+  }
+  .draggable-card{
+    cursor:pointer
   }
   li {
     &:first-of-type {

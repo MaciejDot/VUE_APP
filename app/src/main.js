@@ -23,13 +23,13 @@ import {
 } from './store/actions/actions'
 
 var VueScrollTo = require('vue-scrollto');
+
 Vue.use(VueScrollTo)
 Vue.component('vue-simple-context-menu', VueSimpleContextMenu)
 Vue.component('v-select', vSelect)
 Vue.use(VueRouter);
 Vue.use(BootstrapVue)
 Vue.use(Vuex)
-
 const vuexPersist = new VuexPersist({
   key: 'calisthenics_encyclopedia',
   storage: window.localStorage
@@ -50,14 +50,13 @@ const store = new Vuex.Store({
 Vue.prototype.$baseUrlArticleApi = "https://localhost:44379";
 Vue.prototype.$baseUrlForumApi = "https://localhost:44362";
 var headers = function () {
-  return store.getters.jwtToken != undefined ? {
+  return store.state.jwtToken != undefined ? {
     'Content-Type': "application/json",
-    'Authorization': `Bearer ${store.getters.jwtToken}`
+    'Authorization': `Bearer ${store.state.jwtToken}`
   } : {
     'Content-Type': "application/json"
   }
 }
-
 const accountApi = () =>
   axios.create({
     baseURL: "https://localhost:44344",
@@ -86,7 +85,6 @@ Vue.prototype.$axios = {
   article: articleApi,
   workout: workoutApi
 }
-
 
 new Vue({
   store,

@@ -1,9 +1,9 @@
 export const actions = {
-    updateAccountInfo: function({
+    updateAccountInfo: function ({
         commit,
         state,
         dispatch
-    })  {
+    }) {
         if (state.jwtToken !== undefined) {
             this._vm
                 .$axios
@@ -20,11 +20,11 @@ export const actions = {
             dispatch('logOut')
         }
     },
-    updateToken: function({
+    updateToken: function ({
         commit,
         state,
         dispatch
-    },) {
+    }, ) {
         if (state.jwtToken !== undefined) {
             this._vm.$axios.account()
                 .get("/Token")
@@ -45,8 +45,61 @@ export const actions = {
         commit('username', undefined);
         commit('roles', undefined);
     },
+    getExercises: function({state}){
+        if (state.exercises === undefined) {
+            return this._vm.$axios
+                .workout()
+                .get("/Exercise")
+                .then(
+                    x => {
+                        state.exercises = x.data.map(y => {
+                            return {
+                                value: y.id,
+                                label: y.name
+                            };
+
+                        })
+                        return state.exercises;
+                    });
+        }
+        return Promise.resolve(state.exercises);
+    },
+    getMoods: function({state}){
+        if (state.moods === undefined) {
+            return this._vm.$axios
+                .workout()
+                .get("/Mood")
+                .then(x => {
+                    state.moods = x.data.map(y => {
+                        return {
+                            value: y.id,
+                            label: y.name
+                        };
+                    });
+                    return state.moods;
+                });
+        }
+        return Promise.resolve(state.moods);
+    },
+    getFatigues: function({state}) {
+        if (state.fatigues === undefined) {
+            return this._vm.$axios
+                .workout()
+                .get("/Fatigue")
+                .then(x => {
+                    state.fatigues = x.data.map(y => {
+                        return {
+                            value: y.id,
+                            label: y.name
+                        };
+                    });
+                    return state.fatigues;
+                });
+        }
+        return Promise.resolve(state.fatigues);
+    },
     userIsInRole: ({
-        state
+            state
         }, role) => state.roles !== undefined ?
         state.roles.some(x => x === role) : false
 }

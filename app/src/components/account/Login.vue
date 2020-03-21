@@ -66,8 +66,6 @@ export default {
         })
         .then(t => {
           this.$store.commit('jwtToken', t.data.token);
-          // eslint-disable-next-line no-console
-          console.log(this.$store.state.jwtToken);
           this.$store.dispatch('updateAccountInfo');
           this.$router.push({ path: "/" });
         }).catch(()=>{
