@@ -23,7 +23,7 @@ import {
 } from './store/actions/actions'
 
 var VueScrollTo = require('vue-scrollto');
-
+document.title = 'Calisthenics Encyclopedia'
 Vue.use(VueScrollTo)
 Vue.component('vue-simple-context-menu', VueSimpleContextMenu)
 Vue.component('v-select', vSelect)
@@ -91,8 +91,11 @@ new Vue({
   router,
   render: h => h(App)
 }).$mount('#app')
-store.dispatch('updateToken');
-store.dispatch('updateAccountInfo');
+
+//Update token is to slow if update account failed then update token
+  store.dispatch('updateToken');
+  store.dispatch('updateAccountInfo');
+//
 setInterval(() => {
   store.dispatch('updateToken');
   store.dispatch('updateAccountInfo');

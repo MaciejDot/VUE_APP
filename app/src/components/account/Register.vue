@@ -125,7 +125,7 @@ export default {
         .then(t => {
           this.$store.commit('jwtToken', t.data.token);
           this.$store.dispatch('updateAccountInfo');
-          this.$router.push({ path: "/" });
+          this.$router.push({ path: "/workout" });
         }).catch(()=>{
           this.error="Something went wrong ... ";
         });

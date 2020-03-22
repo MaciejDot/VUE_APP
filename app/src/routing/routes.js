@@ -19,20 +19,32 @@ import WorkoutExecution from '.././components/workout/WorkoutExecution.vue'
 export default [{
         path: '',
         name: "Main Page",
-        component: MainPage
+        component: MainPage,
+        meta: {
+            title: 'Calisthenics Encyclopedia'
+          }
     },
     {
         path: '/workout',
-        component: ChooseWorkout
+        component: ChooseWorkout,
+        meta: {
+            title: 'Calisthenics Encyclopedia - Workout Dashboard'
+          }
     },
     {
         path: '/Forum',
         name: "Forum",
-        component: Forum
+        component: Forum,
+        meta: {
+            title: 'Calisthenics Encyclopedia - Forum'
+          }
     },
     {
         path: '/articles',
-        component: MainPageArticles
+        component: MainPageArticles,
+        meta: {
+            title: 'Calisthenics Encyclopedia - Articles'
+          }
     },
     {
         path: '/articles/:page',
@@ -40,7 +52,10 @@ export default [{
     },
     {
         path: '/article/:id',
-        component: ArticleView
+        component: ArticleView,
+        meta: {
+            title: 'Calisthenics Encyclopedia - Article'
+          }
     },
     {
         path: '/Forum/:subjectName',
@@ -50,7 +65,10 @@ export default [{
             page: {
                 default: 1
             }
-        }
+        },
+        meta: {
+            title: 'Calisthenics Encyclopedia - Forum'
+          }
     },
     {
         path: '/Forum/:subjectName/:threadId',
@@ -59,54 +77,93 @@ export default [{
             page: {
                 default: 1
             }
-        }
+        },
+        meta: {
+            title: 'Calisthenics Encyclopedia - Forum'
+          }
     },
     {
         path: '/create-thread/:subjectName',
-        component: ForumThreadCreator
+        component: ForumThreadCreator,
+        meta: {
+            title: 'Calisthenics Encyclopedia - Create Thread'
+          }
     },
     {
         path: '/create-article',
-        component: RichTextEditorArticle
+        component: RichTextEditorArticle,
+        meta: {
+            title: 'Calisthenics Encyclopedia - Create Artice'
+          }
     },
     {
         path: '/Login',
-        component: Login
+        component: Login,
+        meta: {
+            title: 'Calisthenics Encyclopedia - Login'
+          }
     },
     {
         path: '/Register',
-        component: Register
+        component: Register,
+        meta: {
+            title: 'Calisthenics Encyclopedia - Register'
+          }
     },
     {
         path: '/SuccessSignOut',
-        component: SuccessSignOut
+        component: SuccessSignOut,
+        meta: {
+            title: 'Calisthenics Encyclopedia - Success Sign Out'
+          }
     },
     {
         path: '/WorkoutCreator',
-        component: WorkoutCreator
+        component: WorkoutCreator,
+        meta: {
+            title: 'Calisthenics Encyclopedia - Workout Creator'
+          }
     },
     {
         path: '/WorkoutCreator/:username/:workoutName',
-        component: WorkoutCreator
+        component: WorkoutCreator,
+        meta: {
+            title: 'Calisthenics Encyclopedia - Workout Creator'
+          }
     },
     {
         path: '/WorkoutExecution',
-        component: WorkoutExecution
+        component: WorkoutExecution,
+        meta: {
+            title: 'Calisthenics Encyclopedia - Workout Execution'
+          }
     },
     {
         path: '/WorkoutExecution/:username/:workoutName',
-        component: WorkoutExecution
+        component: WorkoutExecution,
+        meta: {
+            title: 'Calisthenics Encyclopedia - Workout Execution'
+          }
     },
     {
         path: '/BackLog',
-        component: BackLog
+        component: BackLog,
+        meta: {
+            title: 'Calisthenics Encyclopedia - Back Log'
+          }
     },
     {
         path: '/WorkoutViewer/:username/:workoutName',
-        component: WorkoutViewer
+        component: WorkoutViewer,
+        meta: {
+            title: 'Calisthenics Encyclopedia - Workout Viewer'
+          }
     },
     {
         path: '*',
-        component: NotFound
+        component: NotFound,
+        meta: {
+            title: 'Calisthenics Encyclopedia - 404'
+          }
     }
 ];

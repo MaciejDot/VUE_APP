@@ -27,10 +27,9 @@
           </div>
           <div v-if="error!=''" class="error-message">{{error}}</div>
         </div>
+        <b-overlay :show="loggingIn">
         <button class="signin-button" @click="logIn()">LOG IN</button>
-        <div class="link">
-          <a href="#">Forgot password?</a>
-        </div>
+        </b-overlay>
         <div class="link">
           <router-link to="/Register">Register</router-link>
         </div>
@@ -44,7 +43,8 @@ export default {
     return {
       username: "",
       password: "",
-      error:""
+      error:"",
+      loggingIn: false
     };
   },
    mounted() {
@@ -59,6 +59,7 @@ export default {
   },
   methods: {
     logIn: function() {
+      this.loggingIn = true;
       this.$axios.account()
         .post("/Token", {
             email: this.username,
@@ -67,8 +68,9 @@ export default {
         .then(t => {
           this.$store.commit('jwtToken', t.data.token);
           this.$store.dispatch('updateAccountInfo');
-          this.$router.push({ path: "/" });
+          this.$router.push({ path: "/workout" });
         }).catch(()=>{
+          this.loggingIn = false;
           this.error="Given credentials are incorrect...";
         });
     }

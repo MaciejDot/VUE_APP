@@ -5,7 +5,7 @@
       <b-navbar-toggle id="navbar-toggle" target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item>
+          <b-nav-item v-if="username != undefined">
             <router-link class="nav-link" to="/workout">Workout Program</router-link>
           </b-nav-item>
           <b-nav-item>
@@ -20,7 +20,6 @@
             <template slot="button-content">
               <em>{{username}}</em>
             </template>
-            <b-dropdown-item href="#">Profile</b-dropdown-item>
             <b-dropdown-item href="#" @click="signOut()">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item v-else>
@@ -42,6 +41,14 @@ export default {
   computed: mapState({
     username: state => state.username
   }),
+  watch:{
+      '$route' (to) {
+        document.title = to.meta.title || 'Calisthenics Encyclopedia'
+      }
+  },
+  mounted: function(){
+    document.title = this.$route.meta.title || 'Calisthenics Encyclopedia'
+  },
   methods: {
     signOut: function() {
       this.$store.dispatch('logOut',{instance:this});

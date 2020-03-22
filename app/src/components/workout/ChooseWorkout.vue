@@ -4,7 +4,7 @@
     <b-container>
       <b-row>
         <b-col lg="6" sm="12">
-          <b-card style="height:480px">
+          <b-card class="big-card">
             <p>
               <b>Your progress (charts) (choose what to track) and time stamps</b>
             </p>
@@ -14,34 +14,38 @@
         <b-col lg="6" sm="12">
           <b-row>
             <b-col md="6" sm="12">
-              <b-card style="height:230px;cursor:pointer" @click="workoutCreatorLink">
+              <b-card class="small-card clickable-card" @click="workoutCreatorLink">
                 <p>
                   <b>Create new workout plan</b>
                 </p>
               </b-card>
             </b-col>
             <b-col md="6" sm="12">
-              <b-card style="height:230px">
-                <p>
-                  <b>Your workout plans</b>
-                </p>
-                <p v-for="(workoutPlan,index) in workoutPlans" :key="index">
-                  <router-link
-                    class="link"
-                    :to="`WorkoutViewer/${username}/${workoutPlan.name}`"
-                  >{{workoutPlan.name}}</router-link>
-                </p>
-              </b-card>
+              <b-overlay :show="workoutPlansAreUpdateing">
+                <b-card class="small-card">
+                  <p>
+                    <b>Your workout plans</b>
+                  </p>
+                  <div vertical class="links-list">
+                    <p v-for="(workoutPlan,index) in workoutPlans" :key="index">
+                      <router-link
+                        class="link"
+                        :to="`WorkoutViewer/${username}/${workoutPlan.name}`"
+                      >{{workoutPlan.name}}</router-link>
+                    </p>
+                  </div>
+                </b-card>
+              </b-overlay>
             </b-col>
             <b-col md="6" sm="12">
-              <b-card style="height:230px;cursor:pointer" @click="workoutExecutionCreatorLink">
+              <b-card class="small-card clickable-card" @click="workoutExecutionCreatorLink">
                 <p>
                   <b>Create new workout execution</b>
                 </p>
               </b-card>
             </b-col>
             <b-col md="6" sm="12">
-              <b-card style="height:230px;cursor:pointer;">
+              <b-card class="small-card clickable-card">
                 <p>
                   <b>Calendar / Back log</b>
                 </p>
@@ -54,15 +58,16 @@
   </div>
 </template>
 <script>
-import { BCol, BRow, BCard, BContainer } from "bootstrap-vue";
+import { BCol, BRow, BCard, BContainer, BOverlay } from "bootstrap-vue";
 import { Line } from "vue-chartjs";
 import { mapState } from "vuex";
 export default {
   name: "ChooseWorkout",
-  components: { BCol, BRow, BCard, BContainer, LineChart: Line },
+  components: { BCol, BRow, BCard, BContainer, BOverlay, LineChart: Line },
   data: function() {
     return {
-      workoutPlans: []
+      workoutPlans: [],
+      workoutPlansAreUpdateing: true
     };
   },
   computed: mapState({
@@ -77,9 +82,13 @@ export default {
     }
   },
   mounted: function() {
-    this.$store
-      .dispatch("getWorkoutPlans")
-      .then(workoutPlans => (this.workoutPlans = workoutPlans));
+    if (this.$store.state.username == undefined) {
+      this.$router.push({ path: "/" });
+    }
+    this.$store.dispatch("getWorkoutPlans").then(workoutPlans => {
+      this.workoutPlans = workoutPlans;
+      this.workoutPlansAreUpdateing = false;
+    });
     this.$refs.chart.renderChart(
       {
         labels: ["mon", "tue", "wen", "thr", "friday"],
@@ -107,6 +116,11 @@ export default {
 };
 </script>
 <style>
+.links-list {
+  position: relative;
+  height: 150px;
+  overflow-y: scroll;
+}
 .link:focus,
 .link:hover {
   color: rgba(0, 0, 0, 0.7);
@@ -114,6 +128,15 @@ export default {
 }
 .link {
   color: rgba(0, 0, 0, 0.5);
+}
+.clickable-card {
+  cursor: pointer;
+}
+.small-card {
+  height: 230px;
+}
+.big-card {
+  height: 480px;
 }
 .card {
   border-radius: 2px;

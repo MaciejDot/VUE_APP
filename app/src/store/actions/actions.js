@@ -106,6 +106,29 @@ export const actions = {
         }
         return Promise.resolve(state.fatigues);
     },
+    removeWorkoutPlan:  function ({
+        state
+    }, entity) {
+        if (state.workoutPlansLastUpdate == undefined ||
+            state.workoutPlansLastUpdate < Date.now() - 8 * 60 * 60 * 1000 ||
+            state.workoutPlans == undefined) {
+            this._vm.$axios
+                .workout()
+                .get("/WorkoutPlan")
+                .then(x => {
+                    state.workoutPlans = x.data;
+                    state.workoutPlansLastUpdate = Date.now()
+                    return state.workoutPlans;
+                })
+        } else {
+                for(var i=0;i<state.workoutPlans.length;i+=1){
+                    if(state.workoutPlans[i].name == entity.name){
+                        state.workoutPlans.splice(i,1)
+                        return;
+                    }
+                }
+            }
+    },
     updateWorkoutPlans: function ({
         state
     }, entity) {
@@ -121,8 +144,8 @@ export const actions = {
                     return state.workoutPlans;
                 })
         } else {
-            state.workoutPlans.push(entity);
-        }
+                state.workoutPlans.push(entity);
+            }
     },
     getWorkoutPlans: function ({
         state, commit

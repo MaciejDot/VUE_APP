@@ -83,7 +83,10 @@ export default {
       this.$router.push({ path: `/WorkoutCreator/${this.$route.params.username}/${this.$route.params.workoutName}`})
     },
     delete(){
-      //modal
+      this.$axios.workout().delete(`/WorkoutPlan/${this.$route.params.workoutName}`).then(()=>{
+        this.$store.dispatch('removeWorkoutPlan',
+          {name:this.$route.params.workoutName});
+       this.$router.push({ path:'/workout'})})
     },
     makepublic(){
 

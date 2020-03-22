@@ -258,6 +258,9 @@ export default {
     draggable
   },
   mounted: function() {
+     if(this.$store.state.username == undefined){
+      this.$router.push({path:"/"})
+    }
     Promise.all([
       this.$store.dispatch("getFatigues"),
       this.$store.dispatch("getMoods"),

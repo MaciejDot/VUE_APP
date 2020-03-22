@@ -288,6 +288,9 @@ export default {
     draggable
   },
   mounted: function() {
+     if(this.$store.state.username == undefined){
+      this.$router.push({path:"/"})
+    }
     this.$store.dispatch('getExercises').then(exercises=>{
       this.exercises = exercises;
     })
