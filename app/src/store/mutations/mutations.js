@@ -7,5 +7,12 @@ export const mutations = {
     },
     roles: (state, roles) =>{
       state.roles = roles
+    },
+    workoutPlans: (state, workoutPlans) =>{
+      state.workoutPlans = workoutPlans
+    },
+    workoutPlansLastUpdate: (state, workoutPlansLastUpdate) =>{
+      state.workoutPlansLastUpdate = workoutPlansLastUpdate
     }
+
   };

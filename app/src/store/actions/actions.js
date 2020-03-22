@@ -44,8 +44,12 @@ export const actions = {
         commit('jwtToken', undefined);
         commit('username', undefined);
         commit('roles', undefined);
+        commit('workoutPlans',undefined);
+        commit('workoutPlansLastUpdate',undefined);
     },
-    getExercises: function({state}){
+    getExercises: function ({
+        state
+    }) {
         if (state.exercises === undefined) {
             return this._vm.$axios
                 .workout()
@@ -64,7 +68,9 @@ export const actions = {
         }
         return Promise.resolve(state.exercises);
     },
-    getMoods: function({state}){
+    getMoods: function ({
+        state
+    }) {
         if (state.moods === undefined) {
             return this._vm.$axios
                 .workout()
@@ -81,7 +87,9 @@ export const actions = {
         }
         return Promise.resolve(state.moods);
     },
-    getFatigues: function({state}) {
+    getFatigues: function ({
+        state
+    }) {
         if (state.fatigues === undefined) {
             return this._vm.$axios
                 .workout()
@@ -98,20 +106,40 @@ export const actions = {
         }
         return Promise.resolve(state.fatigues);
     },
-    getWorkoutPlans: function({state}){
-        if(state.workoutPlansLastUpdate == undefined || 
-            state.workoutPlansLastUpdate < Date.now() - 15 * 60 * 1000 ||
-            state.workoutPlans ==undefined){
-                return this._vm.$axios
-      .workout()
-      .get("/WorkoutPlan")
-      .then(x => {
-        state.workoutPlans = x.data;
-        state.workoutPlansLastUpdate = Date.now()
-        return state.workoutPlans ;
-      });
-            }
-            return Promise.resolve(state.workoutPlans)
+    updateWorkoutPlans: function ({
+        state
+    }, entity) {
+        if (state.workoutPlansLastUpdate == undefined ||
+            state.workoutPlansLastUpdate < Date.now() - 8 * 60 * 60 * 1000 ||
+            state.workoutPlans == undefined) {
+            this._vm.$axios
+                .workout()
+                .get("/WorkoutPlan")
+                .then(x => {
+                    state.workoutPlans = x.data;
+                    state.workoutPlansLastUpdate = Date.now()
+                    return state.workoutPlans;
+                })
+        } else {
+            state.workoutPlans.push(entity);
+        }
+    },
+    getWorkoutPlans: function ({
+        state, commit
+    }) {
+        if (state.workoutPlansLastUpdate == undefined ||
+            state.workoutPlansLastUpdate < Date.now() - 2 * 60 * 60 * 1000 ||
+            state.workoutPlans == undefined) {
+            return this._vm.$axios
+                .workout()
+                .get("/WorkoutPlan")
+                .then(x => {
+                    commit('workoutPlans',x.data);
+        commit('workoutPlansLastUpdate',Date.now());
+                    return state.workoutPlans;
+                });
+        }
+        return Promise.resolve(state.workoutPlans)
     },
     userIsInRole: ({
             state

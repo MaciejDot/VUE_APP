@@ -96,5 +96,5 @@ store.dispatch('updateAccountInfo');
 setInterval(() => {
   store.dispatch('updateToken');
   store.dispatch('updateAccountInfo');
-}, 2 * 60 * 1000);
+}, 75 * 60 * 1000);
 Vue.config.productionTip = false

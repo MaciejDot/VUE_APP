@@ -359,6 +359,7 @@ export default {
             })
           })
           .then(() => {
+            this.$store.dispatch('updateWorkoutPlans',{name: this.nameOfWorkout, description: this.descriptionOfWorkout,});
             this.$router.push({ path: "/workout" });
           })
           .catch(() => {
