@@ -92,12 +92,10 @@ new Vue({
   render: h => h(App)
 }).$mount('#app')
 
-//Update token is to slow if update account failed then update token
-  store.dispatch('updateToken');
-  store.dispatch('updateAccountInfo');
-//
 setInterval(() => {
-  store.dispatch('updateToken');
-  store.dispatch('updateAccountInfo');
-}, 75 * 60 * 1000);
+  if (store.state.lastUpdatedToken == undefined || store.state.lastUpdatedToken < Date.now() - 75 * 60 * 1000) {
+    store.dispatch('updateToken');
+    store.dispatch('updateAccountInfo');
+  }
+}, 60 * 1000);
 Vue.config.productionTip = false

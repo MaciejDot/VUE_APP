@@ -2,10 +2,10 @@
   <b-container>
     <b-card class="white-card">
       <svg viewBox="0 0 90 90" v-if="isOwner" @click.prevent.stop="openContextMenu($event)">
-          <path
-            d="m 13 45 a 1 1 0 0 0 15 0 a 1 1 0 0 0 -15 0 z m 25 0 a 1 1 0 0 0 15 0 a 1 1 0 0 0 -15 0 z m 25 0 a 1 1 0 0 0 15 0 a 1 1 0 0 0 -15 0 z "
-          />
-        </svg>
+        <path
+          d="m 13 45 a 1 1 0 0 0 15 0 a 1 1 0 0 0 -15 0 z m 25 0 a 1 1 0 0 0 15 0 a 1 1 0 0 0 -15 0 z m 25 0 a 1 1 0 0 0 15 0 a 1 1 0 0 0 -15 0 z "
+        />
+      </svg>
       <b-row>
         <b-col cols="12" class="center-text">
           <h1>{{nameOfWorkout}}</h1>
@@ -49,20 +49,36 @@
       :options="contextMenuOptions"
       @option-clicked="optionClicked"
     ></vue-simple-context-menu>
+    <b-modal ref="modal" hide-footer hide-header>
+      <div class="d-block text-center">
+        <h3>Are you sure you want to delete workout?</h3>
+      </div>
+      <b-row>
+        <b-col cols="5">
+          <b-button variant="white" class="white-button" @click="hideModal">No</b-button>
+        </b-col>
+        <b-col cols="2" />
+        <b-col cols="5">
+          <b-button variant="white" class="white-button" @click="deletePlan">Yes</b-button>
+        </b-col>
+      </b-row>
+    </b-modal>
   </b-container>
 </template>
 <script>
-import { BContainer, BCard, BCol, BRow } from "bootstrap-vue";
-import { mapState } from 'vuex'
+import { BContainer, BCard, BCol, BRow, BModal, BButton } from "bootstrap-vue";
+import { mapState } from "vuex";
 const contextMenuOptionsEnum = Object.freeze({
-edit:"Edit",
-delete:"Delete",
+  edit: "Edit",
+  delete: "Delete"
 });
 export default {
   name: "WorkoutViewer",
-  components: { BContainer, BCard, BCol, BRow },
+  components: { BContainer, BCard, BCol, BRow, BModal, BButton },
   computed: mapState({
-    isOwner: function(state){ return state.username === this.$route.params.username}
+    isOwner: function(state) {
+      return state.username === this.$route.params.username;
+    }
   }),
   methods: {
     openContextMenu(event) {
@@ -74,23 +90,34 @@ export default {
           this.edit();
           break;
         case contextMenuOptionsEnum.delete:
-          this.delete();
+          this.showModal();
           this.$refs.menu.hideMenu();
           break;
       }
     },
     edit() {
-      this.$router.push({ path: `/WorkoutCreator/${this.$route.params.username}/${this.$route.params.workoutName}`})
+      this.$router.push({
+        path: `/WorkoutCreator/${this.$route.params.username}/${this.$route.params.workoutName}`
+      });
     },
-    delete(){
-      this.$axios.workout().delete(`/WorkoutPlan/${this.$route.params.workoutName}`).then(()=>{
-        this.$store.dispatch('removeWorkoutPlan',
-          {name:this.$route.params.workoutName});
-       this.$router.push({ path:'/workout'})})
+    showModal() {
+      this.$refs["modal"].show();
     },
-    makepublic(){
-
-    }
+    hideModal() {
+      this.$refs["modal"].hide();
+    },
+    deletePlan() {
+      this.$axios
+        .workout()
+        .delete(`/WorkoutPlan/${this.$route.params.workoutName}`)
+        .then(() => {
+          this.$store.dispatch("removeWorkoutPlan", {
+            name: this.$route.params.workoutName
+          });
+          this.$router.push({ path: "/workout" });
+        });
+    },
+    makepublic() {}
   },
   mounted: function() {
     this.$axios
@@ -123,7 +150,10 @@ export default {
   },
   data: function() {
     return {
-      contextMenuOptions: [{ name: contextMenuOptionsEnum.edit }, { name: contextMenuOptionsEnum.delete }],
+      contextMenuOptions: [
+        { name: contextMenuOptionsEnum.edit },
+        { name: contextMenuOptionsEnum.delete }
+      ],
       rowsOfWorkout: [],
       descriptionOfWorkout: null,
       nameOfWorkout: null
@@ -132,6 +162,17 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.white-button {
+  border-radius: 4px;
+  border: 1px solid #e7e7e7;
+  padding-top: 4px;
+  padding-bottom: 5px;
+  width: -webkit-fill-available;
+}
+.white-button:hover {
+  border: 1px solid #e7e7e7;
+  background-color: #efefef;
+}
 .vue-simple-context-menu {
   top: 0;
   left: 0;

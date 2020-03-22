@@ -10,6 +10,7 @@ export const actions = {
                 .account()
                 .get('/AccountInfo')
                 .then(r => {
+                    state.lastUpdatedAccountInfo = Date.now()
                     commit('username', r.data.username);
                     commit('roles', r.data.roles);
                 })
@@ -29,6 +30,7 @@ export const actions = {
             this._vm.$axios.account()
                 .get("/Token")
                 .then(t => {
+                    state.lastUpdatedToken = Date.now()
                     commit('jwtToken', t.data.token);
                 })
                 .catch(() =>
