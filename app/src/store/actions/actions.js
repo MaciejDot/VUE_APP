@@ -98,6 +98,21 @@ export const actions = {
         }
         return Promise.resolve(state.fatigues);
     },
+    getWorkoutPlans: function({state}){
+        if(state.workoutPlansLastUpdate == undefined || 
+            state.workoutPlansLastUpdate < Date.now() - 15 * 60 * 1000 ||
+            state.workoutPlans ==undefined){
+                return this._vm.$axios
+      .workout()
+      .get("/WorkoutPlan")
+      .then(x => {
+        state.workoutPlans = x.data;
+        state.workoutPlansLastUpdate = Date.now()
+        return state.workoutPlans ;
+      });
+            }
+            return Promise.resolve(state.workoutPlans)
+    },
     userIsInRole: ({
             state
         }, role) => state.roles !== undefined ?

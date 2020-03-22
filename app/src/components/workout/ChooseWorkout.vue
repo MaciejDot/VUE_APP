@@ -5,7 +5,9 @@
       <b-row>
         <b-col lg="6" sm="12">
           <b-card style="height:480px">
-            Your progress (charts) (choose what to track) and time stamps
+            <p>
+              <b>Your progress (charts) (choose what to track) and time stamps</b>
+            </p>
             <line-chart ref="chart" />
           </b-card>
         </b-col>
@@ -24,7 +26,10 @@
                   <b>Your workout plans</b>
                 </p>
                 <p v-for="(workoutPlan,index) in workoutPlans" :key="index">
-                  <router-link class="link" :to="`WorkoutViewer/${username}/${workoutPlan.name}`">{{workoutPlan.name}}</router-link>
+                  <router-link
+                    class="link"
+                    :to="`WorkoutViewer/${username}/${workoutPlan.name}`"
+                  >{{workoutPlan.name}}</router-link>
                 </p>
               </b-card>
             </b-col>
@@ -51,7 +56,7 @@
 <script>
 import { BCol, BRow, BCard, BContainer } from "bootstrap-vue";
 import { Line } from "vue-chartjs";
-import { mapState } from 'vuex'
+import { mapState } from "vuex";
 export default {
   name: "ChooseWorkout",
   components: { BCol, BRow, BCard, BContainer, LineChart: Line },
@@ -67,18 +72,14 @@ export default {
     workoutCreatorLink: function() {
       this.$router.push({ path: "/WorkoutCreator" });
     },
-    workoutExecutionCreatorLink: function(){
+    workoutExecutionCreatorLink: function() {
       this.$router.push({ path: "/WorkoutExecution" });
     }
   },
   mounted: function() {
-    this.$axios
-      .workout()
-      .get("/WorkoutPlan")
-      .then(x => {
-        this.workoutPlans = x.data;
-      });
-
+    this.$store
+      .dispatch("getWorkoutPlans")
+      .then(workoutPlans => (this.workoutPlans = workoutPlans));
     this.$refs.chart.renderChart(
       {
         labels: ["mon", "tue", "wen", "thr", "friday"],
@@ -106,12 +107,13 @@ export default {
 };
 </script>
 <style>
-.link:focus, .link:hover {
-    color: rgba(0,0,0,.7);
-    text-decoration: none;
+.link:focus,
+.link:hover {
+  color: rgba(0, 0, 0, 0.7);
+  text-decoration: none;
 }
 .link {
-    color: rgba(0,0,0,.5);
+  color: rgba(0, 0, 0, 0.5);
 }
 .card {
   border-radius: 2px;
