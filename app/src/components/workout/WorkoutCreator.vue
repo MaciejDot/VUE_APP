@@ -56,7 +56,7 @@
           </b-col>
           <b-col cols="12" sm="6" md="4" lg="3">
             <b-form-group label="Min Reps/Seconds" label-for="minReps">
-              <b-form-input
+              <b-form-spinbutton min="0" 
                 id="minReps"
                 v-model="exerciseRow.minNumberOfReps"
                 style="height:35px;"
@@ -66,7 +66,7 @@
           </b-col>
           <b-col cols="12" sm="6" md="4" lg="3">
             <b-form-group label="Max Reps/Seconds" label-for="maxReps">
-              <b-form-input
+              <b-form-spinbutton min="0" 
                 id="maxReps"
                 v-model="exerciseRow.maxNumberOfReps"
                 style="height:35px;"
@@ -76,7 +76,7 @@
           </b-col>
           <b-col cols="12" sm="6" md="4" lg="3">
             <b-form-group label="Min Additional Kgs" label-for="minAdd">
-              <b-form-input
+              <b-form-spinbutton min="0" 
                 id="minAdd"
                 v-model="exerciseRow.minAdditionalKgs"
                 style="height:35px;"
@@ -86,7 +86,7 @@
           </b-col>
           <b-col cols="12" sm="6" md="4" lg="3">
             <b-form-group label="Max Additional Kgs" label-for="maxAdd">
-              <b-form-input
+              <b-form-spinbutton min="0" 
                 id="maxAdd"
                 v-model="exerciseRow.maxAdditionalKgs"
                 style="height:35px;"
@@ -96,7 +96,7 @@
           </b-col>
           <b-col cols="12" sm="6" md="4" lg="3">
             <b-form-group label="series" label-for="series">
-              <b-form-input
+              <b-form-spinbutton min="0" 
                 id="series"
                 v-model="exerciseRow.series"
                 style="height:35px;"
@@ -106,7 +106,7 @@
           </b-col>
           <b-col cols="12" sm="6" md="4" lg="3">
             <b-form-group label="breaks (in s.)" label-for="breaks">
-              <b-form-input
+              <b-form-spinbutton min="0" 
                 id="breaks"
                 v-model="exerciseRow.breaks"
                 style="height:35px;"
@@ -187,7 +187,7 @@
         </b-col>
         <b-col cols="12" sm="6" md="4" lg="3">
           <b-form-group label="Min Reps/Seconds" label-for="minReps">
-            <b-form-input
+            <b-form-spinbutton min="0" 
               id="minReps"
               v-model="exercise.minNumberOfReps"
               style="height:35px;"
@@ -197,7 +197,7 @@
         </b-col>
         <b-col cols="12" sm="6" md="4" lg="3">
           <b-form-group label="Max Reps/Seconds" label-for="maxReps">
-            <b-form-input
+            <b-form-spinbutton min="0" 
               id="maxReps"
               v-model="exercise.maxNumberOfReps"
               style="height:35px;"
@@ -207,7 +207,7 @@
         </b-col>
         <b-col cols="12" sm="6" md="4" lg="3">
           <b-form-group label="Min Additional Kgs" label-for="minAdd">
-            <b-form-input
+            <b-form-spinbutton min="0" 
               id="minAdd"
               v-model="exercise.minAdditionalKgs"
               style="height:35px;"
@@ -217,7 +217,7 @@
         </b-col>
         <b-col cols="12" sm="6" md="4" lg="3">
           <b-form-group label="Max Additional Kgs" label-for="maxAdd">
-            <b-form-input
+            <b-form-spinbutton min="0" 
               id="maxAdd"
               v-model="exercise.maxAdditionalKgs"
               style="height:35px;"
@@ -227,12 +227,12 @@
         </b-col>
         <b-col cols="12" sm="6" md="4" lg="3">
           <b-form-group label="series" label-for="series">
-            <b-form-input id="series" v-model="exercise.series" style="height:35px;" type="number" />
+            <b-form-spinbutton min="0"  id="series" v-model="exercise.series" style="height:35px;" type="number" />
           </b-form-group>
         </b-col>
         <b-col cols="12" sm="6" md="4" lg="3">
           <b-form-group label="breaks (in s.)" label-for="breaks">
-            <b-form-input id="breaks" v-model="exercise.breaks" style="height:35px;" type="number" />
+            <b-form-spinbutton min="0"  id="breaks" v-model="exercise.breaks" style="height:35px;" type="number" />
           </b-form-group>
         </b-col>
         <b-col cols="12" sm="6" md="4" lg="3">
@@ -289,7 +289,7 @@ export default {
   },
   mounted: function() {
      if(this.$store.state.username == undefined){
-      this.$router.push({path:"/"})
+   //   this.$router.push({path:"/"})
     }
     this.$store.dispatch('getExercises').then(exercises=>{
       this.exercises = exercises;

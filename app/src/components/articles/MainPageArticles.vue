@@ -57,6 +57,7 @@ export default {
       articles: []
     };
   },
+  //computed: mapActions() ???????????
   mounted: function() {
     this.$axios.article()
       .get(`/Article/${this.$route.params.page == undefined ? 1 : this.$route.params.page}`)

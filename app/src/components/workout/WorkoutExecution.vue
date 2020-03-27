@@ -56,7 +56,7 @@
             </b-col>
             <b-col cols="12" sm="6" md="4" lg="3">
               <b-form-group label="Description" label-for="description">
-                <b-form-input
+                <b-form-input 
                   id="description"
                   placeholder="Enter description..."
                   v-model="exerciseRow.description"
@@ -67,7 +67,7 @@
             </b-col>
             <b-col cols="12" sm="6" md="4" lg="3">
               <b-form-group label="Reps" label-for="minReps">
-                <b-form-input
+                <b-form-spinbutton min="0" 
                   id="minReps"
                   v-model="exerciseRow.reps"
                   style="height:35px;"
@@ -77,7 +77,7 @@
             </b-col>
             <b-col cols="12" sm="6" md="4" lg="3">
               <b-form-group label="Additional Kgs" label-for="minAdd">
-                <b-form-input
+                <b-form-spinbutton min="0" 
                   id="minAdd"
                   v-model="exerciseRow.additionalKgs"
                   style="height:35px;"
@@ -87,7 +87,7 @@
             </b-col>
             <b-col cols="12" sm="6" md="4" lg="3">
               <b-form-group label="series" label-for="series">
-                <b-form-input
+                <b-form-spinbutton min="0" 
                   id="series"
                   v-model="exerciseRow.series"
                   style="height:35px;"
@@ -97,7 +97,7 @@
             </b-col>
             <b-col cols="12" sm="6" md="4" lg="3">
               <b-form-group label="breaks (in s.)" label-for="breaks">
-                <b-form-input
+                <b-form-spinbutton min="0" 
                   id="breaks"
                   v-model="exerciseRow.break"
                   style="height:35px;"
@@ -160,7 +160,7 @@
         </b-col>
         <b-col cols="12" sm="6" md="4" lg="3">
           <b-form-group label="Description" label-for="description">
-            <b-form-input
+            <b-form-input 
               id="description"
               v-model="exercise.description"
               placeholder="Enter description..."
@@ -171,12 +171,12 @@
         </b-col>
         <b-col cols="12" sm="6" md="4" lg="3">
           <b-form-group label="Reps/Seconds" label-for="minReps">
-            <b-form-input id="minReps" v-model="exercise.reps" style="height:35px;" type="number" />
+            <b-form-spinbutton min="0"  id="minReps" v-model="exercise.reps" style="height:35px;" type="number" />
           </b-form-group>
         </b-col>
         <b-col cols="12" sm="6" md="4" lg="3">
           <b-form-group label="Additional Kgs" label-for="minAdd">
-            <b-form-input
+            <b-form-spinbutton min="0" 
               id="minAdd"
               v-model="exercise.additionalKgs"
               style="height:35px;"
@@ -186,12 +186,12 @@
         </b-col>
         <b-col cols="12" sm="6" md="4" lg="3">
           <b-form-group label="series" label-for="series">
-            <b-form-input id="series" v-model="exercise.series" style="height:35px;" type="number" />
+            <b-form-spinbutton min="0" id="series" v-model="exercise.series" style="height:35px;" type="number" />
           </b-form-group>
         </b-col>
         <b-col cols="12" sm="6" md="4" lg="3">
           <b-form-group label="breaks (in s.)" label-for="breaks">
-            <b-form-input id="breaks" v-model="exercise.break" style="height:35px;" type="number" />
+            <b-form-spinbutton min="0" id="breaks" v-model="exercise.break" style="height:35px;" type="number" />
           </b-form-group>
         </b-col>
         <b-col cols="12" sm="6" md="4" lg="3">
@@ -240,6 +240,7 @@ import {
   BFormGroup,
   BButton,
   BFormDatepicker,
+  BFormSpinbutton,
   BFormTextarea
 } from "bootstrap-vue";
 import VSelect from "vue-select";
@@ -255,6 +256,7 @@ export default {
     BButton,
     BFormTextarea,
     BFormDatepicker,
+     BFormSpinbutton,
     draggable
   },
   mounted: function() {

@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-container ref="workout-container" class="html2canvas-container">
     <b-card class="white-card">
       <svg viewBox="0 0 90 90" v-if="isOwner" @click.prevent.stop="openContextMenu($event)">
         <path
@@ -68,9 +68,13 @@
 <script>
 import { BContainer, BCard, BCol, BRow, BModal, BButton } from "bootstrap-vue";
 import { mapState } from "vuex";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 const contextMenuOptionsEnum = Object.freeze({
   edit: "Edit",
-  delete: "Delete"
+  delete: "Delete",
+  exportPDF: "Export PDF",
+  exportCSV: "Export CSV"
 });
 export default {
   name: "WorkoutViewer",
@@ -91,10 +95,29 @@ export default {
           break;
         case contextMenuOptionsEnum.delete:
           this.showModal();
-          this.$refs.menu.hideMenu();
+          break;
+        case contextMenuOptionsEnum.exportPDF:
+          this.exportToPDF();
+          break;
+        case contextMenuOptionsEnum.exportCSV:
+          this.exportToCSV();
           break;
       }
     },
+    exportToPDF() {
+      let workoutContainer = this.$refs["workout-container"];
+      let width = workoutContainer.offsetWidth
+      let height = workoutContainer.offsetHeight
+      html2canvas(
+        workoutContainer
+      ).then(canvas => {
+        let img = canvas.toDataURL("image/jpeg");
+        let doc = new jsPDF("L", "px", [width, height]);
+        doc.addImage(img, "JPEG", 20, 20, width, height);
+        doc.save(`${this.$route.params.workoutName}.pdf`);
+      });
+    },
+    exportToCSV(){},
     edit() {
       this.$router.push({
         path: `/WorkoutCreator/${this.$route.params.username}/${this.$route.params.workoutName}`
@@ -147,13 +170,13 @@ export default {
       .catch(() => {
         this.$router.push({ path: "/404" });
       });
+    this.contextMenuOptions = Object.keys(contextMenuOptionsEnum).map(key => ({
+      name: contextMenuOptionsEnum[key]
+    }));
   },
   data: function() {
     return {
-      contextMenuOptions: [
-        { name: contextMenuOptionsEnum.edit },
-        { name: contextMenuOptionsEnum.delete }
-      ],
+      contextMenuOptions: [],
       rowsOfWorkout: [],
       descriptionOfWorkout: null,
       nameOfWorkout: null
@@ -162,6 +185,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+//.html2canvas-container { width: 3000px !important; height: 3000px !important; }
 .white-button {
   border-radius: 4px;
   border: 1px solid #e7e7e7;
