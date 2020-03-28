@@ -68,12 +68,9 @@
 <script>
 import { BContainer, BCard, BCol, BRow, BModal, BButton } from "bootstrap-vue";
 import { mapState } from "vuex";
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
 const contextMenuOptionsEnum = Object.freeze({
   edit: "Edit",
   delete: "Delete",
-  exportPDF: "Export PDF",
   exportCSV: "Export CSV"
 });
 export default {
@@ -89,35 +86,37 @@ export default {
       this.$refs.menu.showMenu(event);
     },
     optionClicked(event) {
-      switch (event.option.name) {
-        case contextMenuOptionsEnum.edit:
-          this.edit();
-          break;
-        case contextMenuOptionsEnum.delete:
-          this.showModal();
-          break;
-        case contextMenuOptionsEnum.exportPDF:
-          this.exportToPDF();
-          break;
-        case contextMenuOptionsEnum.exportCSV:
-          this.exportToCSV();
-          break;
-      }
+      let optionsActions = {
+        Edit: () => this.edit(),
+        Delete: () => this.showModal(),
+        "Export CSV": () => this.exportToCSV()
+      };
+      optionsActions[event.option.name];
     },
-    exportToPDF() {
-      let workoutContainer = this.$refs["workout-container"];
-      let width = workoutContainer.offsetWidth
-      let height = workoutContainer.offsetHeight
-      html2canvas(
-        workoutContainer
-      ).then(canvas => {
-        let img = canvas.toDataURL("image/jpeg");
-        let doc = new jsPDF("L", "px", [width, height]);
-        doc.addImage(img, "JPEG", 20, 20, width, height);
-        doc.save(`${this.$route.params.workoutName}.pdf`);
-      });
+    exportToCSV() {
+      let dataSeparator = ";";
+      let dataTitles = `Exercise Name${dataSeparator}Min Number Of Reps${dataSeparator}Max Number Of Reps${dataSeparator}Min Additional Kgs${dataSeparator}Max Additional Kgs${dataSeparator}Series${dataSeparator}Breaks${dataSeparator}Description`;
+      let dataString = this.rowsOfWorkout
+        .map(
+          x =>
+            `${x.selectedExercise.label}${dataSeparator}${
+              x.minNumberOfReps
+            }${dataSeparator}${x.maxNumberOfReps}${dataSeparator}${
+              x.minAdditionalKgs
+            }${dataSeparator}${x.maxAdditionalKgs}${dataSeparator}${
+              x.series
+            }${dataSeparator}${x.breaks}${dataSeparator}${
+              x.description == null ? "" : x.description
+            }`
+        )
+        .join("\n");
+      let csv = `${dataTitles}\n${dataString}`;
+      let hiddenElement = document.createElement("a");
+      hiddenElement.href = "data:text/csv;charset=utf-8," + encodeURI(csv);
+      hiddenElement.target = "_blank";
+      hiddenElement.download = `${this.$route.params.workoutName}.csv`;
+      hiddenElement.click();
     },
-    exportToCSV(){},
     edit() {
       this.$router.push({
         path: `/WorkoutCreator/${this.$route.params.username}/${this.$route.params.workoutName}`
