@@ -13,6 +13,11 @@ export const mutations = {
     },
     workoutPlansLastUpdate: (state, workoutPlansLastUpdate) =>{
       state.workoutPlansLastUpdate = workoutPlansLastUpdate
+    },
+    lastUpdatedAccountInfo: (state, lastUpdatedAccountInfo) =>{
+      state.lastUpdatedAccountInfo =lastUpdatedAccountInfo
+    },
+    lastUpdatedToken: (state, lastUpdatedToken) =>{
+      state.lastUpdatedToken = lastUpdatedToken
     }
-
   };

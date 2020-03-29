@@ -1,3 +1,4 @@
+
 export const actions = {
     updateAccountInfo: function ({
         commit,
@@ -10,7 +11,7 @@ export const actions = {
                 .account()
                 .get('/AccountInfo')
                 .then(r => {
-                    state.lastUpdatedAccountInfo = Date.now()
+                    commit('lastUpdatedAccountInfo',Date.now());
                     commit('username', r.data.username);
                     commit('roles', r.data.roles);
                 })
@@ -21,6 +22,42 @@ export const actions = {
             dispatch('logOut')
         }
     },
+    getBackLog: function({state}){
+        if(state.backLog == undefined ||
+            state.lastUpdatedBackLog== undefined ||
+            state.lastUpdatedBackLog < Date.now() - 180 * 60 *1000){
+                return this._vm
+                    .$axios
+                    .workout()
+                    .get('/Workout')
+                    .then(x=>{
+                        state.backLog = x.data;
+                        state.lastUpdatedBackLog = Date.now()
+                        return state.backLog;
+                    })
+            }
+            else{
+                return Promise.resolve(state.backLog);
+            }
+    },
+    getScheduledWorkouts: function({state}){
+        if(state.scheduledWorkouts == undefined ||
+            state.lastUpdatedScheduledWorkouts == undefined ||
+            state.lastUpdatedScheduledWorkouts < Date.now() - 180 * 60 *1000){
+                return this._vm
+                    .$axios
+                    .workout()
+                    .get('/WorkoutSchedule')
+                    .then(x=>{
+                        state.scheduledWorkouts = x.data;
+                        state.lastUpdatedScheduledWorkouts = Date.now()
+                        return state.scheduledWorkouts
+                    })
+            }
+            else{
+                return Promise.resolve(state.scheduledWorkouts);
+            }
+    },
     updateToken: function ({
         commit,
         state,
@@ -30,7 +67,7 @@ export const actions = {
             this._vm.$axios.account()
                 .get("/Token")
                 .then(t => {
-                    state.lastUpdatedToken = Date.now()
+                    commit('lastUpdatedToken', Date.now());
                     commit('jwtToken', t.data.token);
                 })
                 .catch(() =>
@@ -48,6 +85,10 @@ export const actions = {
         commit('roles', undefined);
         commit('workoutPlans',undefined);
         commit('workoutPlansLastUpdate',undefined);
+        commit('workoutPlans',undefined);
+        commit('lastUpdatedToken',undefined);
+        commit('lastUpdatedAccountInfo',undefined);
+        // clear state state = {}
     },
     getExercises: function ({
         state

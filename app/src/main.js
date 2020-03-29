@@ -21,9 +21,19 @@ import {
 import {
   actions
 } from './store/actions/actions'
+import VCalendar from 'v-calendar'
+/*
+model do przemyslenia kazdy state wpis chowam w objekcie
+{
+  value: statewpis,
+  lastUpdated:,
+  updateTimeStamp:,
+}
+*/
 
 var VueScrollTo = require('vue-scrollto');
 document.title = 'Calisthenics Encyclopedia'
+Vue.use(VCalendar)
 Vue.use(VueScrollTo)
 Vue.component('vue-simple-context-menu', VueSimpleContextMenu)
 Vue.component('v-select', vSelect)

@@ -28,7 +28,7 @@
           <div v-if="error!=''" class="error-message">{{error}}</div>
         </div>
         <b-overlay :show="loggingIn">
-        <button class="signin-button" @click="logIn()">LOG IN</button>
+          <button class="signin-button" @click="logIn()">LOG IN</button>
         </b-overlay>
         <div class="link">
           <router-link to="/Register">Register</router-link>
@@ -43,35 +43,37 @@ export default {
     return {
       username: "",
       password: "",
-      error:"",
+      error: "",
       loggingIn: false
     };
   },
-   mounted() {
-    var self=this;
-    if(self.$store.getters.logged){
+  mounted() {
+    var self = this;
+    if (self.$store.getters.logged) {
       self.$router.push({ path: "/" });
     }
     window.addEventListener("keypress", function(e) {
-      e.keyCode==13?self.logIn():null;
-
+      e.keyCode == 13 ? self.logIn() : null;
     });
   },
   methods: {
     logIn: function() {
       this.loggingIn = true;
-      this.$axios.account()
+      this.$axios
+        .account()
         .post("/Token", {
-            email: this.username,
-            password: this.password
+          email: this.username,
+          password: this.password
         })
         .then(t => {
-          this.$store.commit('jwtToken', t.data.token);
-          this.$store.dispatch('updateAccountInfo');
-          this.$router.push({ path: "/workout" });
-        }).catch(()=>{
+          this.$store.commit("jwtToken", t.data.token);
+          this.$store
+            .dispatch("updateAccountInfo")
+            .then(() => this.$router.push({ path: "/workout" }));
+        })
+        .catch(() => {
           this.loggingIn = false;
-          this.error="Given credentials are incorrect...";
+          this.error = "Given credentials are incorrect...";
         });
     }
   },
@@ -79,8 +81,8 @@ export default {
 };
 </script>
 <style scoped>
-.error-message{
-  color:tomato;
+.error-message {
+  color: tomato;
 }
 .separator {
   height: 40px;
@@ -96,7 +98,7 @@ export default {
   padding: 60px 35px 35px 35px;
   border-radius: 3px;
   border: 1px solid #e7e7e7;
-  background-color: white ;
+  background-color: white;
 }
 @media (max-width: 600px) {
   .login-modal {

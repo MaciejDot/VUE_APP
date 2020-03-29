@@ -91,7 +91,7 @@ export default {
         Delete: () => this.showModal(),
         "Export CSV": () => this.exportToCSV()
       };
-      optionsActions[event.option.name];
+      optionsActions[event.option.name]();
     },
     exportToCSV() {
       let dataSeparator = ";";

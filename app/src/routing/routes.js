@@ -15,7 +15,7 @@ import WorkoutCreator from '.././components/workout/WorkoutCreator'
 import BackLog from '.././components/workout/BackLog.vue'
 import WorkoutViewer from '.././components/workout/WorkoutViewer.vue'
 import WorkoutExecution from '.././components/workout/WorkoutExecution.vue'
-
+import Calendar from '.././components/workout/Calendar.vue'
 export default [{
         path: '',
         name: "Main Page",
@@ -144,6 +144,14 @@ export default [{
         meta: {
             title: 'Calisthenics Encyclopedia - Workout Execution'
           }
+    },
+    {
+        path: '/Calendar',
+        component: Calendar,
+        meta: {
+            title: 'Calisthenics Encyclopedia - Calendar'
+          }
+
     },
     {
         path: '/BackLog',
