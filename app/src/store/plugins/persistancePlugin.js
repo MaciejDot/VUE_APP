@@ -9,9 +9,9 @@ const instance = localforage.createInstance({
 export const persistancePlugin = (store) => {
     instance.iterate((value, key) =>
         store.commit(key,value)
-    ).then(()=>
-        EventBus.$emit('data-was-loaded')
-    )
+    ).then(()=>{
+        EventBus.$emit('data-was-loaded');
+    })
     store.subscribe(mutations =>
         instance.setItem(mutations.type, mutations.payload)
     )

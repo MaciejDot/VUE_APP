@@ -21,8 +21,18 @@ import {
   actions
 } from './store/actions/actions'
 import VCalendar from 'v-calendar'
-import {baseUrls} from './config/config'
-import {persistancePlugin} from './store/plugins/persistancePlugin'
+import {
+  baseUrls
+} from './config/config'
+import {
+  persistancePlugin
+} from './store/plugins/persistancePlugin'
+import {
+  EventBus
+} from './eventBus/eventBus'
+
+
+
 var VueScrollTo = require('vue-scrollto');
 document.title = 'Calisthenics Encyclopedia'
 Vue.use(VCalendar)
@@ -38,17 +48,16 @@ const router = new VueRouter({
   mode: 'history',
   routes: routes
 });
+
 const store = new Vuex.Store({
-  state: { dataWasLoaded: false },
+  state: {},
   getters,
   mutations,
   actions,
   plugins: [persistancePlugin]
 });
-
-//api config
-Vue.prototype.$baseUrlArticleApi = "https://localhost:44379";
-Vue.prototype.$baseUrlForumApi = "https://localhost:44362";
+Vue.prototype.$baseUrlArticleApi = baseUrls.articleApiAddress; // future => static + store
+Vue.prototype.$baseUrlForumApi = baseUrls.forumApiAddress; //future => static + store
 var headers = function () {
   return store.state.jwtToken != undefined ? {
     'Content-Type': "application/json",
@@ -87,16 +96,20 @@ Vue.prototype.$axios = {
   workout: workoutApi
 }
 
-new Vue({
-  store,
-  router,
-  render: h => h(App)
-}).$mount('#app')
 
-setInterval( () => {
-  if (store.state.lastUpdatedToken == undefined || store.state.lastUpdatedToken < Date.now() - 75 * 60 * 1000) {
+EventBus.$on("data-was-loaded", () => {
+  new Vue({
+    store,
+    router,
+    render: h => h(App)
+  }).$mount('#app')
+});
+//future change it to SetTimeout and do event handling
+//EventBus????
+setInterval(() => {
+  if (store.state.lastUpdatedToken !== undefined && store.state.lastUpdatedToken < Date.now() - 75 * 60 * 1000) {
     store.dispatch('updateToken');
     store.dispatch('updateAccountInfo');
   }
-},  20* 1000);
+}, 20 * 1000);
 Vue.config.productionTip = false

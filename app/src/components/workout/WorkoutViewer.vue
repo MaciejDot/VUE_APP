@@ -45,7 +45,7 @@
     </b-card>
     <vue-simple-context-menu
       ref="menu"
-      elementId="context-menu"
+      :elementId="`context-menu-${random}`"
       :options="contextMenuOptions"
       @option-clicked="optionClicked"
     ></vue-simple-context-menu>
@@ -84,20 +84,6 @@ export default {
   props: {workoutName:{},username:{}},
   methods: {
     openContextMenu(event) {
-      // eslint-disable-next-line no-console
-      console.log(event)
-      /*
-      var rect = element.getBoundingClientRect();
-      console.log(rect.top, rect.right, rect.bottom, rect.left);
-      */
-      // eslint-disable-next-line no-console
-      console.log(event.toElement.getBoundingClientRect());
-      // eslint-disable-next-line no-console
-      console.log(event.toElement.getClientRects());
-      // eslint-disable-next-line no-console
-      console.log(event.toElement.__proto__);
-      // eslint-disable-next-line no-console
-      console.log(event.toElement.parentNode);
       this.$refs.menu.showMenu(event);
     },
     optionClicked(event) {
@@ -183,9 +169,11 @@ export default {
     this.contextMenuOptions = Object.keys(contextMenuOptionsEnum).map(key => ({
       name: contextMenuOptionsEnum[key]
     }));
+    document.getElementById('app').appendChild(document.getElementById(`context-menu-${this.random}`));
   },
   data: function() {
     return {
+      random: Math.random(),
       contextMenuOptions: [],
       rowsOfWorkout: [],
       descriptionOfWorkout: null,

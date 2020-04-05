@@ -44,7 +44,12 @@
                 d="M742.4 409.6h-25.6v-76.8c0-127.043-103.357-230.4-230.4-230.4s-230.4 103.357-230.4 230.4v76.8h-25.6c-42.347 0-76.8 34.453-76.8 76.8v409.6c0 42.347 34.453 76.8 76.8 76.8h512c42.347 0 76.8-34.453 76.8-76.8v-409.6c0-42.347-34.453-76.8-76.8-76.8zM307.2 332.8c0-98.811 80.389-179.2 179.2-179.2s179.2 80.389 179.2 179.2v76.8h-358.4v-76.8zM768 896c0 14.115-11.485 25.6-25.6 25.6h-512c-14.115 0-25.6-11.485-25.6-25.6v-409.6c0-14.115 11.485-25.6 25.6-25.6h512c14.115 0 25.6 11.485 25.6 25.6v409.6z"
               />
             </svg>
-            <input v-model="repeatPassword" type="password" class="pass-input" placeholder="repeat password" />
+            <input
+              v-model="repeatPassword"
+              type="password"
+              class="pass-input"
+              placeholder="repeat password"
+            />
             <div v-if="errorRepeatPassword!=''" class="error-message">{{errorRepeatPassword}}</div>
           </div>
           <div v-if="error!=''" class="error-message">{{error}}</div>
@@ -60,81 +65,79 @@ export default {
     return {
       username: "",
       password: "",
-      error:"",
+      error: "",
       repeatPassword: "",
-      email:"",
-      errorRepeatPassword:'',
-      errorPassword:'',
-      errorEmail:'',
-      errorUsername:''
+      email: "",
+      errorRepeatPassword: "",
+      errorPassword: "",
+      errorEmail: "",
+      errorUsername: ""
     };
   },
-   mounted() {
-    var self=this;
+  mounted() {
+    var self = this;
     window.addEventListener("keypress", function(e) {
-      e.keyCode==13?self.signIn():null;
-
+      e.keyCode == 13 ? self.signIn() : null;
     });
   },
   methods: {
-    registerModelValidation: function(){
-        let answear = true;
-        if(this.username.length < 6){
-            this.errorUsername ="Username Should be at least 6 characters long";
-            answear = false;
-        }
-        else{
-            this.errorUsername ="";
-        }
-        
-        let emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/i
-        if(this.email.match(emailRegexp) !=this.email){
-            this.errorEmail="This is not a valid email"
-            answear = false;
-        }
-        else{
-            this.errorEmail=""
-        }
-        if(this.password.length<8){
-            this.errorPassword="password should at least be 8 character long"
-            answear = false;
-        }
-        else{
-            this.errorPassword=""
-        }
-        if(this.repeatPassword!=this.password){
-            this.errorRepeatPassword="passwords don't match"
-            answear = false;
-        }
-        else{
-            this.errorRepeatPassword=""
-        }
-        return answear;
+    registerModelValidation: function() {
+      let answear = true;
+      if (this.username.length < 6) {
+        this.errorUsername = "Username Should be at least 6 characters long";
+        answear = false;
+      } else {
+        this.errorUsername = "";
+      }
+
+      let emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/i;
+      if (this.email.match(emailRegexp) != this.email) {
+        this.errorEmail = "This is not a valid email";
+        answear = false;
+      } else {
+        this.errorEmail = "";
+      }
+      if (this.password.length < 8) {
+        this.errorPassword = "password should at least be 8 character long";
+        answear = false;
+      } else {
+        this.errorPassword = "";
+      }
+      if (this.repeatPassword != this.password) {
+        this.errorRepeatPassword = "passwords don't match";
+        answear = false;
+      } else {
+        this.errorRepeatPassword = "";
+      }
+      return answear;
     },
     signIn: function() {
-        if(this.registerModelValidation()){
-      this.$axios.account()
-        .post("/Register", {
+      if (this.registerModelValidation()) {
+        this.$axios
+          .account()
+          .post("/Register", {
             email: this.email,
             username: this.username,
             password: this.password
-        })
-        .then(t => {
-          this.$store.commit('jwtToken', t.data.token);
-          this.$store.dispatch('updateAccountInfo');
-          this.$router.push({ path: "/workout" });
-        }).catch(()=>{
-          this.error="Something went wrong ... ";
-        });
-        }
+          })
+          .then(t => {
+            this.$store.commit("jwtToken", t.data.token);
+            this.$store
+              .dispatch("updateAccountInfo")
+              .then(() => this.$router.push({ path: "/workout" }));
+          })
+          .catch(() => {
+            this.error = "Something went wrong ... ";
+          });
+      }
     }
   },
   name: "Register"
 };
 </script>
 <style scoped>
-.error-message{
-  color:tomato;
+.error-message {
+  color: tomato;
 }
 .separator {
   height: 40px;
@@ -150,7 +153,7 @@ export default {
   padding: 60px 35px 35px 35px;
   border-radius: 3px;
   border: 1px solid #e7e7e7;
-  background-color: white ;
+  background-color: white;
 }
 @media (max-width: 600px) {
   .login-modal {

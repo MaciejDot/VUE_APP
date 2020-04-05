@@ -34,7 +34,6 @@
 </template>
 <script>
 import { BNavbar } from "bootstrap-vue";
-import { EventBus } from "./eventBus/eventBus";
 export default {
   name: "app",
   components: { BNavbar },
@@ -65,8 +64,7 @@ export default {
       }
     }
   },
-  mounted: function() {
-    EventBus.$on("data-was-loaded", () => {
+  created: function() {
       this.username = this.$store.state.username;
       if (
         this.$route.meta.onlyAuthenticated &&
@@ -88,7 +86,6 @@ export default {
       ) {
         this.$router.push({ path: "/401" });
       }
-    });
     document.title = this.$route.meta.title || "Calisthenics Encyclopedia";
   },
   methods: {
