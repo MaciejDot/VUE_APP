@@ -56,15 +56,14 @@ export default {
     BPaginationNav
   },
   name: "ForumThreadList",
+  props: {page:{}, subjectName:{}},
   data: function() {
     return {
       subjectId: "",
       threads: [],
       allThreadsCount: 0,
       title: "",
-      numberOfPages: 1,
-      subjectName: this.$route.params.subjectName,
-      pageNum: this.$route.params.page
+      numberOfPages: 1
     };
   },
   methods: {
@@ -72,16 +71,16 @@ export default {
       return !(localStorage["token"] == undefined);
     },
     linkGen(pageNum) {
-      return `/Forum/${this.$route.params.subjectName}?page=${pageNum}`;
+      return `/Forum/${this.subjectName}?page=${pageNum}`;
     }
   },
   watch: {
-    "$route.query.page": function() {
-      if (this.pageNum != this.$route.query.page) {
-        this.pageNum = this.$route.query.page;
+    "page": function() {
+      if (this.pageNum != this.page) {
+        this.pageNum = this.page;
         this.$axios
           .forum()
-          .get(`/Thread/${this.subjectName}/${this.$route.query.page}`)
+          .get(`/Thread/${this.subjectName}/${this.page}`)
           .then(r => {
             (this.title = r.data.title), (this.threads = r.data.threads);
             this.allThreadsCount = r.data.allThreadsCount;
@@ -99,10 +98,9 @@ export default {
     }
   },
   mounted: function() {
-    this.$route.query.page === undefined ? (this.$route.query.page = 1) : null;
     this.$axios
       .forum()
-      .get(`/Thread/${this.subjectName}/${this.$route.query.page}`)
+      .get(`/Thread/${this.subjectName}/${this.page === undefined ? 1 : this.page }`)
       .then(r => {
         (this.title = r.data.title), (this.threads = r.data.threads);
         this.allThreadsCount = r.data.allThreadsCount;

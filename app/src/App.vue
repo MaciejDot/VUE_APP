@@ -1,11 +1,11 @@
 <template>
-  <div id="app">
+  <div id="app" :key="reload">
     <b-navbar id="navbar" toggleable="lg" type="light" variant="white" :sticky="true">
       <b-navbar-brand  to="/">Calisthenics Encyclopedia</b-navbar-brand>
       <b-navbar-toggle id="navbar-toggle" target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item v-if="username != undefined">
+          <b-nav-item v-if="$store.state.username != undefined">
             <router-link class="nav-link" to="/workout">Workout Program</router-link>
           </b-nav-item>
           <b-nav-item>
@@ -16,9 +16,9 @@
           </b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
-          <b-nav-item-dropdown v-if="username!=undefined" right>
+          <b-nav-item-dropdown v-if="$store.state.username!=undefined" right>
             <template slot="button-content">
-              <em>{{username}}</em>
+              <em>{{$store.state.username}}</em>
             </template>
             <b-dropdown-item href="#" @click="signOut()">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
@@ -34,20 +34,33 @@
 </template>
 <script>
 import { BNavbar } from 'bootstrap-vue'
-import { mapState } from 'vuex'
 export default {
   name: 'app',
   components: { BNavbar },
-  computed: mapState({
-    username: state => state.username
-  }),
+  data: function(){
+    return {
+      reload: 0
+    }
+  },
   watch:{
-      '$route' (to) {
+      '$route' (to, from) {
+        if(from.meta.reload){
+          this.reload += 1;
+        } 
         document.title = to.meta.title || 'Calisthenics Encyclopedia'
       }
   },
   mounted: function(){
-    document.title = this.$route.meta.title || 'Calisthenics Encyclopedia'
+    if(this.$route.meta.onlyAuthenticated && this.$store.state.username === undefined){
+      this.$router.push({ path: "/" });
+    }
+    if(this.$route.meta.onlyAnonymous && this.$store.state.username !== undefined){
+      this.$router.push({ path: "/workout" });
+    }
+    if(this.$route.meta.roles && this.$store.state.roles.some(x=> this.$route.meta.roles.some(y=>y===x))){
+      this.$router.push({ path: "/401" });
+    }
+    document.title = this.$route.meta.title || 'Calisthenics Encyclopedia';
   },
   methods: {
     signOut: function() {

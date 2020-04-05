@@ -9,6 +9,7 @@ import {getFormattedDate} from "../../library/dateFormatter.js"
 export default {
   components: { ArticleViewer },
   name: "ArticleView",
+  props: {'id':{}},
   data: function() {
     return {
       title: "",
@@ -19,7 +20,7 @@ export default {
   },
   mounted: function() {
     this.$axios.article()
-      .get(`/Article/1/${this.$route.params.id}`)
+      .get(`/Article/1/${this.id}`)
       .then(response => {
         this.title = response.data.title;
         this.date = getFormattedDate(response.data.created);

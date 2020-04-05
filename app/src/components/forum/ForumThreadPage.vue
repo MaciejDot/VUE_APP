@@ -13,7 +13,7 @@
       ></b-pagination-nav>
     </b-container>
     <ForumPost
-      v-if="$route.query.page==1"
+      v-if="page==1"
       :content="thread.content.split('\n')"
       :date="thread.created"
       :author="thread.author"
@@ -60,19 +60,20 @@ export default {
     BContainer,
     BPaginationNav
   },
+  props:{threadId: {}, subjectName: {} ,page:{}},
   methods: {
     post: function() {
       var self = this;
       this.$axios
         .forum()
         .post("/Post", {
-          ThreadId: parseInt(this.$route.params.threadId),
+          ThreadId: parseInt(this.threadId),
           Content: self.$refs.editor.content
         })
         .then(() => {
           this.$axios
             .forum()
-            .get(`/Post/${this.$route.params.subjectName}/${this.$route.params.threadId}/${this.$route.query.page}`)
+            .get(`/Post/${this.subjectName}/${this.threadId}/${this.page===undefined?1:this.page}`)
             .then(r => {
               let partialPost = r.data.posts;
               this.posts = partialPost;
@@ -83,16 +84,16 @@ export default {
         .catch(() => (this.error = "Something went wrong"));
     },
     linkGen(pageNum) {
-      return `/Forum/${this.$route.params.subjectName}/${this.$route.params.threadId}?page=${pageNum}`;
+      return `/Forum/${this.subjectName}/${this.$route.params.threadId}?page=${pageNum}`;
     }
   },
   watch: {
-    "$route.query.page": function() {
-      if (this.pageNum != this.$route.query.page) {
-        this.pageNum = this.$route.query.page;
+    "page": function() {
+      if (this.pageNum != this.page) {
+        this.pageNum = this.page === undefined ? 1 : this.page;
         this.$axios
           .forum()
-          .get(`/Post/${this.$route.params.subjectName}/${this.$route.params.threadId}/${this.$route.query.page}`)
+          .get(`/Post/${this.subjectName}/${this.threadId}/${this.page===undefined?1:this.page}`)
           .then(r => {
             let partialPost = r.data.posts;
             this.posts = partialPost;
@@ -108,11 +109,10 @@ export default {
     }
   },
   mounted: function() {
-    this.$route.query.page === undefined ? (this.$route.query.page = 1) : null;
-    this.pageNum = this.$route.query.page;
+    this.pageNum = this.page === undefined ? 1 : this.page;
     this.$axios
       .forum()
-      .get(`/Post/${this.$route.params.subjectName}/${this.$route.params.threadId}/${this.$route.query.page}`)
+      .get(`/Post/${this.subjectName}/${this.threadId}/${this.page===undefined? 1: this.page}`)
       .then(r => {
         let partialPost = r.data.posts;
         this.posts = partialPost;

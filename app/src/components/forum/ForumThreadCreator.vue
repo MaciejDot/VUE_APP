@@ -59,12 +59,13 @@ export default {
       title:''
     }
   },
+  props: {'subjectName':{}},
   methods: {
     post: function() {
       this.$axios.forum().post(
         '/Thread',
         {
-          SubjectName:this.$route.params.subjectName,
+          SubjectName:this.subjectName,
           Content:this.content,
           Title:this.title
         }

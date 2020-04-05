@@ -12,7 +12,6 @@ import SuccessSignOut from '.././components/account/SuccessSignOut.vue'
 import Register from '.././components/account/Register.vue'
 import NotFound from '.././components/routing/NotFound.vue'
 import WorkoutCreator from '.././components/workout/WorkoutCreator'
-import BackLog from '.././components/workout/BackLog.vue'
 import WorkoutViewer from '.././components/workout/WorkoutViewer.vue'
 import WorkoutExecution from '.././components/workout/WorkoutExecution.vue'
 import Calendar from '.././components/workout/Calendar.vue'
@@ -28,7 +27,8 @@ export default [{
         path: '/workout',
         component: ChooseWorkout,
         meta: {
-            title: 'Calisthenics Encyclopedia - Workout Dashboard'
+            title: 'Calisthenics Encyclopedia - Workout Dashboard',
+            onlyAuthenticated: true
           }
     },
     {
@@ -48,14 +48,16 @@ export default [{
     },
     {
         path: '/articles/:page',
-        component: MainPageArticles
+        component: MainPageArticles,
+        props: (route) => ({ page: route.params.page })
     },
     {
         path: '/article/:id',
         component: ArticleView,
         meta: {
             title: 'Calisthenics Encyclopedia - Article'
-          }
+          },
+        props: (route) => ({ id: route.params.id })
     },
     {
         path: '/Forum/:subjectName',
@@ -68,7 +70,8 @@ export default [{
         },
         meta: {
             title: 'Calisthenics Encyclopedia - Forum'
-          }
+          },
+          props: (route) => ({ page: route.query.page, subjectName: route.params.subjectName })
     },
     {
         path: '/Forum/:subjectName/:threadId',
@@ -80,92 +83,104 @@ export default [{
         },
         meta: {
             title: 'Calisthenics Encyclopedia - Forum'
-          }
+          },
+          props: (route) => ({ threadId: route.params.threadId, subjectName: route.params.subjectName ,page : route.query.page })
     },
     {
         path: '/create-thread/:subjectName',
         component: ForumThreadCreator,
         meta: {
-            title: 'Calisthenics Encyclopedia - Create Thread'
-          }
+            title: 'Calisthenics Encyclopedia - Create Thread',
+            onlyAuthenticated: true
+          },
+        props: (route) => ({ subjectName: route.params.subjectName })
+    
     },
     {
         path: '/create-article',
         component: RichTextEditorArticle,
         meta: {
-            title: 'Calisthenics Encyclopedia - Create Artice'
+            title: 'Calisthenics Encyclopedia - Create Artice',
+            onlyAuthenticated: true,
+            roles: ['admin']
           }
     },
     {
         path: '/Login',
         component: Login,
         meta: {
-            title: 'Calisthenics Encyclopedia - Login'
+            title: 'Calisthenics Encyclopedia - Login',
+            onlyAnonymous: true,
+            reload: true
           }
     },
     {
         path: '/Register',
         component: Register,
         meta: {
-            title: 'Calisthenics Encyclopedia - Register'
+            title: 'Calisthenics Encyclopedia - Register',
+            onlyAnonymous: true,
+            reload: true
           }
     },
     {
         path: '/SuccessSignOut',
         component: SuccessSignOut,
         meta: {
-            title: 'Calisthenics Encyclopedia - Success Sign Out'
+            title: 'Calisthenics Encyclopedia - Success Sign Out',
+            onlyAnonymous: true
           }
     },
     {
         path: '/WorkoutCreator',
         component: WorkoutCreator,
         meta: {
-            title: 'Calisthenics Encyclopedia - Workout Creator'
-          }
+            title: 'Calisthenics Encyclopedia - Workout Creator',
+            onlyAuthenticated: true
+          },
+          props: () => ({username: undefined, workoutName: undefined})
     },
     {
         path: '/WorkoutCreator/:username/:workoutName',
         component: WorkoutCreator,
         meta: {
-            title: 'Calisthenics Encyclopedia - Workout Creator'
-          }
+            title: 'Calisthenics Encyclopedia - Workout Creator',
+            onlyAuthenticated: true,
+          },
+        props: (route) => ({username: route.params.username, workoutName: route.params.workoutName})
     },
     {
         path: '/WorkoutExecution',
         component: WorkoutExecution,
         meta: {
             title: 'Calisthenics Encyclopedia - Workout Execution'
-          }
+          },
+        props: () => ({username: undefined, workoutName: undefined})
     },
     {
         path: '/WorkoutExecution/:username/:workoutName',
         component: WorkoutExecution,
         meta: {
             title: 'Calisthenics Encyclopedia - Workout Execution'
-          }
+          },
+          props: (route) => ({username: route.params.username, workoutName: route.params.workoutName})
     },
     {
         path: '/Calendar',
         component: Calendar,
         meta: {
-            title: 'Calisthenics Encyclopedia - Calendar'
+            title: 'Calisthenics Encyclopedia - Calendar',
+            onlyAuthenticated: true,
           }
 
-    },
-    {
-        path: '/BackLog',
-        component: BackLog,
-        meta: {
-            title: 'Calisthenics Encyclopedia - Back Log'
-          }
     },
     {
         path: '/WorkoutViewer/:username/:workoutName',
         component: WorkoutViewer,
         meta: {
             title: 'Calisthenics Encyclopedia - Workout Viewer'
-          }
+          },
+          props: (route) => ({username: route.params.username, workoutName: route.params.workoutName})
     },
     {
         path: '*',

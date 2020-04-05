@@ -71,9 +71,6 @@ export default {
   },
    mounted() {
     var self=this;
-    if(self.$store.getters.jwtToken!=undefined){
-      this.$router.push({ path: "/" });
-    }
     window.addEventListener("keypress", function(e) {
       e.keyCode==13?self.signIn():null;
 

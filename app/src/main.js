@@ -11,7 +11,6 @@ import 'vue-select/dist/vue-select.css';
 import vSelect from 'vue-select'
 import VueSimpleContextMenu from 'vue-simple-context-menu'
 import Vuex from 'vuex'
-import VuexPersist from 'vuex-persist';
 import {
   getters
 } from './store/getters/getters'
@@ -22,15 +21,16 @@ import {
   actions
 } from './store/actions/actions'
 import VCalendar from 'v-calendar'
-/*
-model do przemyslenia kazdy state wpis chowam w objekcie
-{
-  value: statewpis,
-  lastUpdated:,
-  updateTimeStamp:,
-}
-*/
+import {baseUrls} from './config/config'
+import {persistancePlugin} from './store/plugins/persistancePlugin'
+/*import localforage from "localforage";
 
+var instance = localforage.createInstance({
+  driver: [
+          localforage.INDEXEDDB,
+          localforage.WEBSQL,
+          localforage.LOCALSTORAGE]
+});*/
 var VueScrollTo = require('vue-scrollto');
 document.title = 'Calisthenics Encyclopedia'
 Vue.use(VCalendar)
@@ -40,10 +40,8 @@ Vue.component('v-select', vSelect)
 Vue.use(VueRouter);
 Vue.use(BootstrapVue)
 Vue.use(Vuex)
-const vuexPersist = new VuexPersist({
-  key: 'calisthenics_encyclopedia',
-  storage: window.localStorage
-});
+
+
 const router = new VueRouter({
   mode: 'history',
   routes: routes
@@ -53,7 +51,7 @@ const store = new Vuex.Store({
   getters,
   mutations,
   actions,
-  plugins: [vuexPersist.plugin]
+  plugins: [persistancePlugin]
 });
 
 //api config
@@ -69,26 +67,27 @@ var headers = function () {
 }
 const accountApi = () =>
   axios.create({
-    baseURL: "https://localhost:44344",
+    baseURL: baseUrls.accountApiAddress,
     headers: headers(),
     timeout: 50000,
   })
 const forumApi = () =>
   axios.create({
-    baseURL: "https://localhost:44362",
+    baseURL: baseUrls.forumApiAddress,
     headers: headers(),
     timeout: 50000,
   })
 const articleApi = () => axios.create({
-  baseURL: "https://localhost:44379",
+  baseURL: baseUrls.articleApiAddress,
   headers: headers(),
   timeout: 50000,
 })
 const workoutApi = () => axios.create({
-  baseURL: "https://localhost:44341",
+  baseURL: baseUrls.workoutApiAddress,
   headers: headers(),
   timeout: 50000,
 });
+
 Vue.prototype.$axios = {
   account: accountApi,
   forum: forumApi,
@@ -102,10 +101,10 @@ new Vue({
   render: h => h(App)
 }).$mount('#app')
 
-setInterval(() => {
+setInterval( () => {
   if (store.state.lastUpdatedToken == undefined || store.state.lastUpdatedToken < Date.now() - 75 * 60 * 1000) {
     store.dispatch('updateToken');
     store.dispatch('updateAccountInfo');
   }
-}, 60 * 1000);
+},  20* 1000);
 Vue.config.productionTip = false

@@ -7,15 +7,17 @@
     </b-col>
     <b-col cols="12" md ="6">
       <p>{{hooverDay}}</p>
+      <WorkoutViewer username='maciej' workoutName='MASSIVE-Workout' />
       </b-col>
     </b-row>
   </b-container>
 </template>
 <script>
 import { BContainer, BRow, BCol } from "bootstrap-vue";
+import WorkoutViewer from "./WorkoutViewer"
 export default {
   name: "Calendar",
-  components: { BContainer, BRow, BCol },
+  components: { BContainer, BRow, BCol, WorkoutViewer },
   mounted: function(){
     this
       .$store
@@ -32,7 +34,7 @@ export default {
       .dispatch('getScheduledWorkouts')
       .then(x => x.forEach(y=>this.attrs.push({
         dot: 'red',
-        dates: [new Date(y.scheduledDate)],
+        dates: [new Date(y.scheduleDate)],
         popover: {
             label: `planned: ${y.workoutPlanName}`
           }
@@ -50,7 +52,7 @@ export default {
   },
   data() {
     return {
-      hooverDay: new Date().ariaLabel,
+      hooverDay: new Date().toLocaleDateString(undefined,{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' } ),
       attrs: [
         {
           key: "today",

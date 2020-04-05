@@ -259,10 +259,8 @@ export default {
      BFormSpinbutton,
     draggable
   },
+  props: {workoutName:{},username:{}},
   mounted: function() {
-     if(this.$store.state.username == undefined){
-      this.$router.push({path:"/"})
-    }
     Promise.all([
       this.$store.dispatch("getFatigues"),
       this.$store.dispatch("getMoods"),
@@ -274,11 +272,11 @@ export default {
         this.exercises = response[2];
       })
       .then(() => {
-        if (this.$route.params.username !== undefined) {
+        if (this.username !== undefined) {
           this.$axios
             .workout()
             .get(
-              `/Workout/${this.$route.params.username}/${this.$route.params.workoutName}`
+              `/Workout/${this.username}/${this.workoutName}`
             )
             .then(response => {
               let data = response.data;
@@ -362,7 +360,7 @@ export default {
       } else {
         this.$axios
           .workout()
-          .patch(`/Workout/${this.$route.params.workoutName}`, {
+          .patch(`/Workout/${this.workoutName}`, {
             dateOfWorkout: this.dateOfWorkout,
             mood: this.mood.value,
             fatigue: this.fatigue.value,

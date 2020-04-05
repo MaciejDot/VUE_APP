@@ -49,9 +49,6 @@ export default {
   },
   mounted() {
     var self = this;
-    if (self.$store.getters.logged) {
-      self.$router.push({ path: "/" });
-    }
     window.addEventListener("keypress", function(e) {
       e.keyCode == 13 ? self.logIn() : null;
     });

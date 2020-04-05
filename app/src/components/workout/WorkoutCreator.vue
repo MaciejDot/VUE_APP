@@ -287,22 +287,20 @@ export default {
     BFormTextarea,
     draggable
   },
+  props: {workoutName:{},username:{}},
   mounted: function() {
-     if(this.$store.state.username == undefined){
-   //   this.$router.push({path:"/"})
-    }
     this.$store.dispatch('getExercises').then(exercises=>{
       this.exercises = exercises;
     })
-    if (this.$route.params.workoutName !== undefined) {
-      this.$axios
-        .workout()
-        .get(`/WorkoutPlan/${this.$route.params.username}/${this.$route.params.workoutName}`)
-        .then(x => {
+    if (this.workoutName !== undefined) {
+        this
+        .$store
+        .dispatch('getWorkoutPlanView',{username: this.username, workoutName: this.workoutName})
+        .then(data => {
           this.workoutEdition = true;
-          this.nameOfWorkout = x.data.name;
-          this.descriptionOfWorkout = x.data.description;
-          this.rowsOfWorkout = x.data.exercises.map(x => {
+          this.nameOfWorkout = data.name;
+          this.descriptionOfWorkout = data.description;
+          this.rowsOfWorkout = data.exercises.map(x => {
             return {
               selectedExercise: {
                 label: x.exerciseName,
@@ -371,7 +369,7 @@ export default {
       } else {
         this.$axios
           .workout()
-          .patch(`/WorkoutPlan/${this.$route.params.workoutName}`, {
+          .patch(`/WorkoutPlan/${this.workoutName}`, {
             exercises: this.rowsOfWorkout.map(x => {
               order += 1;
               return {
@@ -388,6 +386,7 @@ export default {
             })
           })
           .then(() => {
+            this.$store.dispatch('updateWorkoutPlanViewState',{ username: this.$store.state.username, workoutName: this.$route.params.workoutName, data : undefined});
             this.$router.push({ path: "/workout" });
           })
           .catch(() => {

@@ -45,7 +45,7 @@
               </b-card>
             </b-col>
             <b-col md="6" sm="12">
-              <b-card class="small-card clickable-card">
+              <b-card class="small-card clickable-card" @click="calendarLink">
                 <p>
                   <b>Calendar / Back log</b>
                 </p>
@@ -79,12 +79,12 @@ export default {
     },
     workoutExecutionCreatorLink: function() {
       this.$router.push({ path: "/WorkoutExecution" });
+    },
+    calendarLink: function(){
+      this.$router.push({ path: '/Calendar'})
     }
   },
   mounted: function() {
-    if (this.$store.state.username == undefined) {
-      this.$router.push({ path: "/" });
-    }
     this.$store.dispatch("getWorkoutPlans").then(workoutPlans => {
       this.workoutPlans = workoutPlans;
       this.workoutPlansAreUpdateing = false;

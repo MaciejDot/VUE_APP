@@ -49,26 +49,24 @@ import { BContainer, BPaginationNav } from "bootstrap-vue";
 import ArticleThumbnail from "./articleComponents/ArticleThumbnail.vue";
 export default {
   name: "MainPageArticles",
+  props : {page :{}},
   data: function() {
     return {
-      pageNum:
-        this.$route.params.page == undefined ? 1 : this.$route.params.page,
       numberOfPages: 1,
       articles: []
     };
   },
-  //computed: mapActions() ???????????
   mounted: function() {
     this.$axios.article()
-      .get(`/Article/${this.$route.params.page == undefined ? 1 : this.$route.params.page}`)
+      .get(`/Article/${this.page == undefined ? 1 : this.page}`)
       .then(response => {
         this.articles = response.data.articles;
         this.numberOfPages = response.data.allArticlesCount / 20;
       });
   },
   methods: {
-    linkGen(pageNum) {
-      return pageNum === 1 ? "" : `/articles/${pageNum}`;
+    linkGen(page) {
+      return page === 1 ? "" : `/articles/${page}`;
     }
   },
   components: {

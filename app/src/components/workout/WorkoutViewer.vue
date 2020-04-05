@@ -78,9 +78,10 @@ export default {
   components: { BContainer, BCard, BCol, BRow, BModal, BButton },
   computed: mapState({
     isOwner: function(state) {
-      return state.username === this.$route.params.username;
+      return state.username === this.username;
     }
   }),
+  props: {workoutName:{},username:{}},
   methods: {
     openContextMenu(event) {
       this.$refs.menu.showMenu(event);
@@ -114,12 +115,12 @@ export default {
       let hiddenElement = document.createElement("a");
       hiddenElement.href = "data:text/csv;charset=utf-8," + encodeURI(csv);
       hiddenElement.target = "_blank";
-      hiddenElement.download = `${this.$route.params.workoutName}.csv`;
+      hiddenElement.download = `${this.workoutName}.csv`;
       hiddenElement.click();
     },
     edit() {
       this.$router.push({
-        path: `/WorkoutCreator/${this.$route.params.username}/${this.$route.params.workoutName}`
+        path: `/WorkoutCreator/${this.username}/${this.workoutName}`
       });
     },
     showModal() {
@@ -131,10 +132,10 @@ export default {
     deletePlan() {
       this.$axios
         .workout()
-        .delete(`/WorkoutPlan/${this.$route.params.workoutName}`)
+        .delete(`/WorkoutPlan/${this.workoutName}`)
         .then(() => {
           this.$store.dispatch("removeWorkoutPlan", {
-            name: this.$route.params.workoutName
+            name: this.workoutName
           });
           this.$router.push({ path: "/workout" });
         });
@@ -142,15 +143,11 @@ export default {
     makepublic() {}
   },
   mounted: function() {
-    this.$axios
-      .workout()
-      .get(
-        `/WorkoutPlan/${this.$route.params.username}/${this.$route.params.workoutName}`
-      )
-      .then(x => {
-        this.nameOfWorkout = x.data.name;
-        this.descriptionOfWorkout = x.data.description;
-        this.rowsOfWorkout = x.data.exercises.map(x => {
+    this.$store.dispatch('getWorkoutPlanView',{username: this.username, workoutName: this.workoutName})
+      .then(data => {
+        this.nameOfWorkout = data.name;
+        this.descriptionOfWorkout = data.description;
+        this.rowsOfWorkout = data.exercises.map(x => {
           return {
             selectedExercise: {
               label: x.exerciseName,
