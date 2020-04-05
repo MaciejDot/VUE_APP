@@ -2,10 +2,10 @@
   <b-container>
     <h1>Calendar</h1>
     <b-row>
-    <b-col cols="12" md ="6">
+    <b-col cols="12" xl ="6">
     <v-calendar @dayclick="updateHooverDay" is-expanded :attributes="attrs"></v-calendar>
     </b-col>
-    <b-col cols="12" md ="6">
+    <b-col cols="12" xl ="6">
       <p>{{hooverDay}}</p>
       <WorkoutViewer username='maciej' workoutName='MASSIVE-Workout' />
       </b-col>

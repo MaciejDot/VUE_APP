@@ -66,7 +66,10 @@ export default {
           this.$store.commit("jwtToken", t.data.token);
           this.$store
             .dispatch("updateAccountInfo")
-            .then(() => this.$router.push({ path: "/workout" }));
+            .then(() => {
+                 // eslint-disable-next-line no-console
+      console.log(this.$store.state.username)
+              this.$router.push({ path: "/workout" })});
         })
         .catch(() => {
           this.loggingIn = false;

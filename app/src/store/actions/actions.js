@@ -5,20 +5,21 @@ export const actions = {
         dispatch
     }) {
         if (state.jwtToken !== undefined) {
-            this._vm
+            return this._vm
                 .$axios
                 .account()
                 .get('/AccountInfo')
-                .then(r => {
+                .then( r => {
                     commit('lastUpdatedAccountInfo', Date.now());
                     commit('username', r.data.username);
                     commit('roles', r.data.roles);
+                    return Promise;
                 })
                 .catch(() => {
                     dispatch('logOut')
                 });
         } else {
-            dispatch('logOut')
+            return dispatch('logOut')
         }
     },
     getBackLog: function ({

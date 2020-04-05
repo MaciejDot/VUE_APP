@@ -23,14 +23,6 @@ import {
 import VCalendar from 'v-calendar'
 import {baseUrls} from './config/config'
 import {persistancePlugin} from './store/plugins/persistancePlugin'
-/*import localforage from "localforage";
-
-var instance = localforage.createInstance({
-  driver: [
-          localforage.INDEXEDDB,
-          localforage.WEBSQL,
-          localforage.LOCALSTORAGE]
-});*/
 var VueScrollTo = require('vue-scrollto');
 document.title = 'Calisthenics Encyclopedia'
 Vue.use(VCalendar)
@@ -47,7 +39,7 @@ const router = new VueRouter({
   routes: routes
 });
 const store = new Vuex.Store({
-  state: {},
+  state: { dataWasLoaded: false },
   getters,
   mutations,
   actions,

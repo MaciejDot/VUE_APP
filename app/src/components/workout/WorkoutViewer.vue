@@ -1,5 +1,5 @@
 <template>
-  <b-container ref="workout-container" class="html2canvas-container">
+  <b-container ref="workout-container">
     <b-card class="white-card">
       <svg viewBox="0 0 90 90" v-if="isOwner" @click.prevent.stop="openContextMenu($event)">
         <path
@@ -84,6 +84,20 @@ export default {
   props: {workoutName:{},username:{}},
   methods: {
     openContextMenu(event) {
+      // eslint-disable-next-line no-console
+      console.log(event)
+      /*
+      var rect = element.getBoundingClientRect();
+      console.log(rect.top, rect.right, rect.bottom, rect.left);
+      */
+      // eslint-disable-next-line no-console
+      console.log(event.toElement.getBoundingClientRect());
+      // eslint-disable-next-line no-console
+      console.log(event.toElement.getClientRects());
+      // eslint-disable-next-line no-console
+      console.log(event.toElement.__proto__);
+      // eslint-disable-next-line no-console
+      console.log(event.toElement.parentNode);
       this.$refs.menu.showMenu(event);
     },
     optionClicked(event) {
@@ -181,7 +195,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-//.html2canvas-container { width: 3000px !important; height: 3000px !important; }
 .white-button {
   border-radius: 4px;
   border: 1px solid #e7e7e7;
@@ -200,7 +213,6 @@ export default {
   padding: 0;
   display: none;
   list-style: none;
-  position: absolute;
   z-index: 1000000;
   background-color: white;
   border: 1px solid #e7e7e7;

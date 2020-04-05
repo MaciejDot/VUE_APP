@@ -1,11 +1,11 @@
 <template>
   <div id="app" :key="reload">
     <b-navbar id="navbar" toggleable="lg" type="light" variant="white" :sticky="true">
-      <b-navbar-brand  to="/">Calisthenics Encyclopedia</b-navbar-brand>
+      <b-navbar-brand to="/">Calisthenics Encyclopedia</b-navbar-brand>
       <b-navbar-toggle id="navbar-toggle" target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item v-if="$store.state.username != undefined">
+          <b-nav-item v-if="username != undefined">
             <router-link class="nav-link" to="/workout">Workout Program</router-link>
           </b-nav-item>
           <b-nav-item>
@@ -16,9 +16,9 @@
           </b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
-          <b-nav-item-dropdown v-if="$store.state.username!=undefined" right>
+          <b-nav-item-dropdown v-if="username!=undefined" right>
             <template slot="button-content">
-              <em>{{$store.state.username}}</em>
+              <em>{{username}}</em>
             </template>
             <b-dropdown-item href="#" @click="signOut()">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
@@ -33,55 +33,85 @@
   </div>
 </template>
 <script>
-import { BNavbar } from 'bootstrap-vue'
+import { BNavbar } from "bootstrap-vue";
+import { EventBus } from "./eventBus/eventBus";
 export default {
-  name: 'app',
+  name: "app",
   components: { BNavbar },
-  data: function(){
+  data: function() {
     return {
-      reload: 0
-    }
+      reload: 0,
+      username: this.$store.state.username
+    };
   },
-  watch:{
-      '$route' (to, from) {
-        if(from.meta.reload){
-          this.reload += 1;
-        } 
-        document.title = to.meta.title || 'Calisthenics Encyclopedia'
+  watch: {
+    $route(to, from) {
+      this.username = this.$store.state.username;
+      if (from.meta.reload) {
+        this.reload += 1;
       }
+      document.title = to.meta.title || "Calisthenics Encyclopedia";
+      if (to.onlyAuthenticated && this.$store.state.username === undefined) {
+        this.$router.push({ path: "/" });
+      }
+      if (to.onlyAnonymous && this.$store.state.username !== undefined) {
+        this.$router.push({ path: "/" });
+      }
+      if (
+        to.roles &&
+        this.$store.state.roles.some(x => to.roles.some(y => y === x))
+      ) {
+        this.$router.push({ path: "/401" });
+      }
+    }
   },
-  mounted: function(){
-    if(this.$route.meta.onlyAuthenticated && this.$store.state.username === undefined){
-      this.$router.push({ path: "/" });
-    }
-    if(this.$route.meta.onlyAnonymous && this.$store.state.username !== undefined){
-      this.$router.push({ path: "/workout" });
-    }
-    if(this.$route.meta.roles && this.$store.state.roles.some(x=> this.$route.meta.roles.some(y=>y===x))){
-      this.$router.push({ path: "/401" });
-    }
-    document.title = this.$route.meta.title || 'Calisthenics Encyclopedia';
+  mounted: function() {
+    EventBus.$on("data-was-loaded", () => {
+      this.username = this.$store.state.username;
+      if (
+        this.$route.meta.onlyAuthenticated &&
+        this.username === undefined
+      ) {
+        this.$router.push({ path: "/" });
+      }
+      if (
+        this.$route.meta.onlyAnonymous &&
+        this.username !== undefined
+      ) {
+        this.$router.push({ path: "/" });
+      }
+      if (
+        this.$route.meta.roles &&
+        this.$store.state.roles.some(x =>
+          this.$route.meta.roles.some(y => y === x)
+        )
+      ) {
+        this.$router.push({ path: "/401" });
+      }
+    });
+    document.title = this.$route.meta.title || "Calisthenics Encyclopedia";
   },
   methods: {
     signOut: function() {
-      this.$store.dispatch('logOut',{instance:this});
-      this.$router.push({ path: "SuccessSignOut" });
-    },
+      this.$store.dispatch("logOut").then(()=>
+        this.$router.push({ path: "SuccessSignOut" })
+      );
+    }
   }
 };
 </script>
 <style lang="scss">
-#navbar{
+#navbar {
   border: 1px solid #e7e7e7;
 }
-#navbar-toggle{
- border-radius:1px;  
+#navbar-toggle {
+  border-radius: 1px;
 }
-#app{
-  margin-top:0px; 
-  position:relative;
+#app {
+  margin-top: 0px;
+  position: relative;
 }
-h1{
+h1 {
   margin: 20px !important;
 }
 #app {
@@ -95,13 +125,13 @@ body {
   background-color: #bfd8ee;
 }
 iframe {
-    border: 1px solid #eee;
-    border-radius: 2px;
-  }
-  .iframe-instagram {
-    border: 1px solid #eee;
-    border-radius: 2px;
-  }
+  border: 1px solid #eee;
+  border-radius: 2px;
+}
+.iframe-instagram {
+  border: 1px solid #eee;
+  border-radius: 2px;
+}
 @media (max-width: 199px) and (min-width: 150px) {
   iframe {
     width: 100px;
